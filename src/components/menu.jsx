@@ -26,7 +26,7 @@ const ITEM_HEIGHT = 88;
 class LongMenu extends React.Component {
   state = {
     anchorEl: null,
-    selectedItem: ""
+    selectedItem: "None"
   };
 
   handleClick = event => {
@@ -35,6 +35,11 @@ class LongMenu extends React.Component {
 
   handleClose = () => {
     this.setState({ anchorEl: null });
+  };
+
+  handleClickOption = event => {
+    //With this line you can get the element of the menu
+    this.setState({ selectedItem: event.target.innerText });
   };
 
   render() {
@@ -55,6 +60,7 @@ class LongMenu extends React.Component {
           id="long-menu"
           anchorEl={anchorEl}
           open={open}
+          onClick={this.handleClickOption}
           onClose={this.handleClose}
           PaperProps={{
             style: {
@@ -64,11 +70,7 @@ class LongMenu extends React.Component {
           }}
         >
           {options.map(option => (
-            <MenuItem
-              key={option}
-              selected={option === "Pyxis"}
-              onClick={this.handleClose}
-            >
+            <MenuItem key={option} onClick={this.handleClose}>
               {option}
             </MenuItem>
           ))}

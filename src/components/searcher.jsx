@@ -4,12 +4,14 @@ import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import LongMenu from "./menu";
+import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControl from "@material-ui/core/FormControl";
+import SearchIcon from "@material-ui/icons/Search";
 
-const styles = {
+//Here you can add some styles for the elements
+const styles1 = {
   root: {
     flexGrow: 1
   },
@@ -22,6 +24,11 @@ const styles = {
   }
 };
 
+const styles2 = {
+  color: "#fff"
+};
+
+//AppBar Component
 function ButtonAppBar(props) {
   const { classes } = props;
   return (
@@ -30,8 +37,20 @@ function ButtonAppBar(props) {
         <Toolbar>
           <LongMenu />
           <Typography variant="h6" color="inherit" className={classes.grow}>
-            Tienda
+            Boutique Paula Carmona
           </Typography>
+
+          <FormControl className={classes.margin}>
+            <Input
+              id="input-with-icon-adornment"
+              style={styles2}
+              startAdornment={
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              }
+            />
+          </FormControl>
         </Toolbar>
       </AppBar>
       <br />
@@ -43,4 +62,4 @@ ButtonAppBar.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ButtonAppBar);
+export default withStyles(styles1)(ButtonAppBar);
