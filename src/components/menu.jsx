@@ -34,7 +34,6 @@ class LongMenu extends React.Component {
   };
 
   handleClose = () => {
-    alert("this");
     this.setState({ anchorEl: null });
   };
 
@@ -68,7 +67,7 @@ class LongMenu extends React.Component {
             <MenuItem
               key={option}
               selected={option === "Pyxis"}
-              onClick={this.handleClose(option)}
+              onClick={this.handleClose}
             >
               {option}
             </MenuItem>

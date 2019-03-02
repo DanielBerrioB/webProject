@@ -26,7 +26,7 @@ function ButtonAppBar(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <LongMenu />
           <Typography variant="h6" color="inherit" className={classes.grow}>
@@ -34,6 +34,7 @@ function ButtonAppBar(props) {
           </Typography>
         </Toolbar>
       </AppBar>
+      <br />
     </div>
   );
 }
