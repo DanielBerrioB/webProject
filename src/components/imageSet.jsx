@@ -5,11 +5,11 @@ const simpleStyle = {
   marginTop: "50px"
 };
 
+const imagenStyle = {
+  borderRadius: "50px"
+};
 
-const imagenStyle={
-  borderRadius: "50px",
-}
-
+//This class represents
 class ImageSet extends React.Component {
   state = {};
 
@@ -21,40 +21,47 @@ class ImageSet extends React.Component {
             <table style={simpleStyle} cellSpacing="10px">
               <tr>
                 <th>
-                  <img style={imagenStyle}
-                    src="https://tennis.vteximg.com.br/arquivos/ids/717344-275-420/Tshirt-fondo-entero.jpg?v=636867032336570000"
+                  <img
+                    style={imagenStyle}
+                    src={Data[0].source}
                     width="250"
                     height="430"
                     alt=""
                   />
-                  <p>Here goes the description's image</p>
+                  <p>{Data[0].name}</p>
+                  <p>Precio: {Data[0].precio}</p>
                 </th>
                 <th>
-                  <img style={imagenStyle}
-                    src="https://tennis.vteximg.com.br/arquivos/ids/717344-275-420/Tshirt-fondo-entero.jpg?v=636867032336570000"
+                  <img
+                    style={imagenStyle}
+                    src={Data[1].source}
                     width="250"
                     height="430"
                     alt=""
                   />
-                  <p>Here goes the description's image</p>
+                  <p>{Data[1].name}</p>
+                  <p>Precio: {Data[1].precio}</p>
+                </th>
+
+                <th onClick={alert("Se hixo click")}>
+                  <img
+                    style={imagenStyle}
+                    src={Data[2].source}
+                    width="250"
+                    height="430"
+                    alt=""
+                  />
+                  <p>{Data[2].name}</p>
+                  <p>Precio: {Data[2].precio}</p>
                 </th>
 
                 <th>
-                  <img style={imagenStyle}
+                  <img
+                    style={imagenStyle}
                     src="https://tennis.vteximg.com.br/arquivos/ids/717344-275-420/Tshirt-fondo-entero.jpg?v=636867032336570000"
                     width="250"
                     height="430"
                     alt=""
-                  />
-                  <p>Here goes the description's image</p>
-                </th>
-
-                <th>
-                  <img style={imagenStyle}
-                      src="https://tennis.vteximg.com.br/arquivos/ids/717344-275-420/Tshirt-fondo-entero.jpg?v=636867032336570000"
-                      width="250"
-                      height="430"
-                      alt=""
                   />
                   <p>Here goes the description's image</p>
                 </th>
@@ -62,7 +69,8 @@ class ImageSet extends React.Component {
               <br />
               <tr>
                 <th>
-                  <img style={imagenStyle}
+                  <img
+                    style={imagenStyle}
                     src="https://tennis.vteximg.com.br/arquivos/ids/717344-275-420/Tshirt-fondo-entero.jpg?v=636867032336570000"
                     width="250"
                     height="430"
@@ -71,7 +79,8 @@ class ImageSet extends React.Component {
                   <p>Here goes the description's image</p>
                 </th>
                 <th>
-                  <img style={imagenStyle}
+                  <img
+                    style={imagenStyle}
                     src="https://tennis.vteximg.com.br/arquivos/ids/717344-275-420/Tshirt-fondo-entero.jpg?v=636867032336570000"
                     width="250"
                     height="430"
@@ -80,7 +89,8 @@ class ImageSet extends React.Component {
                   <p>Text1</p>
                 </th>
                 <th>
-                  <img style={imagenStyle}
+                  <img
+                    style={imagenStyle}
                     src="https://tennis.vteximg.com.br/arquivos/ids/717344-275-420/Tshirt-fondo-entero.jpg?v=636867032336570000"
                     width="250"
                     height="430"
@@ -89,7 +99,8 @@ class ImageSet extends React.Component {
                   <p>Text1</p>
                 </th>
                 <th>
-                  <img style={imagenStyle}
+                  <img
+                    style={imagenStyle}
                     src="https://tennis.vteximg.com.br/arquivos/ids/717344-275-420/Tshirt-fondo-entero.jpg?v=636867032336570000"
                     width="250"
                     height="430"
@@ -101,7 +112,8 @@ class ImageSet extends React.Component {
 
               <tr>
                 <th>
-                  <img style={imagenStyle}
+                  <img
+                    style={imagenStyle}
                     src="https://tennis.vteximg.com.br/arquivos/ids/717344-275-420/Tshirt-fondo-entero.jpg?v=636867032336570000"
                     width="250"
                     height="430"
@@ -119,7 +131,8 @@ class ImageSet extends React.Component {
                   <p>Text1</p>
                 </th>
                 <th>
-                  <img style={imagenStyle}
+                  <img
+                    style={imagenStyle}
                     src="https://tennis.vteximg.com.br/arquivos/ids/717344-275-420/Tshirt-fondo-entero.jpg?v=636867032336570000"
                     width="250"
                     height="430"
@@ -128,7 +141,31 @@ class ImageSet extends React.Component {
                   <p>Text1</p>
                 </th>
                 <th>
-                  <img style={imagenStyle}
+                  <img
+                    style={imagenStyle}
+                    src="https://tennis.vteximg.com.br/arquivos/ids/717344-275-420/Tshirt-fondo-entero.jpg?v=636867032336570000"
+                    width="250"
+                    height="430"
+                    alt=""
+                  />
+                  <p>Text1</p>
+                </th>
+              </tr>
+
+              <tr>
+                <th>
+                  <img
+                    style={imagenStyle}
+                    src="https://tennis.vteximg.com.br/arquivos/ids/717344-275-420/Tshirt-fondo-entero.jpg?v=636867032336570000"
+                    width="250"
+                    height="430"
+                    alt=""
+                  />
+                  <p>Here goes the description's image</p>
+                </th>
+                <th>
+                  <img
+                    style={imagenStyle}
                     src="https://tennis.vteximg.com.br/arquivos/ids/717344-275-420/Tshirt-fondo-entero.jpg?v=636867032336570000"
                     width="250"
                     height="430"
