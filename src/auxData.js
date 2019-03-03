@@ -46,5 +46,13 @@ export default [
       "http://drive.google.com/uc?export=view&id=195NTDKqkBO0yUgmMSnQYPQezmf85vtkg",
     precio: 80000,
     categoria: "Camisas"
+  },
+  {
+    id: 7,
+    name: "Camisón",
+    source:
+      "http://drive.google.com/uc?export=view&id=195NTDKqkBO0yUgmMSnQYPQezmf85vtkg",
+    precio: 80000,
+    categoria: "Camisas"
   }
 ];

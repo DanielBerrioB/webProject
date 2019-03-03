@@ -38,27 +38,18 @@ class ImageSet extends React.Component {
         <center>
           <div>
             <table style={simpleStyle} cellSpacing="20px">
-              <tr>
-                {this.state.arrayElement[0].map(option => (
-                  <TableElement
-                    name={option.name}
-                    precio={option.precio}
-                    src={option.source}
-                    style={imagenStyle}
-                  />
-                ))}
-              </tr>
-              <br />
-              <tr>
-                {this.state.arrayElement[1].map(option => (
-                  <TableElement
-                    name={option.name}
-                    precio={option.precio}
-                    src={option.source}
-                    style={imagenStyle}
-                  />
-                ))}
-              </tr>
+              {this.state.arrayElement.map(option => (
+                <tr>
+                  {option.map(element => (
+                    <TableElement
+                      name={element.name}
+                      precio={element.precio}
+                      src={element.source}
+                      style={imagenStyle}
+                    />
+                  ))}
+                </tr>
+              ))}
             </table>
           </div>
         </center>

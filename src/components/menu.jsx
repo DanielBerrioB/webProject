@@ -4,25 +4,8 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
 const fontStyle = {
-  color: "#ffff"
+  color: "#fff"
 };
-
-const options = [
-  "None",
-  "Atria",
-  "Callisto",
-  "Dione",
-  "Ganymede",
-  "Hangouts Call",
-  "Luna",
-  "Oberon",
-  "Phobos",
-  "Pyxis",
-  "Sedna",
-  "Titania",
-  "Triton",
-  "Umbriel"
-];
 
 const ITEM_HEIGHT = 88;
 
@@ -57,7 +40,7 @@ class LongMenu extends React.Component {
           aria-haspopup="true"
           onClick={this.handleClick}
         >
-          <p style={fontStyle}>Mujer</p>
+          <p style={fontStyle}>{this.props.name}</p>
         </IconButton>
         <Menu
           id="long-menu"
@@ -69,11 +52,11 @@ class LongMenu extends React.Component {
             style: {
               maxHeight: ITEM_HEIGHT * 4.5, //Da el ancho del cosito
               width: 500,
-              background: "black"
+              background: "white"
             }
           }}
         >
-          {options.map(option => (
+          {this.props.array.map(option => (
             <MenuItem key={option} onClick={this.handleClose}>
               {option}
             </MenuItem>

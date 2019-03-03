@@ -5,8 +5,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import LongMenu from "./menu";
-import LongMenu2 from "./menu2";
-import LongMenu3 from "./menu3";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
@@ -30,16 +28,42 @@ const styles2 = {
   color: "#fff",
   marginLeft: "240px",
   fontSize: "20px",
-  fontStyle: "italic",
-
+  fontStyle: "italic"
 };
-
 
 const stylesToolbar = {
   background: "#00BFFF",
-  height: "50px",
+  height: "50px"
+};
 
-}
+const options1 = [
+  "None",
+  "Atria",
+  "Callisto",
+  "Dione",
+  "Ganymede",
+  "Hangouts Call",
+  "Luna",
+  "Oberon",
+  "Phobos",
+  "Pyxis",
+  "Sedna",
+  "Titania",
+  "Triton",
+  "Umbriel"
+];
+
+const options2 = [
+  "None",
+  "Atria",
+  "Callisto",
+  "Dione",
+  "Ganymede",
+  "Hangouts Call",
+  "Luna"
+];
+
+const options3 = ["None", "Atria", "Callisto", "Dione", "Ganymede"];
 
 //AppBar Component
 function ButtonAppBar(props) {
@@ -48,9 +72,9 @@ function ButtonAppBar(props) {
     <div className={classes.root}>
       <AppBar position="fixed">
         <Toolbar style={stylesToolbar}>
-          <LongMenu />
-          <LongMenu2 />
-          <LongMenu3 />
+          <LongMenu array={options1} name={"Mujer"} />
+          <LongMenu array={options2} name={"Nuevo"} />
+          <LongMenu array={options3} name={"Promoción"} />
           <Typography style={styles2} className={classes.grow}>
             Boutique Paula Montes
           </Typography>
