@@ -29,6 +29,7 @@ class ImageSet extends React.Component {
                     alt=""
                   />
                   <p>{Data[0].name}</p>
+                  <p>Precio: {Data[0].precio}</p>
                 </th>
                 <th>
                   <img
@@ -39,9 +40,10 @@ class ImageSet extends React.Component {
                     alt=""
                   />
                   <p>{Data[1].name}</p>
+                  <p>Precio: {Data[1].precio}</p>
                 </th>
 
-                <th>
+                <th onClick={alert("Se hixo click")}>
                   <img
                     style={imagenStyle}
                     src={Data[2].source}
@@ -50,6 +52,7 @@ class ImageSet extends React.Component {
                     alt=""
                   />
                   <p>{Data[2].name}</p>
+                  <p>Precio: {Data[2].precio}</p>
                 </th>
 
                 <th>
