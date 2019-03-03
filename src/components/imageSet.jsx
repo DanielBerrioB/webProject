@@ -10,6 +10,7 @@ const imagenStyle = {
   borderRadius: "50px"
 };
 
+//This class represents
 class ImageSet extends React.Component {
   state = {};
 
