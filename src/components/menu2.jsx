@@ -3,10 +3,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
-const fontStyle = {
-  color: "#ffff"
-};
-
 const options = [
   "None",
   "Atria",
@@ -14,19 +10,16 @@ const options = [
   "Dione",
   "Ganymede",
   "Hangouts Call",
-  "Luna",
-  "Oberon",
-  "Phobos",
-  "Pyxis",
-  "Sedna",
-  "Titania",
-  "Triton",
-  "Umbriel"
+  "Luna"
 ];
+
+const fontStyle = {
+  color: "#ffff"
+};
 
 const ITEM_HEIGHT = 88;
 
-class LongMenu extends React.Component {
+class LongMenu2 extends React.Component {
   state = {
     anchorEl: null,
     selectedItem: "None"
@@ -57,7 +50,7 @@ class LongMenu extends React.Component {
           aria-haspopup="true"
           onClick={this.handleClick}
         >
-          <p style={fontStyle}>Mujer</p>
+          <p style={fontStyle}>Nuevo</p>
         </IconButton>
         <Menu
           id="long-menu"
@@ -67,9 +60,8 @@ class LongMenu extends React.Component {
           onClose={this.handleClose}
           PaperProps={{
             style: {
-              maxHeight: ITEM_HEIGHT * 4.5, //Da el ancho del cosito
-              width: 500,
-              background: "black"
+              maxHeight: ITEM_HEIGHT * 4.5,
+              width: 500
             }
           }}
         >
@@ -84,4 +76,4 @@ class LongMenu extends React.Component {
   }
 }
 
-export default LongMenu;
+export default LongMenu2;

@@ -5,6 +5,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import LongMenu from "./menu";
+import LongMenu2 from "./menu2";
+import LongMenu3 from "./menu3";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
@@ -25,8 +27,19 @@ const styles1 = {
 };
 
 const styles2 = {
-  color: "#fff"
+  color: "#fff",
+  marginLeft: "240px",
+  fontSize: "20px",
+  fontStyle: "italic",
+
 };
+
+
+const stylesToolbar = {
+  background: "#00BFFF",
+  height: "50px",
+
+}
 
 //AppBar Component
 function ButtonAppBar(props) {
@@ -34,10 +47,12 @@ function ButtonAppBar(props) {
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
-        <Toolbar>
+        <Toolbar style={stylesToolbar}>
           <LongMenu />
-          <Typography variant="h6" color="inherit" className={classes.grow}>
-            Boutique Paula Carmona
+          <LongMenu2 />
+          <LongMenu3 />
+          <Typography style={styles2} className={classes.grow}>
+            Boutique Paula Montes
           </Typography>
 
           <FormControl className={classes.margin}>
