@@ -5,7 +5,8 @@ export default [
     source:
       "http://drive.google.com/uc?export=view&id=1wYGK1zy-VTptuiIDFvh0dcoNFU-_oDXT",
     precio: 50000,
-    categoria: "pantalon"
+    categoria: "pantalon",
+    promocion: true
   },
   {
     id: 2,
@@ -13,7 +14,8 @@ export default [
     source:
       "http://drive.google.com/uc?export=view&id=1-k63xPM6GExVj5zUzMm7gq-SyrmjNjxL",
     precio: 66000,
-    categoria: "Camisa"
+    categoria: "Camisa",
+    promocion: true
   },
   {
     id: 3,
@@ -21,7 +23,8 @@ export default [
     source:
       "http://drive.google.com/uc?export=view&id=1wuWVK_pOOEO1all96rKQvimctl_8TGtz",
     precio: 68000,
-    categoria: "pantalon"
+    categoria: "pantalon",
+    promocion: true
   },
   {
     id: 4,
@@ -29,7 +32,8 @@ export default [
     source:
       "http://drive.google.com/uc?export=view&id=1zwd2slAfp7LZSkfS_Xk8iZP7OEFqMsHO",
     precio: 67000,
-    categoria: "Camisas"
+    categoria: "Camisa",
+    promocion: false
   },
   {
     id: 5,
@@ -37,7 +41,8 @@ export default [
     source:
       "http://drive.google.com/uc?export=view&id=1kw0nv3zpqnQZbRerkBjsHhIxmP6wpAh9",
     precio: 69000,
-    categoria: "Camisas"
+    categoria: "Camisa",
+    promocion: false
   },
   {
     id: 6,
@@ -45,7 +50,8 @@ export default [
     source:
       "http://drive.google.com/uc?export=view&id=195NTDKqkBO0yUgmMSnQYPQezmf85vtkg",
     precio: 80000,
-    categoria: "Camisas"
+    categoria: "Camisa",
+    promocion: false
   },
   {
     id: 7,
@@ -53,6 +59,7 @@ export default [
     source:
       "http://drive.google.com/uc?export=view&id=195NTDKqkBO0yUgmMSnQYPQezmf85vtkg",
     precio: 80000,
-    categoria: "Camisas"
+    categoria: "Camisa",
+    promocion: false
   }
 ];

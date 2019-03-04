@@ -24,10 +24,22 @@ class ImageSet extends React.Component {
     if (array.length !== 0) this.setState({ arrayElement: toConvert(array) });
   };
 
+  show = (event, text) => {
+    if (text !== "") this.setState({ arrayElement: fromCategory(text) });
+  };
+
+  promotion = event => {
+    this.setState({ arrayElement: byPromotion() });
+  };
+
   render() {
     return (
       <div>
-        <ButtonAppBar handleChange={this.onAlert} />
+        <ButtonAppBar
+          handleChange={this.onAlert}
+          putting={this.show}
+          handleClick={this.promotion}
+        />
         <center>
           <table style={simpleStyle} cellSpacing="20px" key="table1">
             {this.state.arrayElement.map(option => (
@@ -67,6 +79,22 @@ function toConvert(arrayParse) {
   }
   values.push(aux);
   return values;
+}
+
+function byPromotion() {
+  var arrayToReturn = [];
+  Data.forEach(i => {
+    if (i.promocion) arrayToReturn.push(i);
+  });
+  return toConvert(arrayToReturn);
+}
+
+function fromCategory(text) {
+  var arrayToReturn = [];
+  Data.forEach(i => {
+    if (text.includes(i.categoria)) arrayToReturn.push(i);
+  });
+  return toConvert(arrayToReturn);
 }
 
 export default ImageSet;

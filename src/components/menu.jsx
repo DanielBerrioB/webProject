@@ -26,6 +26,7 @@ class LongMenu extends React.Component {
   handleClickOption = event => {
     //With this line you can get the element of the menu
     this.setState({ selectedItem: event.target.innerText });
+    this.props.handleClickOption(event, event.target.innerText);
   };
 
   render() {
@@ -38,7 +39,7 @@ class LongMenu extends React.Component {
           aria-label="Menu"
           aria-owns={open ? "long-menu" : undefined}
           aria-haspopup="true"
-          onClick={this.handleClick}
+          onClick={this.handleClick.bind(this)}
         >
           <p style={fontStyle}>{this.props.name}</p>
         </IconButton>
@@ -46,7 +47,7 @@ class LongMenu extends React.Component {
           id="long-menu"
           anchorEl={anchorEl}
           open={open}
-          onClick={this.handleClickOption}
+          onClick={this.handleClickOption.bind(this)}
           onClose={this.handleClose}
           PaperProps={{
             style: {

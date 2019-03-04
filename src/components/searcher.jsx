@@ -6,6 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import LongMenu from "./menu";
 import Input from "@material-ui/core/Input";
+import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import SearchIcon from "@material-ui/icons/Search";
@@ -37,34 +38,17 @@ const stylesToolbar = {
   height: "50px"
 };
 
-const options1 = [
-  "None",
-  "Atria",
-  "Callisto",
-  "Dione",
-  "Ganymede",
-  "Hangouts Call",
-  "Luna",
-  "Oberon",
-  "Phobos",
-  "Pyxis",
-  "Sedna",
-  "Titania",
-  "Triton",
-  "Umbriel"
-];
+const fontStyle = {
+  color: "#fff"
+};
 
-const options2 = [
-  "None",
-  "Atria",
-  "Callisto",
-  "Dione",
-  "Ganymede",
-  "Hangouts Call",
-  "Luna"
-];
-
-const options3 = ["None", "Atria", "Callisto", "Dione", "Ganymede"];
+function categoryArray() {
+  var arrayToReturn = [];
+  Data.forEach(i => {
+    if (!arrayToReturn.includes(i.categoria)) arrayToReturn.push(i.categoria);
+  });
+  return arrayToReturn;
+}
 
 class ButtonAppBar extends React.Component {
   state = {
@@ -76,16 +60,32 @@ class ButtonAppBar extends React.Component {
     this.props.handleChange(event, verifyContent(this.state.text));
   };
 
+  handleClick = event => {
+    this.props.handleClick(event);
+  };
+
+  putting = (event, text) => {
+    this.props.putting(event, text);
+  };
+
   render() {
     return (
       <div className={this.props.root}>
         <AppBar position="fixed">
           <Toolbar style={stylesToolbar}>
-            <LongMenu array={options1} name={"Mujer"} />
-            <LongMenu array={options2} name={"Nuevo"} />
-            <LongMenu array={options3} name={"Promoción"} />
+            <LongMenu
+              array={categoryArray()}
+              name={"Nuevo"}
+              handleClickOption={this.putting}
+            />
+            <IconButton
+              aria-haspopup="true"
+              onClick={this.handleClick.bind(this)}
+            >
+              <p style={fontStyle}>Promoción</p>
+            </IconButton>
             <Typography style={styles2} className={this.props.grow}>
-              {this.state.text}
+              Boutique Paula Carmona
             </Typography>
 
             <FormControl className={this.props.margin}>
