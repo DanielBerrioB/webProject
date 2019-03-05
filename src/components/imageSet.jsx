@@ -1,7 +1,8 @@
 import React from "react";
-import Data from "../auxData.js";
 import TableElement from "./tableElement";
 import ButtonAppBar from "./searcher";
+import Modal from "@material-ui/core/Modal";
+import ModalWindow from "./modalWindow";
 
 const simpleStyle = {
   width: "100%",
@@ -12,12 +13,25 @@ const imagenStyle = {
   borderRadius: "50px"
 };
 
-var values = toConvert(Data);
+const styles = {
+  position: "absolute",
+  width: 50,
+  backgroundColor: "#fff",
+  outline: "none"
+};
+
+var data = JSON.parse(localStorage.getItem("arrayElement"));
+
+var values = toConvert(data);
+
+var toImage = [];
 
 //This class represents
 class ImageSet extends React.Component {
   state = {
-    arrayElement: values
+    arrayElement: values,
+    openModal: false,
+    valueKey: ""
   };
 
   onAlert = (event, array) => {
@@ -30,6 +44,15 @@ class ImageSet extends React.Component {
 
   promotion = event => {
     this.setState({ arrayElement: byPromotion() });
+  };
+
+  imageClick = event => {
+    this.setState({ openModal: true });
+    this.setState({ valueKey: event.target.id });
+  };
+
+  imageClickClose = () => {
+    this.setState({ openModal: false });
   };
 
   render() {
@@ -50,12 +73,18 @@ class ImageSet extends React.Component {
                     precio={element.precio}
                     src={element.source}
                     style={imagenStyle}
-                    key={element.id}
+                    id={element.id}
+                    handleImageClick={this.imageClick.bind(this)}
                   />
                 ))}
               </tr>
             ))}
           </table>
+          <ModalWindow
+            allowOpen={this.state.openModal}
+            cambio={this.imageClickClose}
+            text={this.state.valueKey}
+          />
         </center>
       </div>
     );
@@ -83,7 +112,7 @@ function toConvert(arrayParse) {
 
 function byPromotion() {
   var arrayToReturn = [];
-  Data.forEach(i => {
+  data.forEach(i => {
     if (i.promocion) arrayToReturn.push(i);
   });
   return toConvert(arrayToReturn);
@@ -91,7 +120,7 @@ function byPromotion() {
 
 function fromCategory(text) {
   var arrayToReturn = [];
-  Data.forEach(i => {
+  data.forEach(i => {
     if (text.includes(i.categoria)) arrayToReturn.push(i);
   });
   return toConvert(arrayToReturn);

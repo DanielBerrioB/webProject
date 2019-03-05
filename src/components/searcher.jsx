@@ -10,7 +10,6 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import SearchIcon from "@material-ui/icons/Search";
-import Data from "../auxData.js";
 
 //Here you can add some styles for the elements
 const styles1 = {
@@ -28,9 +27,15 @@ const styles1 = {
 
 const styles2 = {
   color: "#fff",
-  marginLeft: "240px",
   fontSize: "20px",
+  marginLeft: "30%",
   fontStyle: "italic"
+};
+
+const styles3 = {
+  color: "#fff",
+  marginLeft: "30%",
+  fontSize: "18px"
 };
 
 const stylesToolbar = {
@@ -41,10 +46,11 @@ const stylesToolbar = {
 const fontStyle = {
   color: "#fff"
 };
+var data = JSON.parse(localStorage.getItem("arrayElement"));
 
 function categoryArray() {
   var arrayToReturn = [];
-  Data.forEach(i => {
+  data.forEach(i => {
     if (!arrayToReturn.includes(i.categoria)) arrayToReturn.push(i.categoria);
   });
   return arrayToReturn;
@@ -84,6 +90,7 @@ class ButtonAppBar extends React.Component {
             >
               <p style={fontStyle}>Promoción</p>
             </IconButton>
+
             <Typography style={styles2} className={this.props.grow}>
               Boutique Paula Carmona
             </Typography>
@@ -91,7 +98,7 @@ class ButtonAppBar extends React.Component {
             <FormControl className={this.props.margin}>
               <Input
                 id="input-with-icon-adornment"
-                style={styles2}
+                style={styles3}
                 value={this.state.value}
                 onChange={this.handleChange.bind(this)}
                 startAdornment={
@@ -112,18 +119,18 @@ class ButtonAppBar extends React.Component {
 function verifyContent(text) {
   var arrayElement = [];
   if (text !== "") {
-    for (let i = 0; i < Data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       if (
-        Data[i].name
+        data[i].name
           .toLowerCase()
           .trim()
           .includes(text) ||
-        Data[i].categoria
+        data[i].categoria
           .toLowerCase()
           .trim()
           .includes(text)
       ) {
-        arrayElement.push(Data[i]);
+        arrayElement.push(data[i]);
       }
     }
   }
