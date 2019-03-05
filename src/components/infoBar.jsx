@@ -4,7 +4,7 @@ const simpleStyle = {
   height: "70px",
   width: "100%",
   background:
-    " -webkit-linear-gradient(left, rgba(88,189,204,1) 0%, rgba(88,189,204,1) 1%, rgba(209,232,240,1) 100%)"
+    "#F4EADE"
 };
 
 const letra = {
@@ -18,7 +18,10 @@ class infoBar extends React.Component {
     return (
       <div style={simpleStyle}>
         <br />
-        <h6 style={letra}>Telefono 318 221 35 96 | Ubicación Remedios </h6>
+        <center>
+        <h3 style={letra}>Telefono 318 221 35 96 | Ubicación Remedios </h3>
+        </center>
+      
       </div>
     );
   }

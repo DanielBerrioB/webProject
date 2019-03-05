@@ -26,25 +26,25 @@ const styles1 = {
 };
 
 const styles2 = {
-  color: "#fff",
+  color: "black",
   fontSize: "20px",
   marginLeft: "30%",
   fontStyle: "italic"
 };
 
 const styles3 = {
-  color: "#fff",
+  color: "black",
   marginLeft: "30%",
   fontSize: "18px"
 };
 
 const stylesToolbar = {
-  background: "#00BFFF",
+  background: "#ED8C72",
   height: "50px"
 };
 
 const fontStyle = {
-  color: "#fff"
+  color: "black"
 };
 
 var data = JSON.parse(localStorage.getItem("arrayElement"));
@@ -93,7 +93,7 @@ class ButtonAppBar extends React.Component {
             </IconButton>
 
             <Typography style={styles2} className={this.props.grow}>
-              Boutique Paula Carmona
+              Boutique Paula Montes
             </Typography>
 
             <FormControl className={this.props.margin}>

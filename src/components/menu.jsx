@@ -4,7 +4,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
 const fontStyle = {
-  color: "#fff"
+  color: "black"
 };
 
 const ITEM_HEIGHT = 88;

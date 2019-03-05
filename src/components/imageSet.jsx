@@ -14,19 +14,11 @@ const imagenStyle = {
   borderRadius: "50px"
 };
 
-const styles = {
-  position: "absolute",
-  width: 50,
-  backgroundColor: "#fff",
-  outline: "none"
-};
 
 if(!localStorage.arrayElement) localStorage.setItem("arrayElement", JSON.stringify(Data));
 var data = JSON.parse(localStorage.getItem("arrayElement"));
 
 var values = toConvert(data);
-
-var toImage = [];
 
 //This class represents
 class ImageSet extends React.Component {

@@ -1,10 +1,17 @@
 import React from "react";
 
+
+
+const normal={
+  fontWeight:"normal",
+}
 //Somethind different
 class TableElement extends React.Component {
   handleImageClick = event => {
     this.props.handleImageClick(event);
   };
+
+
 
   render() {
     return (
@@ -18,8 +25,8 @@ class TableElement extends React.Component {
           alt=""
           onClick={this.handleImageClick.bind(this)}
         />
-        <p>{this.props.name}</p>
-        <p>Precio: {this.props.precio}</p>
+        <p style={normal}>{this.props.name}</p>
+        <p style={normal}>Precio: ${this.props.precio}</p>
       </th>
     );
   }

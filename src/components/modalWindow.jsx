@@ -3,6 +3,17 @@ import PropTypes, { element } from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import TableElement from "./tableElement";
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import OptionButton from './optionSize'
+
+import Button from '@material-ui/core/Button';
+
+
+
+const botonBackground = {
+  background:"-webkit-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%)"
+}
+
 
 const styles = theme => ({
   paper: {
@@ -11,7 +22,8 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
-    outline: "none"
+    outline: "none",
+    borderRadius: "20px"
   }
 });
 
@@ -32,9 +44,14 @@ class SimpleModal extends React.Component {
     this.handleClose(event);
   };
 
+
+  handleButton =()=>{
+    //Aqui se llama el radio buton
+  }
+
   render() {
     const { classes } = this.props;
-    var hola = findById(this.props.text);
+    var element = findById(this.props.text);
     return (
       <div>
         <Modal
@@ -44,12 +61,20 @@ class SimpleModal extends React.Component {
           onClose={() => this.props.cambio()}
         >
           <div style={getModalStyle()} className={classes.paper}>
-            <TableElement
-              name={hola.name}
-              precio={hola.precio}
-              src={hola.source}
-              id={hola.id}
-            />
+            <center>
+              <TableElement
+                name={element.name}
+                precio={element.precio}
+                src={element.source}
+                id={element.id}
+              />
+
+              <OptionButton handleChange = {this.handleButton} talla = {element.talla}></OptionButton>
+              <Button variant="contained" color="primary" className={classes.button} style={botonBackground} >
+                <p style={{marginRight:"20px"}}>Comprar</p>     
+                <AddShoppingCartIcon className={classes.rightIcon}>send</AddShoppingCartIcon>
+              </Button>
+            </center>
             <SimpleModalWrapped />
           </div>
         </Modal>
