@@ -3,6 +3,7 @@ import TableElement from "./tableElement";
 import ButtonAppBar from "./searcher";
 import Modal from "@material-ui/core/Modal";
 import ModalWindow from "./modalWindow";
+import Data from "../auxData";
 
 const simpleStyle = {
   width: "100%",
@@ -20,6 +21,7 @@ const styles = {
   outline: "none"
 };
 
+if(!localStorage.arrayElement) localStorage.setItem("arrayElement", JSON.stringify(Data));
 var data = JSON.parse(localStorage.getItem("arrayElement"));
 
 var values = toConvert(data);

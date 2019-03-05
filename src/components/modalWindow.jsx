@@ -9,7 +9,7 @@ const styles = theme => ({
     position: "absolute",
     width: theme.spacing.unit * 50,
     backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
+    boxShadow: theme. shadows[5],
     padding: theme.spacing.unit * 4,
     outline: "none"
   }
@@ -26,7 +26,6 @@ function getModalStyle() {
   };
 }
 
-var data = JSON.parse(localStorage.getItem("arrayElement"));
 
 class SimpleModal extends React.Component {
   handleClose = event => {
@@ -55,14 +54,13 @@ class SimpleModal extends React.Component {
 }
 
 function findById(id) {
-  console.log("Entra");
-  data.forEach(i => {
-    console.log(i.id);
-    if (i.id == id) {
-      console.log("Algo " + i.precio);
-      return i;
-    }
-  });
+  var data = JSON.parse(localStorage.getItem("arrayElement"));
+  if (!id) {
+    const [ first ] = data
+    return first
+  }
+  return data.find(product => product.id == id)
+  
 }
 
 SimpleModal.propTypes = {

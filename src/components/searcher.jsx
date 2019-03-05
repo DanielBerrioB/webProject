@@ -46,6 +46,7 @@ const stylesToolbar = {
 const fontStyle = {
   color: "#fff"
 };
+
 var data = JSON.parse(localStorage.getItem("arrayElement"));
 
 function categoryArray() {
