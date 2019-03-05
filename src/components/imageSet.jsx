@@ -14,11 +14,20 @@ const imagenStyle = {
   borderRadius: "50px"
 };
 
+const styles = {
+  position: "absolute",
+  width: 50,
+  backgroundColor: "#fff",
+  outline: "none"
+};
 
-if(!localStorage.arrayElement) localStorage.setItem("arrayElement", JSON.stringify(Data));
-var data = JSON.parse(localStorage.getItem("arrayElement"));
+var data = Data;
+
+JSON.parse(window.localStorage.getItem("arrayElement"));
 
 var values = toConvert(data);
+
+var toImage = [];
 
 //This class represents
 class ImageSet extends React.Component {
@@ -52,6 +61,8 @@ class ImageSet extends React.Component {
   render() {
     return (
       <div>
+
+        
         <ButtonAppBar
           handleChange={this.onAlert}
           putting={this.show}

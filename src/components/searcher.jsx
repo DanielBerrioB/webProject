@@ -10,6 +10,9 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import SearchIcon from "@material-ui/icons/Search";
+import logo from "./logo.png";
+import promocion from "./promocion.png"
+import nuevo from "./nuevo.png"
 
 //Here you can add some styles for the elements
 const styles1 = {
@@ -26,10 +29,7 @@ const styles1 = {
 };
 
 const styles2 = {
-  color: "black",
-  fontSize: "20px",
-  marginLeft: "30%",
-  fontStyle: "italic"
+    marginLeft:"14%"
 };
 
 const styles3 = {
@@ -43,9 +43,6 @@ const stylesToolbar = {
   height: "50px"
 };
 
-const fontStyle = {
-  color: "black"
-};
 
 var data = JSON.parse(localStorage.getItem("arrayElement"));
 
@@ -82,30 +79,30 @@ class ButtonAppBar extends React.Component {
           <Toolbar style={stylesToolbar}>
             <LongMenu
               array={categoryArray()}
-              name={"Nuevo"}
+              name={<img src = {nuevo}></img>}
               handleClickOption={this.putting}
             />
             <IconButton
               aria-haspopup="true"
               onClick={this.handleClick.bind(this)}
             >
-              <p style={fontStyle}>Promoción</p>
+              <img src={promocion}></img>
             </IconButton>
+            
+            <img style={styles2} src={logo}></img>
 
-            <Typography style={styles2} className={this.props.grow}>
-              Boutique Paula Montes
-            </Typography>
 
+            <div style={{marginLeft:"20%"}}></div>
             <FormControl className={this.props.margin}>
               <Input
+                
                 id="input-with-icon-adornment"
                 style={styles3}
                 value={this.state.value}
                 onChange={this.handleChange.bind(this)}
+                
                 startAdornment={
-                  <InputAdornment position="start">
                     <SearchIcon />
-                  </InputAdornment>
                 }
               />
             </FormControl>

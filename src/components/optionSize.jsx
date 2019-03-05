@@ -1,23 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-
-
-const styles = theme => ({
-  radio: {
-    '&$checked': {
-      color: '#4B8DF8'
-    }
-  },
-  checked: {}
-})
-
-
-var data = JSON.parse(localStorage.getItem("arrayElement"));
 
 class RadioButtons extends React.Component {
   state = {
@@ -48,7 +34,7 @@ class RadioButtons extends React.Component {
 
             <FormControlLabel
               value="top"
-              control={<Radio color="red" />}
+              //control={<Radio color="red" />}
               label="Top"
               labelPlacement="top"
             />
