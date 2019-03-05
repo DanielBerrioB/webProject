@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes, { element } from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import TableElement from "./tableElement";
@@ -9,7 +9,7 @@ const styles = theme => ({
     position: "absolute",
     width: theme.spacing.unit * 50,
     backgroundColor: theme.palette.background.paper,
-    boxShadow: theme. shadows[5],
+    boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: "none"
   }
@@ -44,7 +44,12 @@ class SimpleModal extends React.Component {
           onClose={() => this.props.cambio()}
         >
           <div style={getModalStyle()} className={classes.paper}>
-            <h1>{hola.id}</h1>
+            <TableElement
+              name={hola.name}
+              precio={hola.precio}
+              src={hola.source}
+              id={hola.id}
+            />
             <SimpleModalWrapped />
           </div>
         </Modal>
@@ -56,11 +61,11 @@ class SimpleModal extends React.Component {
 function findById(id) {
   var data = JSON.parse(localStorage.getItem("arrayElement"));
   if (!id) {
-    const [ first ] = data
+    const [first] = data
     return first
   }
   return data.find(product => product.id == id)
-  
+
 }
 
 SimpleModal.propTypes = {

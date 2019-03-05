@@ -12,7 +12,7 @@ class Main extends React.Component {
   //if(JSON.parse(localStorage.getItem("arrayElement"))){}
   
   componentDidMount(){
-    if(!JSON.parse(localStorage.getItem("arrayElement"))){
+    if(JSON.parse(localStorage.getItem("arrayElement"))){
       localStorage.setItem("arrayElement", JSON.stringify(Data));
     }
   }
