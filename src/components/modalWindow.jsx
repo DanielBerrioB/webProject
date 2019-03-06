@@ -8,8 +8,7 @@ import OptionButton from "./optionSize";
 import Button from "@material-ui/core/Button";
 
 const botonBackground = {
-  background:
-    "-webkit-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%)"
+  background:"#FF956C"
 };
 //New element
 const styles = theme => ({
