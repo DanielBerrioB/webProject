@@ -6,17 +6,16 @@ import Data from "../auxData";
 
 class Main extends React.Component {
   constructor(...props) {
-    super(...props)
+    super(...props);
     localStorage.setItem("arrayElement", JSON.stringify(Data));
   }
-  //if(JSON.parse(localStorage.getItem("arrayElement"))){}
-  
-  componentDidMount(){
-    if(JSON.parse(localStorage.getItem("arrayElement"))){
+
+  componentDidMount() {
+    if (JSON.parse(localStorage.getItem("arrayElement"))) {
       localStorage.setItem("arrayElement", JSON.stringify(Data));
     }
   }
-  
+
   render() {
     return (
       <div>

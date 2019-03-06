@@ -3,16 +3,17 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import LongMenu from "./menu";
 import Input from "@material-ui/core/Input";
 import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import SearchIcon from "@material-ui/icons/Search";
-import logo from "./logo.png";
-import promocion from "./promocion.png"
-import nuevo from "./nuevo.png"
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import logo from "../images/logo.png";
+import promocion from "../images/promocion.png";
+import nuevo from "../images/nuevo.png";
+import Data from "../auxData";
+import SimpleMenu from "./menuShopCart";
 
 //Here you can add some styles for the elements
 const styles1 = {
@@ -29,7 +30,7 @@ const styles1 = {
 };
 
 const styles2 = {
-    marginLeft:"14%"
+  marginLeft: "14%"
 };
 
 const styles3 = {
@@ -43,6 +44,8 @@ const stylesToolbar = {
   height: "50px"
 };
 
+if (!localStorage.arrayElement)
+  localStorage.setItem("arrayElement", JSON.stringify(Data));
 
 var data = JSON.parse(localStorage.getItem("arrayElement"));
 
@@ -79,33 +82,29 @@ class ButtonAppBar extends React.Component {
           <Toolbar style={stylesToolbar}>
             <LongMenu
               array={categoryArray()}
-              name={<img src = {nuevo}></img>}
+              name={<img src={nuevo} alt="" />}
               handleClickOption={this.putting}
             />
             <IconButton
               aria-haspopup="true"
               onClick={this.handleClick.bind(this)}
             >
-              <img src={promocion}></img>
+              <img src={promocion} alt="" />
             </IconButton>
-            
-            <img style={styles2} src={logo}></img>
 
+            <img style={styles2} src={logo} alt="" />
 
-            <div style={{marginLeft:"20%"}}></div>
+            <div style={{ marginLeft: "20%" }} />
             <FormControl className={this.props.margin}>
               <Input
-                
                 id="input-with-icon-adornment"
                 style={styles3}
                 value={this.state.value}
                 onChange={this.handleChange.bind(this)}
-                
-                startAdornment={
-                    <SearchIcon />
-                }
+                startAdornment={<SearchIcon />}
               />
             </FormControl>
+            <SimpleMenu />
           </Toolbar>
         </AppBar>
         <br />

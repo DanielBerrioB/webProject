@@ -1,7 +1,6 @@
 import React from "react";
 import TableElement from "./tableElement";
 import ButtonAppBar from "./searcher";
-import Modal from "@material-ui/core/Modal";
 import ModalWindow from "./modalWindow";
 import Data from "../auxData";
 
@@ -14,20 +13,11 @@ const imagenStyle = {
   borderRadius: "50px"
 };
 
-const styles = {
-  position: "absolute",
-  width: 50,
-  backgroundColor: "#fff",
-  outline: "none"
-};
+if (!localStorage.arrayElement)
+  localStorage.setItem("arrayElement", JSON.stringify(Data));
 
-var data = Data;
-
-JSON.parse(window.localStorage.getItem("arrayElement"));
-
+var data = JSON.parse(window.localStorage.getItem("arrayElement"));
 var values = toConvert(data);
-
-var toImage = [];
 
 //This class represents
 class ImageSet extends React.Component {
@@ -61,8 +51,6 @@ class ImageSet extends React.Component {
   render() {
     return (
       <div>
-
-        
         <ButtonAppBar
           handleChange={this.onAlert}
           putting={this.show}

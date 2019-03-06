@@ -1,17 +1,13 @@
 import React from "react";
 
-
-
-const normal={
-  fontWeight:"normal",
-}
+const normal = {
+  fontWeight: "normal"
+};
 //Somethind different
 class TableElement extends React.Component {
   handleImageClick = event => {
     this.props.handleImageClick(event);
   };
-
-
 
   render() {
     return (

@@ -3,18 +3,15 @@ import PropTypes, { element } from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import TableElement from "./tableElement";
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import OptionButton from './optionSize'
-
-import Button from '@material-ui/core/Button';
-
-
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import OptionButton from "./optionSize";
+import Button from "@material-ui/core/Button";
 
 const botonBackground = {
-  background:"-webkit-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%)"
-}
-
-
+  background:
+    "-webkit-linear-gradient(left, rgba(179,220,237,1) 0%, rgba(41,184,229,1) 50%, rgba(188,224,238,1) 100%)"
+};
+//New element
 const styles = theme => ({
   paper: {
     position: "absolute",
@@ -38,16 +35,41 @@ function getModalStyle() {
   };
 }
 
-
 class SimpleModal extends React.Component {
+  state = {
+    sizeClothe: ""
+  };
+
   handleClose = event => {
     this.handleClose(event);
   };
 
+  handleButton = size => {
+    this.setState({ sizeClothe: size });
+  };
 
-  handleButton =()=>{
-    //Aqui se llama el radio buton
-  }
+  handleAddCar = () => {
+    var information = findById(this.props.text);
+    var jsonVar = [
+      {
+        id: information.id,
+        name: information.name,
+        precio: information.precio,
+        size: this.state.sizeClothe
+      }
+    ];
+
+    if (!localStorage.carrito) {
+      localStorage.setItem("carrito", JSON.stringify(jsonVar));
+    } else {
+      var dataCar = JSON.parse(localStorage.carrito);
+      dataCar.push(jsonVar);
+      console.log(dataCar);
+      localStorage.setItem("carrito", JSON.stringify(dataCar));
+    }
+    this.props.cambio();
+    alert("Se agregó correctamente");
+  };
 
   render() {
     const { classes } = this.props;
@@ -68,11 +90,21 @@ class SimpleModal extends React.Component {
                 src={element.source}
                 id={element.id}
               />
-
-              <OptionButton handleChange = {this.handleButton} talla = {element.talla}></OptionButton>
-              <Button variant="contained" color="primary" className={classes.button} style={botonBackground} >
-                <p style={{marginRight:"20px"}}>Comprar</p>     
-                <AddShoppingCartIcon className={classes.rightIcon}>send</AddShoppingCartIcon>
+              <OptionButton
+                handleChange={this.handleButton}
+                talla={element.talla}
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                style={botonBackground}
+                onClick={this.handleAddCar}
+              >
+                <p style={{ marginRight: "20px" }}>Comprar</p>
+                <AddShoppingCartIcon className={classes.rightIcon}>
+                  send
+                </AddShoppingCartIcon>
               </Button>
             </center>
             <SimpleModalWrapped />
@@ -86,11 +118,10 @@ class SimpleModal extends React.Component {
 function findById(id) {
   var data = JSON.parse(localStorage.getItem("arrayElement"));
   if (!id) {
-    const [first] = data
-    return first
+    const [first] = data;
+    return first;
   }
-  return data.find(product => product.id == id)
-
+  return data.find(product => product.id == id);
 }
 
 SimpleModal.propTypes = {
