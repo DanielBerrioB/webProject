@@ -38,8 +38,4 @@ class RadioButtons extends React.Component {
     );
   }
 }
-RadioButtons.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
 export default RadioButtons;
