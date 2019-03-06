@@ -14,6 +14,8 @@ import promocion from "../images/promocion.png";
 import nuevo from "../images/nuevo.png";
 import Data from "../auxData";
 import SimpleMenu from "./menuShopCart";
+import Comentarios from "../images/comentarios.png";
+import ModalComment from "./modalComment";
 
 //Here you can add some styles for the elements
 const styles1 = {
@@ -30,7 +32,7 @@ const styles1 = {
 };
 
 const styles2 = {
-  marginLeft: "14%"
+  marginLeft: "3%"
 };
 
 const styles3 = {
@@ -59,8 +61,19 @@ function categoryArray() {
 
 class ButtonAppBar extends React.Component {
   state = {
+    openComment: false,
     text: ""
   };
+
+  handleClickComment = event => {
+    this.setState({openComment: true});
+    //this.props.handleClickComment(event);
+  };
+
+  closeComment = event => {
+    this.setState({openComment: false});
+  };
+
 
   handleChange = event => {
     this.setState({ text: event.target.value });
@@ -92,9 +105,19 @@ class ButtonAppBar extends React.Component {
               <img src={promocion} alt="" />
             </IconButton>
 
+            <IconButton
+              aria-haspopup="true"
+              onClick={this.handleClickComment}
+            >
+              <img src={Comentarios} alt="" />
+            </IconButton>
+
             <img style={styles2} src={logo} alt="" />
 
-            <div style={{ marginLeft: "20%" }} />
+            <div style={{ marginLeft: "5%" }} />
+
+
+
             <FormControl className={this.props.margin}>
               <Input
                 id="input-with-icon-adornment"
@@ -107,6 +130,11 @@ class ButtonAppBar extends React.Component {
             <SimpleMenu />
           </Toolbar>
         </AppBar>
+        <ModalComment
+          allowOpen={this.state.openComment}
+          cambio={this.closeComment}
+        >
+        </ModalComment>
         <br />
       </div>
     );

@@ -6,34 +6,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Grid from "@material-ui/core/Grid";
 
-if (localStorage.carrito) {
-  var data = JSON.parse(localStorage.getItem("carrito"));
-  data.forEach(i => {
-    console.log("Mal " + i.name);
-  });
-}
-
-/*
-function toArray() {
-  var array = [];
-  try {
-    console.log("Tamaño " + data.length);
-    for (let i = 1; i < data.length; i++) {
-      data[i].forEach(element => {
-        array.push(element);
-        console.log("Sale" + element);
-      });
-    }
-    array.push(data[0]);
-    console.log("Primer dato " + data[0]);
-    return array;
-  } catch (error) {
-    console.log(error);
-    array.push({ id: 0, name: "", precio: 0, size: 0 });
-    return array;
-  }
-}
-*/
+var data;
 
 class SimpleMenu extends React.Component {
   state = {
@@ -42,23 +15,24 @@ class SimpleMenu extends React.Component {
     estaActivado: false
   };
 
-  //Cambiar
   handleClick = event => {
     if (localStorage.carrito) {
+      data = JSON.parse(localStorage.getItem("carrito"));
       this.setState({ arrayElement: data });
-      console.log(data.length + " Tamano ");
       if (data.length > 0) this.setState({ anchorEl: event.currentTarget });
     }
   };
   //Cambiar
-  handleClose = event => {
+  handleClose = (event) => {
     this.setState({ anchorEl: null });
     if (localStorage.carrito) {
+      data = JSON.parse(localStorage.getItem("carrito"));
+      var seElimino = toDelete(event.target.id, data);
       localStorage.setItem(
         "carrito",
-        JSON.stringify(toDelete(event.target.value))
+        JSON.stringify(seElimino)
       );
-      data = localStorage.getItem("carrito");
+      data = JSON.parse(localStorage.getItem("carrito"));
       this.setState({ arrayElement: data });
       if (data.length === 0) this.setState({ estaActivado: false });
     }
@@ -75,6 +49,7 @@ class SimpleMenu extends React.Component {
   render() {
     const { anchorEl } = this.state;
     var elements = this.state.arrayElement;
+    if(data) elements = data;
     return (
       <div>
         <IconButton
@@ -93,7 +68,7 @@ class SimpleMenu extends React.Component {
         >
           {elements.map(element => (
             <Grid item xs={8} style={{ width: "100%" }}>
-              <MenuItem onClick={this.handleClose} style={{ width: "99%" }}>
+              <MenuItem onClick={this.handleClose} style={{ width: "99%" }} id={element.id}>
                 <DeleteIcon style={{ float: "right" }} />
                 {element.name}
               </MenuItem>
@@ -105,12 +80,13 @@ class SimpleMenu extends React.Component {
   }
 }
 
-function toDelete(id) {
+function toDelete(id, arrayData) {
   var toReturn = [];
-  if (data.length === 1) return toReturn;
-  for (let i = 0; i < data.length; i++) {
-    if (id !== data.id) toReturn.push(data);
+  if (arrayData.length === 1) return toReturn;
+  for (let i = 0; i < arrayData.length; i++) {
+    if (id != arrayData[i].id) toReturn.push(arrayData[i]);
   }
+  console.log(toReturn);
   return toReturn;
 }
 

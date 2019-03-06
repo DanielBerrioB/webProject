@@ -24,7 +24,7 @@ class ImageSet extends React.Component {
   state = {
     arrayElement: values,
     openModal: false,
-    valueKey: ""
+    valueKey: "",
   };
 
   onAlert = (event, array) => {
