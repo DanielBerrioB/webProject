@@ -66,14 +66,13 @@ class ButtonAppBar extends React.Component {
   };
 
   handleClickComment = event => {
-    this.setState({openComment: true});
+    this.setState({ openComment: true });
     //this.props.handleClickComment(event);
   };
 
   closeComment = event => {
-    this.setState({openComment: false});
+    this.setState({ openComment: false });
   };
-
 
   handleChange = event => {
     this.setState({ text: event.target.value });
@@ -86,6 +85,10 @@ class ButtonAppBar extends React.Component {
 
   putting = (event, text) => {
     this.props.putting(event, text);
+  };
+
+  handleMenuGestion = (event, text) => {
+    this.props.handleMenuGestion(text);
   };
 
   render() {
@@ -105,18 +108,13 @@ class ButtonAppBar extends React.Component {
               <img src={promocion} alt="" />
             </IconButton>
 
-            <IconButton
-              aria-haspopup="true"
-              onClick={this.handleClickComment}
-            >
+            <IconButton aria-haspopup="true" onClick={this.handleClickComment}>
               <img src={Comentarios} alt="" />
             </IconButton>
 
             <img style={styles2} src={logo} alt="" />
 
             <div style={{ marginLeft: "5%" }} />
-
-
 
             <FormControl className={this.props.margin}>
               <Input
@@ -128,13 +126,21 @@ class ButtonAppBar extends React.Component {
               />
             </FormControl>
             <SimpleMenu />
+            <LongMenu
+              array={[
+                "Agregar producto",
+                "Eliminar producto",
+                "Editar producto"
+              ]}
+              name={"Gestionar producto"}
+              handleClickOption={this.handleMenuGestion}
+            />
           </Toolbar>
         </AppBar>
         <ModalComment
           allowOpen={this.state.openComment}
           cambio={this.closeComment}
-        >
-        </ModalComment>
+        />
         <br />
       </div>
     );

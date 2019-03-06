@@ -3,6 +3,8 @@ import TableElement from "./tableElement";
 import ButtonAppBar from "./searcher";
 import ModalWindow from "./modalWindow";
 import Data from "../auxData";
+import ModalGestion from "./modalGestion";
+import TextField from "@material-ui/core/TextField";
 
 const simpleStyle = {
   width: "100%",
@@ -25,6 +27,9 @@ class ImageSet extends React.Component {
     arrayElement: values,
     openModal: false,
     valueKey: "",
+    openModalGestion: false,
+    titleModalGestion: "",
+    body: <div />
   };
 
   onAlert = (event, array) => {
@@ -48,6 +53,164 @@ class ImageSet extends React.Component {
     this.setState({ openModal: false });
   };
 
+  //Aqui se agrega el elemento que se quiere mostrar
+  handleModalGestion = text => {
+    if (text.includes("Agregar producto")) {
+      this.setState({
+        body: (
+          <div>
+            <h1>Agrega un producto</h1>
+            <TextField
+              id="txtId"
+              label="Id"
+              //value={this.state.name}
+              //onChange={this.handleChange("name")}
+              margin="normal"
+            />
+            <br />
+            <TextField
+              id="txtName"
+              label="Nombre"
+              //value={this.state.name}
+              //onChange={this.handleChange("name")}
+              margin="normal"
+            />
+            <br />
+            <TextField
+              id="txtUrl"
+              label="URL"
+              //value={this.state.name}
+              //onChange={this.handleChange("name")}
+              margin="normal"
+            />
+            <br />
+            <TextField
+              id="txtPrecio"
+              label="Precio"
+              //value={this.state.name}
+              //onChange={this.handleChange("name")}
+              margin="normal"
+            />
+            <br />
+            <TextField
+              id="txtCategoria"
+              label="Categoria"
+              //value={this.state.name}
+              //onChange={this.handleChange("name")}
+              margin="normal"
+            />
+            <br />
+            <TextField
+              id="txtPromocion"
+              label="¿Esta en promoción?"
+              //value={this.state.name}
+              //onChange={this.handleChange("name")}
+              margin="normal"
+            />
+            <br />
+            <TextField
+              id="txtTalla"
+              label="Tallas (separadas por,)"
+              //value={this.state.name}
+              //onChange={this.handleChange("name")}
+              margin="normal"
+            />
+            <br />
+          </div>
+        )
+      });
+    } else {
+      if (text.includes("Eliminar producto")) {
+        this.setState({
+          body: (
+            <div>
+              <h1>Eliminar producto</h1>
+              <TextField
+                id="txtEliminarId"
+                label="Ingrese el Id de la imagen"
+                //value={this.state.name}
+                //onChange={this.handleChange("name")}
+                margin="normal"
+              />
+              <br />
+            </div>
+          )
+        });
+      } else {
+        this.setState({
+          body: (
+            <div>
+              <h1>Editar un producto</h1>
+              <TextField
+                id="txtId"
+                label="Id imagen a editar"
+                //value={this.state.name}
+                //onChange={this.handleChange("name")}
+                margin="normal"
+              />
+              <br />
+              <TextField
+                id="txtName"
+                label="Nombre"
+                //value={this.state.name}
+                //onChange={this.handleChange("name")}
+                margin="normal"
+              />
+              <br />
+              <TextField
+                id="txtUrl"
+                label="URL"
+                //value={this.state.name}
+                //onChange={this.handleChange("name")}
+                margin="normal"
+              />
+              <br />
+              <TextField
+                id="txtPrecio"
+                label="Precio"
+                //value={this.state.name}
+                //onChange={this.handleChange("name")}
+                margin="normal"
+              />
+              <br />
+              <TextField
+                id="txtCategoria"
+                label="Categoria"
+                //value={this.state.name}
+                //onChange={this.handleChange("name")}
+                margin="normal"
+              />
+              <br />
+              <TextField
+                id="txtPromocion"
+                label="¿Esta en promoción?"
+                //value={this.state.name}
+                //onChange={this.handleChange("name")}
+                margin="normal"
+              />
+              <br />
+              <TextField
+                id="txtTalla"
+                label="Tallas (separadas por,)"
+                //value={this.state.name}
+                //onChange={this.handleChange("name")}
+                margin="normal"
+              />
+              <br />
+            </div>
+          )
+        });
+      }
+    }
+    this.setState({ titleModalGestion: text });
+    this.setState({ openModalGestion: true });
+  };
+
+  closeHandleModalGestion = () => {
+    this.setState({ titleModalGestion: "" });
+    this.setState({ openModalGestion: false });
+  };
+
   render() {
     return (
       <div>
@@ -55,6 +218,7 @@ class ImageSet extends React.Component {
           handleChange={this.onAlert}
           putting={this.show}
           handleClick={this.promotion}
+          handleMenuGestion={this.handleModalGestion}
         />
         <center>
           <table style={simpleStyle} cellSpacing="20px" key="table1">
@@ -66,6 +230,7 @@ class ImageSet extends React.Component {
                     precio={element.precio}
                     src={element.source}
                     style={imagenStyle}
+                    identify={element.id}
                     id={element.id}
                     handleImageClick={this.imageClick.bind(this)}
                   />
@@ -77,6 +242,12 @@ class ImageSet extends React.Component {
             allowOpen={this.state.openModal}
             cambio={this.imageClickClose}
             text={this.state.valueKey}
+          />
+          <ModalGestion
+            allowOpen={this.state.openModalGestion}
+            actionName={this.state.titleModalGestion}
+            cambio={this.closeHandleModalGestion}
+            bodyElement={this.state.body}
           />
         </center>
       </div>

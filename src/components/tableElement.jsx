@@ -21,6 +21,7 @@ class TableElement extends React.Component {
           alt=""
           onClick={this.handleImageClick.bind(this)}
         />
+        <p style={normal}>{this.props.identify}</p>
         <p style={normal}>{this.props.name}</p>
         <p style={normal}>Precio: ${this.props.precio}</p>
       </th>
