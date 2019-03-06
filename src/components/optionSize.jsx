@@ -25,6 +25,7 @@ class RadioButtons extends React.Component {
             <Radio
               checked={this.state.selectedValue === size}
               onChange={this.handleChange}
+              color="default"
               value={size}
               name={size}
               aria-label="A"
@@ -37,5 +38,8 @@ class RadioButtons extends React.Component {
     );
   }
 }
+RadioButtons.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default RadioButtons;
