@@ -48,11 +48,9 @@ class SimpleModal extends React.Component {
   };
 
   handleAddCar = () => {
-      alert(this.props.text)
+    if (this.state.sizeClothe != "") {
       var information = findById(this.props.text);
-      if (information != "") {
       var jsonVar1 = [
-
         {
           id: information.id,
           name: information.name,
@@ -74,9 +72,9 @@ class SimpleModal extends React.Component {
         localStorage.setItem("carrito", JSON.stringify(dataCar));
       }
       this.props.cambio();
+      this.setState({sizeClothe: ""})
     }
   };
-
 
   render() {
     const { classes } = this.props;
