@@ -98,7 +98,7 @@ class SimpleModal extends React.Component {
               />
               <Button
                 variant="contained"
-                color="primary"
+                color="black"
                 className={classes.button}
                 style={botonBackground}
                 onClick={this.handleAddCar}
