@@ -10,11 +10,6 @@ const botonBackground = {
   marginLeft: "10px"
 };
 
-
-
-
-
-//New element
 const styles = theme => ({
   paper: {
     position: "absolute",

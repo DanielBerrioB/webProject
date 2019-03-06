@@ -6,12 +6,13 @@ import FormLabel from "@material-ui/core/FormLabel";
 
 class RadioButtons extends React.Component {
   state = {
-    selectedValue: "XS"
+    selectedValue: "XS", 
+    isSelected: false
   };
 
   handleChange = event => {
     this.setState({ selectedValue: event.target.value });
-    this.props.handleChange(event.target.value);
+    this.props.handleChange(event.target.value, this.state.selectedValue);
   };
 
   render() {
