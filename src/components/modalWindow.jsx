@@ -50,7 +50,7 @@ class SimpleModal extends React.Component {
 
   handleAddCar = () => {
     var information = findById(this.props.text);
-    var jsonVar = [
+    var jsonVar1 = [
       {
         id: information.id,
         name: information.name,
@@ -60,15 +60,18 @@ class SimpleModal extends React.Component {
     ];
 
     if (!localStorage.carrito) {
-      localStorage.setItem("carrito", JSON.stringify(jsonVar));
+      localStorage.setItem("carrito", JSON.stringify(jsonVar1));
     } else {
-      var dataCar = JSON.parse(localStorage.carrito);
-      dataCar.push(jsonVar);
-      console.log(dataCar);
+      var dataCar = JSON.parse(localStorage.getItem("carrito"));
+      dataCar.push({
+        id: information.id,
+        name: information.name,
+        precio: information.precio,
+        size: this.state.sizeClothe
+      });
       localStorage.setItem("carrito", JSON.stringify(dataCar));
     }
     this.props.cambio();
-    alert("Se agregó correctamente");
   };
 
   render() {
