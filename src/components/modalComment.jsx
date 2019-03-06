@@ -45,9 +45,15 @@ class CommendModal extends React.Component {
   };
 
   createComment = () => {
-    this.setState({text: document.getElementById("txt1").value});
-    var last = localStorage.getItem("comentario") +"\n";
-    localStorage.setItem("comentario", last + document.getElementById("txt1").value);
+    this.setState({ text: document.getElementById("txt1").value });
+    if (localStorage.comentario) {
+      var last = JSON.parse(localStorage.getItem("comentario"));
+      last.push({ comment: document.getElementById("txt1").value });
+      localStorage.setItem("comentario", JSON.stringify(last));
+    } else {
+      var json = [{ comment: document.getElementById("txt1").value }]
+      localStorage.setItem("comentario", JSON.stringify(json));
+    }
   }
 
   handleClose = event => {
@@ -72,11 +78,13 @@ class CommendModal extends React.Component {
         >
 
           <div style={getModalStyle()} className={classes.paper}>
-            <center>
-              <p>Deja tu comentario!</p>
-              <input id="txt1" style={{ width: "300px", height: "300px", textAlign: "start" }} type="text" ></input>
 
-              <Button onClick={this.createComment} style={botonBackground}>Enviar</Button>
+            <h5>Deja tu comentario!</h5>
+            <center>
+              <div>
+                <textarea id="txt1" style={{ width: "300px", height: "100px", textAlign: "start", fontStyle: "arial" }}></textarea>
+                <Button onClick={this.createComment} style={botonBackground}>Enviar</Button>
+              </div>
             </center>
 
             <commendModalWrapped />

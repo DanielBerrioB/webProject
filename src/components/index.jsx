@@ -1,7 +1,6 @@
 import React from "react";
 import ImageSet from "./imageSet";
 import InfoBar from "./infoBar";
-import Moda from "./modalWindow";
 import Data from "../auxData";
 
 class Main extends React.Component {

@@ -8,7 +8,7 @@ import OptionButton from "./optionSize";
 import Button from "@material-ui/core/Button";
 
 const botonBackground = {
-  background:"#FF956C"
+  background: "#FF956C"
 };
 //New element
 const styles = theme => ({
@@ -48,30 +48,35 @@ class SimpleModal extends React.Component {
   };
 
   handleAddCar = () => {
-    var information = findById(this.props.text);
-    var jsonVar1 = [
-      {
-        id: information.id,
-        name: information.name,
-        precio: information.precio,
-        size: this.state.sizeClothe
-      }
-    ];
+      alert(this.props.text)
+      var information = findById(this.props.text);
+      if (information != "") {
+      var jsonVar1 = [
 
-    if (!localStorage.carrito) {
-      localStorage.setItem("carrito", JSON.stringify(jsonVar1));
-    } else {
-      var dataCar = JSON.parse(localStorage.getItem("carrito"));
-      dataCar.push({
-        id: information.id,
-        name: information.name,
-        precio: information.precio,
-        size: this.state.sizeClothe
-      });
-      localStorage.setItem("carrito", JSON.stringify(dataCar));
+        {
+          id: information.id,
+          name: information.name,
+          precio: information.precio,
+          size: this.state.sizeClothe
+        }
+      ];
+
+      if (!localStorage.carrito) {
+        localStorage.setItem("carrito", JSON.stringify(jsonVar1));
+      } else {
+        var dataCar = JSON.parse(localStorage.getItem("carrito"));
+        dataCar.push({
+          id: information.id,
+          name: information.name,
+          precio: information.precio,
+          size: this.state.sizeClothe
+        });
+        localStorage.setItem("carrito", JSON.stringify(dataCar));
+      }
+      this.props.cambio();
     }
-    this.props.cambio();
   };
+
 
   render() {
     const { classes } = this.props;
