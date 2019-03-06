@@ -3,11 +3,12 @@ import PropTypes, { element } from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from '@material-ui/core/Button';
+import ModalWindow from './listComment'
 
 const botonBackground = {
   background: "#FF956C",
   borderRadios: "20px",
-  marginLeft: "10px"
+  marginTop: "10px"
 };
 
 
@@ -83,10 +84,11 @@ class CommendModal extends React.Component {
             <center>
               <div>
                 <textarea id="txt1" style={{ width: "300px", height: "100px", textAlign: "start", fontStyle: "arial" }}></textarea>
-                <Button onClick={this.createComment} style={botonBackground}>Enviar</Button>
+                
               </div>
+              <Button onClick={this.createComment} style={botonBackground}>Enviar</Button>
             </center>
-
+            <ModalWindow></ModalWindow>
             <commendModalWrapped />
           </div>
         </Modal>
