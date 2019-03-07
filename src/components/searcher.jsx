@@ -15,7 +15,7 @@ import Data from "../auxData";
 import SimpleMenu from "./menuShopCart";
 import Comentarios from "../images/comentarios.png";
 import ModalComment from "./modalComment";
-import Gestionar from "../images/GestionarProducto.jpeg";
+import Gestionar from "../images/GestionarProducto.png";
 
 //Here you can add some styles for the elements
 const styles1 = {
@@ -122,7 +122,7 @@ class ButtonAppBar extends React.Component {
 
             <img style={styles2} src={logo} alt="" />
 
-            <div style={{ marginLeft: "5%" }} />
+            <div style={{ marginLeft: "0%" }} />
 
             <FormControl className={this.props.margin}>
               <Input
