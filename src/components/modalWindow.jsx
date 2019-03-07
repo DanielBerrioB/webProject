@@ -8,7 +8,7 @@ import OptionButton from "./optionSize";
 import Button from "@material-ui/core/Button";
 
 const botonBackground = {
-  background: "#FF956C"
+  background: "#FFAB88"
 };
 //New element
 const styles = theme => ({
