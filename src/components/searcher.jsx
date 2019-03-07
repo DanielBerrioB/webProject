@@ -42,7 +42,7 @@ const styles3 = {
 };
 
 const stylesToolbar = {
-  background: "#ED8C72",
+  background: "#FF7F50",
   height: "50px"
 };
 
