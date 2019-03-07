@@ -8,7 +8,6 @@ import Input from "@material-ui/core/Input";
 import IconButton from "@material-ui/core/IconButton";
 import FormControl from "@material-ui/core/FormControl";
 import SearchIcon from "@material-ui/icons/Search";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import logo from "../images/logo.png";
 import promocion from "../images/promocion.png";
 import nuevo from "../images/nuevo.png";
@@ -16,6 +15,7 @@ import Data from "../auxData";
 import SimpleMenu from "./menuShopCart";
 import Comentarios from "../images/comentarios.png";
 import ModalComment from "./modalComment";
+import Gestionar from "../images/GestionarProducto.jpeg";
 
 //Here you can add some styles for the elements
 const styles1 = {
@@ -51,9 +51,10 @@ if (!localStorage.arrayElement)
 
 var data = JSON.parse(localStorage.getItem("arrayElement"));
 
-function categoryArray() {
+function categoryArray(array) {
+  array = JSON.parse(localStorage.getItem("arrayElement"));
   var arrayToReturn = [];
-  data.forEach(i => {
+  array.forEach(i => {
     if (!arrayToReturn.includes(i.categoria)) arrayToReturn.push(i.categoria);
   });
   return arrayToReturn;
@@ -62,7 +63,8 @@ function categoryArray() {
 class ButtonAppBar extends React.Component {
   state = {
     openComment: false,
-    text: ""
+    text: "",
+    arrayCategory: categoryArray(data)
   };
 
   handleClickComment = event => {
@@ -74,6 +76,10 @@ class ButtonAppBar extends React.Component {
     this.setState({ openComment: false });
   };
 
+  updateElementFromParent() {
+    this.setState({ arrayCategory: categoryArray(data) });
+  }
+
   handleChange = event => {
     this.setState({ text: event.target.value });
     this.props.handleChange(event, verifyContent(this.state.text));
@@ -84,6 +90,8 @@ class ButtonAppBar extends React.Component {
   };
 
   putting = (event, text) => {
+    data = JSON.parse(localStorage.getItem("arrayElement"));
+    this.setState({ arrayCategory: categoryArray(data) });
     this.props.putting(event, text);
   };
 
@@ -97,7 +105,7 @@ class ButtonAppBar extends React.Component {
         <AppBar position="fixed">
           <Toolbar style={stylesToolbar}>
             <LongMenu
-              array={categoryArray()}
+              array={this.state.arrayCategory}
               name={<img src={nuevo} alt="" />}
               handleClickOption={this.putting}
             />
@@ -132,7 +140,7 @@ class ButtonAppBar extends React.Component {
                 "Eliminar producto",
                 "Editar producto"
               ]}
-              name={"Gestionar producto"}
+              name={<img src={Gestionar} alt="" />}
               handleClickOption={this.handleMenuGestion}
             />
           </Toolbar>

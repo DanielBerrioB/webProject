@@ -23,13 +23,19 @@ var values = toConvert(data);
 
 //This class represents
 class ImageSet extends React.Component {
+  constructor(props) {
+    super(props);
+    this.buttonAppBar = React.createRef();
+  }
+
   state = {
     arrayElement: values,
     openModal: false,
     valueKey: "",
     openModalGestion: false,
     titleModalGestion: "",
-    body: <div />
+    body: <div />,
+    arrayToGive: []
   };
 
   onAlert = (event, array) => {
@@ -60,59 +66,25 @@ class ImageSet extends React.Component {
         body: (
           <div>
             <h1>Agrega un producto</h1>
-            <TextField
-              id="txtId"
-              label="Id"
-              //value={this.state.name}
-              //onChange={this.handleChange("name")}
-              margin="normal"
-            />
+            <TextField id="txtId" label="Id" margin="normal" />
             <br />
-            <TextField
-              id="txtName"
-              label="Nombre"
-              //value={this.state.name}
-              //onChange={this.handleChange("name")}
-              margin="normal"
-            />
+            <TextField id="txtName" label="Nombre" margin="normal" />
             <br />
-            <TextField
-              id="txtUrl"
-              label="URL"
-              //value={this.state.name}
-              //onChange={this.handleChange("name")}
-              margin="normal"
-            />
+            <TextField id="txtUrl" label="URL" margin="normal" />
             <br />
-            <TextField
-              id="txtPrecio"
-              label="Precio"
-              //value={this.state.name}
-              //onChange={this.handleChange("name")}
-              margin="normal"
-            />
+            <TextField id="txtPrecio" label="Precio" margin="normal" />
             <br />
-            <TextField
-              id="txtCategoria"
-              label="Categoria"
-              //value={this.state.name}
-              //onChange={this.handleChange("name")}
-              margin="normal"
-            />
+            <TextField id="txtCategoria" label="Categoria" margin="normal" />
             <br />
             <TextField
               id="txtPromocion"
               label="¿Esta en promoción?"
-              //value={this.state.name}
-              //onChange={this.handleChange("name")}
               margin="normal"
             />
             <br />
             <TextField
               id="txtTalla"
               label="Tallas (separadas por,)"
-              //value={this.state.name}
-              //onChange={this.handleChange("name")}
               margin="normal"
             />
             <br />
@@ -128,8 +100,6 @@ class ImageSet extends React.Component {
               <TextField
                 id="txtEliminarId"
                 label="Ingrese el Id de la imagen"
-                //value={this.state.name}
-                //onChange={this.handleChange("name")}
                 margin="normal"
               />
               <br />
@@ -142,58 +112,32 @@ class ImageSet extends React.Component {
             <div>
               <h1>Editar un producto</h1>
               <TextField
-                id="txtId"
+                id="txtIdEditar"
                 label="Id imagen a editar"
-                //value={this.state.name}
-                //onChange={this.handleChange("name")}
                 margin="normal"
               />
               <br />
-              <TextField
-                id="txtName"
-                label="Nombre"
-                //value={this.state.name}
-                //onChange={this.handleChange("name")}
-                margin="normal"
-              />
+              <TextField id="txtNameEditar" label="Nombre" margin="normal" />
+              <br />
+              <TextField id="txtUrlEditar" label="URL" margin="normal" />
+              <br />
+              <TextField id="txtPrecioEditar" label="Precio" margin="normal" />
               <br />
               <TextField
-                id="txtUrl"
-                label="URL"
-                //value={this.state.name}
-                //onChange={this.handleChange("name")}
-                margin="normal"
-              />
-              <br />
-              <TextField
-                id="txtPrecio"
-                label="Precio"
-                //value={this.state.name}
-                //onChange={this.handleChange("name")}
-                margin="normal"
-              />
-              <br />
-              <TextField
-                id="txtCategoria"
+                id="txtCategoriaEditar"
                 label="Categoria"
-                //value={this.state.name}
-                //onChange={this.handleChange("name")}
                 margin="normal"
               />
               <br />
               <TextField
-                id="txtPromocion"
-                label="¿Esta en promoción?"
-                //value={this.state.name}
-                //onChange={this.handleChange("name")}
+                id="txtPromocionEditar"
+                label="¿Promoción?(S o N)"
                 margin="normal"
               />
               <br />
               <TextField
-                id="txtTalla"
+                id="txtTallaEditar"
                 label="Tallas (separadas por,)"
-                //value={this.state.name}
-                //onChange={this.handleChange("name")}
                 margin="normal"
               />
               <br />
@@ -208,6 +152,14 @@ class ImageSet extends React.Component {
 
   closeHandleModalGestion = () => {
     this.setState({ titleModalGestion: "" });
+    this.setState({ openModalGestion: false });
+  };
+
+  //Aqui se hace hotReload con los nhevos elementos
+  handleReload = () => {
+    data = JSON.parse(window.localStorage.getItem("arrayElement"));
+    var values = toConvert(data);
+    this.setState({ arrayElement: values });
     this.setState({ openModalGestion: false });
   };
 
@@ -248,6 +200,7 @@ class ImageSet extends React.Component {
             actionName={this.state.titleModalGestion}
             cambio={this.closeHandleModalGestion}
             bodyElement={this.state.body}
+            handleActionButton={this.handleReload}
           />
         </center>
       </div>

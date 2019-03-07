@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes, { element } from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import Button from '@material-ui/core/Button';
-import ModalWindow from './listComment'
+import Button from "@material-ui/core/Button";
+import ModalWindow from "./listComment";
 
 const botonBackground = {
   background: "#FF956C",
@@ -33,11 +33,19 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`
   };
 }
+var data = [];
+
+if (localStorage.getItem("comentario")) {
+  data = JSON.parse(localStorage.getItem("comentario"));
+} else {
+  data.push({ comment: "" });
+}
 
 class CommendModal extends React.Component {
   state = {
     sizeClothe: "",
-    text: ""
+    text: "",
+    arrayComment: data
   };
 
   createComment = () => {
@@ -47,10 +55,14 @@ class CommendModal extends React.Component {
       last.push({ comment: document.getElementById("txt1").value });
       localStorage.setItem("comentario", JSON.stringify(last));
     } else {
-      var json = [{ comment: document.getElementById("txt1").value }]
+      var json = [{ comment: document.getElementById("txt1").value }];
       localStorage.setItem("comentario", JSON.stringify(json));
     }
-  }
+    this.setState({
+      arrayComment: JSON.parse(localStorage.getItem("comentario"))
+    });
+    this.props.cambio();
+  };
 
   handleClose = event => {
     this.handleClose(event);
@@ -60,10 +72,8 @@ class CommendModal extends React.Component {
     this.setState({ sizeClothe: size });
   };
 
-
   render() {
     const { classes } = this.props;
-    //var element = findById(this.props.text);
     return (
       <div>
         <Modal
@@ -72,18 +82,25 @@ class CommendModal extends React.Component {
           open={this.props.allowOpen}
           onClose={() => this.props.cambio()}
         >
-
           <div style={getModalStyle()} className={classes.paper}>
-
             <h5>Deja tu comentario!</h5>
             <center>
               <div>
-                <textarea id="txt1" style={{ width: "300px", height: "100px", textAlign: "start", fontStyle: "arial" }}></textarea>
-                
+                <textarea
+                  id="txt1"
+                  style={{
+                    width: "300px",
+                    height: "100px",
+                    textAlign: "start",
+                    fontStyle: "arial"
+                  }}
+                />
               </div>
-              <Button onClick={this.createComment} style={botonBackground}>Enviar</Button>
+              <Button onClick={this.createComment} style={botonBackground}>
+                Enviar
+              </Button>
             </center>
-            <ModalWindow></ModalWindow>
+            <ModalWindow array={this.state.arrayComment} />
             <commendModalWrapped />
           </div>
         </Modal>

@@ -32,6 +32,73 @@ function getModalStyle() {
 }
 
 class ModalGestion extends React.Component {
+  handleActionButton = event => {
+    //Para eliminar
+    if (event.currentTarget.id == "Eliminar producto") {
+      if (findId(document.getElementById("txtEliminarId").value)) {
+        var newArray = deleteItem(
+          document.getElementById("txtEliminarId").value
+        );
+        localStorage.setItem("arrayElement", JSON.stringify(newArray));
+        document.getElementById("txtEliminarId").value = "";
+      } else {
+        alert("No se encontró el elemento");
+      }
+    } else {
+      //Para editar
+      if (event.currentTarget.id == "Editar producto") {
+        if (findId(document.getElementById("txtIdEditar").value)) {
+          var newArray2 = deleteItem(
+            document.getElementById("txtIdEditar").value
+          );
+          newArray2.push({
+            id: parseInt(document.getElementById("txtIdEditar").value),
+            name: document.getElementById("txtNameEditar").value,
+            source: document.getElementById("txtUrlEditar").value,
+            precio: parseInt(document.getElementById("txtPrecioEditar").value),
+            categoria: document.getElementById("txtCategoriaEditar").value,
+            promocion:
+              document.getElementById("txtPromocionEditar").value === "S"
+                ? true
+                : false,
+            talla: document
+              .getElementById("txtTallaEditar")
+              .value.trim()
+              .split(",")
+          });
+          localStorage.setItem("arrayElement", JSON.stringify(newArray2));
+        } else {
+          alert("No se encontró el elemento");
+        }
+      } else {
+        // Para agregar elemento
+        var str = document.getElementById("txtTalla").value.split(",");
+        var x =
+          document.getElementById("txtPromocion").value != "true"
+            ? false
+            : true;
+        var datosAgregar = {
+          id: document.getElementById("txtId").value,
+          name: document.getElementById("txtName").value,
+          source: document.getElementById("txtUrl").value,
+          precio: document.getElementById("txtPrecio").value,
+          categoria: document.getElementById("txtCategoria").value,
+          promocion: x,
+          talla: str
+        };
+        if (localStorage.arrayElement) {
+          var last = JSON.parse(localStorage.getItem("arrayElement"));
+          last.push(datosAgregar);
+          localStorage.setItem("arrayElement", JSON.stringify(last));
+        } else {
+          var json = datosAgregar;
+          localStorage.setItem("arrayElement", JSON.stringify(json));
+        }
+      }
+    }
+    this.props.handleActionButton();
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -50,6 +117,8 @@ class ModalGestion extends React.Component {
                 color="black"
                 className={classes.button}
                 style={botonBackground}
+                id={this.props.actionName}
+                onClick={this.handleActionButton}
               >
                 <p style={{ marginRight: "20px" }}>{this.props.actionName}</p>
               </Button>
@@ -60,6 +129,20 @@ class ModalGestion extends React.Component {
       </div>
     );
   }
+}
+
+function deleteItem(id) {
+  var data = JSON.parse(localStorage.getItem("arrayElement"));
+  var newArray = [];
+  data.forEach(i => {
+    if (i.id != id) newArray.push(i);
+  });
+  return newArray;
+}
+
+function findId(id) {
+  var data = JSON.parse(localStorage.getItem("arrayElement"));
+  return data.find(i => i.id == id);
 }
 
 ModalGestion.propTypes = {
