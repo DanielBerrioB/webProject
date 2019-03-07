@@ -4,7 +4,7 @@ const simpleStyle = {
   height: "70px",
   width: "100%",
   background:
-    "#F4EADE"
+    "#FF956C"
 };
 
 const letra = {

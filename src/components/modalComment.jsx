@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 import ModalWindow from "./listComment";
 
 const botonBackground = {
-  background: "#FF956C",
+  background: "#FFAB88",
   borderRadios: "20px",
   marginTop: "10px"
 };
