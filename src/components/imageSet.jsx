@@ -6,6 +6,7 @@ import Data from "../auxData";
 import ModalGestion from "./modalGestion";
 import TextField from "@material-ui/core/TextField";
 
+//Styles
 const simpleStyle = {
   width: "100%",
   marginTop: "50px"
@@ -15,26 +16,31 @@ const imagenStyle = {
   borderRadius: "50px"
 };
 
+//Data from local storage
 if (!localStorage.arrayElement)
   localStorage.setItem("arrayElement", JSON.stringify(Data));
-
 var data = JSON.parse(window.localStorage.getItem("arrayElement"));
 var values = toConvert(data);
 
-//This class represents
+/**
+ * This class represents the entire skeleton of the web. First of all, we put
+ * the app bar property with the given methods and parameters, then the set of images
+ * was putted in a set of rows each one with 4 images, finally the modal windows
+ * appears when they are called from its childs.
+ */
 class ImageSet extends React.Component {
   constructor(props) {
     super(props);
     this.buttonAppBar = React.createRef();
   }
-
+  //Create a set with some particualar values
   state = {
-    arrayElement: values,
+    arrayElement: values, //Here, the array element takes all the values from localStorage
     openModal: false,
     valueKey: "",
     openModalGestion: false,
     titleModalGestion: "",
-    body: <div />,
+    body: <div />, //(WILL BE DELETE)
     arrayToGive: []
   };
 
@@ -59,7 +65,7 @@ class ImageSet extends React.Component {
     this.setState({ openModal: false });
   };
 
-  //Aqui se agrega el elemento que se quiere mostrar
+  //Here you add the body's elements from modal class (WILL BE DELETE)
   handleModalGestion = text => {
     if (text.includes("Agregar producto")) {
       this.setState({
@@ -155,7 +161,7 @@ class ImageSet extends React.Component {
     this.setState({ openModalGestion: false });
   };
 
-  //Aqui se hace hotReload con los nhevos elementos
+  //Updating the values to reload the page with new changes
   handleReload = () => {
     data = JSON.parse(window.localStorage.getItem("arrayElement"));
     var values = toConvert(data);
@@ -208,6 +214,10 @@ class ImageSet extends React.Component {
   }
 }
 
+/**
+ * This method change a bunch of images into a set of rows with 4 images
+ * @param {Array from local storage with all images} arrayParse
+ */
 function toConvert(arrayParse) {
   var cont = 0;
   var values = [],
@@ -227,6 +237,9 @@ function toConvert(arrayParse) {
   return values;
 }
 
+/**
+ * This method returns the products which have a promotion
+ */
 function byPromotion() {
   var arrayToReturn = [];
   data.forEach(i => {
@@ -235,6 +248,10 @@ function byPromotion() {
   return toConvert(arrayToReturn);
 }
 
+/**
+ * It return the category with a given key
+ * @param {It's the given category key to find the category} text
+ */
 function fromCategory(text) {
   var arrayToReturn = [];
   data.forEach(i => {

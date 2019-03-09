@@ -8,6 +8,9 @@ import Grid from "@material-ui/core/Grid";
 
 var data;
 
+/**
+ * This class represents a simple menu with all the things that the user has choosen
+ */
 class SimpleMenu extends React.Component {
   state = {
     anchorEl: null,
@@ -15,6 +18,7 @@ class SimpleMenu extends React.Component {
     estaActivado: false
   };
 
+  //Get all the elements from local storage and then it saves into data
   handleClick = event => {
     if (localStorage.carrito) {
       data = JSON.parse(localStorage.getItem("carrito"));
@@ -22,16 +26,14 @@ class SimpleMenu extends React.Component {
       if (data.length > 0) this.setState({ anchorEl: event.currentTarget });
     }
   };
-  //Cambiar
-  handleClose = (event) => {
+
+  //When the cart has been closed the anchorEl state changes and delete the elements with the given id
+  handleClose = event => {
     this.setState({ anchorEl: null });
     if (localStorage.carrito) {
       data = JSON.parse(localStorage.getItem("carrito"));
       var seElimino = toDelete(event.target.id, data);
-      localStorage.setItem(
-        "carrito",
-        JSON.stringify(seElimino)
-      );
+      localStorage.setItem("carrito", JSON.stringify(seElimino));
       data = JSON.parse(localStorage.getItem("carrito"));
       this.setState({ arrayElement: data });
       if (data.length === 0) this.setState({ estaActivado: false });
@@ -49,7 +51,7 @@ class SimpleMenu extends React.Component {
   render() {
     const { anchorEl } = this.state;
     var elements = this.state.arrayElement;
-    if(data) elements = data;
+    if (data) elements = data;
     return (
       <div>
         <IconButton
@@ -68,7 +70,11 @@ class SimpleMenu extends React.Component {
         >
           {elements.map(element => (
             <Grid item xs={8} style={{ width: "100%" }}>
-              <MenuItem onClick={this.handleClose} style={{ width: "99%" }} id={element.id}>
+              <MenuItem
+                onClick={this.handleClose}
+                style={{ width: "99%" }}
+                id={element.id}
+              >
                 <DeleteIcon style={{ float: "right" }} />
                 {element.name}
               </MenuItem>
@@ -80,13 +86,17 @@ class SimpleMenu extends React.Component {
   }
 }
 
+/**
+ * This methos allows to delete a tuple given an Id
+ * @param {Represents the value to find} id
+ * @param {It's the array that contains all the information} arrayData
+ */
 function toDelete(id, arrayData) {
   var toReturn = [];
   if (arrayData.length === 1) return toReturn;
   for (let i = 0; i < arrayData.length; i++) {
     if (id != arrayData[i].id) toReturn.push(arrayData[i]);
   }
-  console.log(toReturn);
   return toReturn;
 }
 

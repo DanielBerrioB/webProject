@@ -51,6 +51,10 @@ if (!localStorage.arrayElement)
 
 var data = JSON.parse(localStorage.getItem("arrayElement"));
 
+/**
+ * Allows to return the categories from the local storage
+ * @param {The array that contains all the information from the localStorage} array
+ */
 function categoryArray(array) {
   array = JSON.parse(localStorage.getItem("arrayElement"));
   var arrayToReturn = [];
@@ -69,7 +73,6 @@ class ButtonAppBar extends React.Component {
 
   handleClickComment = event => {
     this.setState({ openComment: true });
-    //this.props.handleClickComment(event);
   };
 
   closeComment = event => {
@@ -155,6 +158,10 @@ class ButtonAppBar extends React.Component {
   }
 }
 
+/**
+ * Return all the data related to the text
+ * @param {Text given by the input} text
+ */
 function verifyContent(text) {
   var arrayElement = [];
   if (text !== "") {

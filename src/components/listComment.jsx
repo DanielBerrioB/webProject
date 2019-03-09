@@ -6,6 +6,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 
+//Styles
 const styles = theme => ({
   root: {
     width: "100%",
@@ -24,6 +25,7 @@ const styles = theme => ({
   }
 });
 
+//This represents the list with the comments
 class PinnedSubheaderList extends React.Component {
   render() {
     const { classes } = this.props;

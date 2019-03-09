@@ -4,10 +4,11 @@ import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 
+//CSS styles
 const botonBackground = {
   background: "#FF956C"
 };
-//New element
+
 const styles = theme => ({
   paper: {
     position: "absolute",
@@ -20,6 +21,9 @@ const styles = theme => ({
   }
 });
 
+/**
+ * This function allows to put the modal window in the center of the screen
+ */
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -31,9 +35,13 @@ function getModalStyle() {
   };
 }
 
+/**
+ * This class show the different interfaces for the admin that changes dinamilly depending
+ * of the parameter that the father provides
+ */
 class ModalGestion extends React.Component {
   handleActionButton = event => {
-    //Para eliminar
+    //Deleting
     if (event.currentTarget.id == "Eliminar producto") {
       if (findId(document.getElementById("txtEliminarId").value)) {
         var newArray = deleteItem(
@@ -45,7 +53,7 @@ class ModalGestion extends React.Component {
         alert("No se encontró el elemento");
       }
     } else {
-      //Para editar
+      //Editing
       if (event.currentTarget.id == "Editar producto") {
         if (findId(document.getElementById("txtIdEditar").value)) {
           var newArray2 = deleteItem(
@@ -71,7 +79,7 @@ class ModalGestion extends React.Component {
           alert("No se encontró el elemento");
         }
       } else {
-        // Para agregar elemento
+        // Adding
         var str = document.getElementById("txtTalla").value.split(",");
         var x =
           document.getElementById("txtPromocion").value != "true"
@@ -131,6 +139,10 @@ class ModalGestion extends React.Component {
   }
 }
 
+/**
+ * With the id we can delete the element from the localStorage
+ * @param {Given key for a particular element} id
+ */
 function deleteItem(id) {
   var data = JSON.parse(localStorage.getItem("arrayElement"));
   var newArray = [];
@@ -140,6 +152,10 @@ function deleteItem(id) {
   return newArray;
 }
 
+/**
+ * Find an element with the id
+ * @param {Given key for a particular element} id
+ */
 function findId(id) {
   var data = JSON.parse(localStorage.getItem("arrayElement"));
   return data.find(i => i.id == id);

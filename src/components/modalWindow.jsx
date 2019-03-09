@@ -7,10 +7,11 @@ import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import OptionButton from "./optionSize";
 import Button from "@material-ui/core/Button";
 
+//CSS styles
 const botonBackground = {
   background: "#FFAB88"
 };
-//New element
+
 const styles = theme => ({
   paper: {
     position: "absolute",
@@ -23,6 +24,9 @@ const styles = theme => ({
   }
 });
 
+/**
+ * This function allows to put the modal window in the center of the screen
+ */
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -34,6 +38,9 @@ function getModalStyle() {
   };
 }
 
+/**
+ * This class shows the image's descriptions when it has been tapped
+ */
 class SimpleModal extends React.Component {
   state = {
     sizeClothe: ""
@@ -47,6 +54,10 @@ class SimpleModal extends React.Component {
     this.setState({ sizeClothe: size });
   };
 
+  /**
+   * When the button has been clicked the information about the clothe will be added to the
+   * JSON at the local storage
+   */
   handleAddCar = () => {
     if (this.state.sizeClothe != "") {
       var information = findById(this.props.text);
@@ -71,8 +82,8 @@ class SimpleModal extends React.Component {
         });
         localStorage.setItem("carrito", JSON.stringify(dataCar));
       }
-      this.props.cambio();
-      this.setState({sizeClothe: ""})
+      this.props.cambio(); //It close the window
+      this.setState({ sizeClothe: "" });
     }
   };
 
@@ -120,6 +131,10 @@ class SimpleModal extends React.Component {
   }
 }
 
+/**
+ * Find an element with the id
+ * @param {Given key for a particular element} id
+ */
 function findById(id) {
   var data = JSON.parse(localStorage.getItem("arrayElement"));
   if (!id) {

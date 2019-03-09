@@ -5,6 +5,7 @@ import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import ModalWindow from "./listComment";
 
+//CSS styles
 const botonBackground = {
   background: "#FFAB88",
   borderRadios: "20px",
@@ -23,6 +24,9 @@ const styles = theme => ({
   }
 });
 
+/**
+ * This function allows to put the modal window in the center of the screen
+ */
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -35,12 +39,14 @@ function getModalStyle() {
 }
 var data = [];
 
+//Get all the datas from the local storage
 if (localStorage.getItem("comentario")) {
   data = JSON.parse(localStorage.getItem("comentario"));
 } else {
-  data.push({ comment: "" });
+  data.push({ comment: "" }); // if there is nothing at the local storage an empty comment will be added
 }
 
+//This class represents the modal window that shows all the comments and allows to add comments to the local Storage
 class CommendModal extends React.Component {
   state = {
     sizeClothe: "",
@@ -48,6 +54,9 @@ class CommendModal extends React.Component {
     arrayComment: data
   };
 
+  /**
+   * Create a comment and add it to the localStorage
+   */
   createComment = () => {
     this.setState({ text: document.getElementById("txt1").value });
     if (localStorage.comentario) {

@@ -4,12 +4,13 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 
+//This class represents the radio buttons that allow to select a size from the clothe
 class RadioButtons extends React.Component {
   state = {
-    selectedValue: "XS", 
+    selectedValue: "XS",
     isSelected: false
   };
-
+  //Catch the selectedValue from the size
   handleChange = event => {
     this.setState({ selectedValue: event.target.value });
     this.props.handleChange(event.target.value, this.state.selectedValue);
