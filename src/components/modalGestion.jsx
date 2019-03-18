@@ -3,6 +3,7 @@ import PropTypes, { element } from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
+import SnackBar from "./snackBar";
 
 //CSS styles
 const botonBackground = {
@@ -40,6 +41,11 @@ function getModalStyle() {
  * of the parameter that the father provides
  */
 class ModalGestion extends React.Component {
+  state = {
+    openSnack: false,
+    snackMessage: ""
+  };
+
   handleActionButton = event => {
     //Deleting
     if (event.currentTarget.id == "Eliminar producto") {
@@ -49,8 +55,11 @@ class ModalGestion extends React.Component {
         );
         localStorage.setItem("arrayElement", JSON.stringify(newArray));
         document.getElementById("txtEliminarId").value = "";
+        this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+        this.setState({ snackMessage: "Se eliminó correctamente" }); //The message to snackBar
       } else {
-        alert("No se encontró el elemento");
+        this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+        this.setState({ snackMessage: "No se encontró el elemento" }); //The message to snackBar
       }
     } else {
       //Editing
@@ -75,8 +84,11 @@ class ModalGestion extends React.Component {
               .split(",")
           });
           localStorage.setItem("arrayElement", JSON.stringify(newArray2));
+          this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+          this.setState({ snackMessage: "Se editó correctamente" }); //The message to snackBar
         } else {
-          alert("No se encontró el elemento");
+          this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+          this.setState({ snackMessage: "No se encontró el elemento" }); //The message to snackBar
         }
       } else {
         // Adding
@@ -102,9 +114,16 @@ class ModalGestion extends React.Component {
           var json = datosAgregar;
           localStorage.setItem("arrayElement", JSON.stringify(json));
         }
+        this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+        this.setState({ snackMessage: "Se agregó correctamente" }); //The message to snackBar
       }
     }
     this.props.handleActionButton();
+  };
+
+  //Here the openSnack is changed by false in order to close the SnackBar.
+  handleCloseSnackBar = () => {
+    this.setState({ openSnack: false });
   };
 
   render() {
@@ -134,6 +153,11 @@ class ModalGestion extends React.Component {
             <SimpleModalWrapped />
           </div>
         </Modal>
+        <SnackBar
+          openSnackBar={this.state.openSnack}
+          handleCloseSnack={this.handleCloseSnackBar}
+          textMessage={this.state.snackMessage}
+        />
       </div>
     );
   }
@@ -141,7 +165,7 @@ class ModalGestion extends React.Component {
 
 /**
  * With the id we can delete the element from the localStorage
- * @param {Given key for a particular element} id
+ * @param {Given a key for a particular element} id
  */
 function deleteItem(id) {
   var data = JSON.parse(localStorage.getItem("arrayElement"));
