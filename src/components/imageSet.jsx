@@ -181,7 +181,7 @@ class ImageSet extends React.Component {
         <center>
           <table style={simpleStyle} cellSpacing="20px" key="table1">
             {this.state.arrayElement.map(option => (
-              <tr>
+              <tbody>
                 {option.map(element => (
                   <TableElement
                     name={element.name}
@@ -190,10 +190,11 @@ class ImageSet extends React.Component {
                     style={imagenStyle}
                     identify={element.id}
                     id={element.id}
+                    key={element.id}
                     handleImageClick={this.imageClick.bind(this)}
                   />
                 ))}
-              </tr>
+              </tbody>
             ))}
           </table>
           <ModalWindow

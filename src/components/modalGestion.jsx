@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes, { element } from "prop-types";
+import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
@@ -49,17 +49,22 @@ class ModalGestion extends React.Component {
   handleActionButton = event => {
     //Deleting
     if (event.currentTarget.id == "Eliminar producto") {
-      if (findId(document.getElementById("txtEliminarId").value)) {
-        var newArray = deleteItem(
-          document.getElementById("txtEliminarId").value
-        );
-        localStorage.setItem("arrayElement", JSON.stringify(newArray));
-        document.getElementById("txtEliminarId").value = "";
-        this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
-        this.setState({ snackMessage: "Se eliminó correctamente" }); //The message to snackBar
-      } else {
-        this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
-        this.setState({ snackMessage: "No se encontró el elemento" }); //The message to snackBar
+      if(document.getElementById("txtEliminarId").value.includes("")){ //Verify if the value if empty
+        this.setState({ openSnack: true});
+        this.setState({ snackMessage: "No has ingresado los campos válidos"});
+      }else{
+        if (findId(document.getElementById("txtEliminarId").value)) {
+          var newArray = deleteItem(
+            document.getElementById("txtEliminarId").value
+          );
+          localStorage.setItem("arrayElement", JSON.stringify(newArray));
+          document.getElementById("txtEliminarId").value = "";
+          this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+          this.setState({ snackMessage: "Se eliminó correctamente" }); //The message to snackBar
+        } else {
+          this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+          this.setState({ snackMessage: "No se encontró el elemento" }); //The message to snackBar
+        }
       }
     } else {
       //Editing

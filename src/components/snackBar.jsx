@@ -34,7 +34,7 @@ class SimpleSnackbar extends React.Component {
               key="undo"
               color="secondary"
               size="small"
-              onClick={this.handleClose} //Need to be change or removed because it doesn't work
+              onClick={() => this.props.handleCloseSnack()} //Need to be change or removed because it doesn't work
             >
               Cerrar
             </Button>,
