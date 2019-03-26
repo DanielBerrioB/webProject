@@ -8,12 +8,17 @@ const fontStyle = {
   color: "black"
 };
 
+const styleDiv ={
+
+};  
+
 const ITEM_HEIGHT = 88;
 
 class LongMenu extends React.Component {
   state = {
     anchorEl: null,
-    selectedItem: "None"
+    selectedItem: "None", 
+    hideOrShow: false
   };
 
   //Catcher elements
@@ -35,8 +40,9 @@ class LongMenu extends React.Component {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl); // Verify if the window is opne
 
+    //The hidden atributte allows to show or hide this element depending of the hideOrShow state
     return (
-      <div>
+      <div id="divButton" hidden={this.state.hideOrShow}>
         <IconButton //this tag receive the name from its father.
           aria-label="Menu"
           aria-owns={open ? "long-menu" : undefined}

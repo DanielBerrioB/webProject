@@ -37,7 +37,8 @@ const styles2 = {
 
 const styles3 = {
   color: "black",
-  marginLeft: "30%",
+  marginLeft: "55%",
+  width: "85%",
   fontSize: "18px"
 };
 
@@ -125,8 +126,6 @@ class ButtonAppBar extends React.Component {
 
             <img style={styles2} src={logo} alt="" />
 
-            <div style={{ marginLeft: "0%" }} />
-
             <FormControl className={this.props.margin}>
               <Input
                 id="input-with-icon-adornment"
@@ -146,6 +145,9 @@ class ButtonAppBar extends React.Component {
               name={<img src={Gestionar} alt="" />}
               handleClickOption={this.handleMenuGestion}
             />
+            <IconButton id="btnSesion">
+              Inicia sesión
+            </IconButton>
           </Toolbar>
         </AppBar>
         <ModalComment
