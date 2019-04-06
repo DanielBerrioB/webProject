@@ -1,9 +1,9 @@
 import React from "react";
 import TableElement from "./tableElement";
 import ButtonAppBar from "./searcher";
-import ModalWindow from "./modalWindow";
+import ModalWindow from "./modalWindows/modalWindow";
 import Data from "../auxData";
-import ModalGestion from "./modalGestion";
+import ModalGestion from "./modalWindows/modalGestion";
 import TextField from "@material-ui/core/TextField";
 
 //Styles
@@ -169,6 +169,11 @@ class ImageSet extends React.Component {
     this.setState({ openModalGestion: false });
   };
 
+  //This button is called from its child (searcher, ButtonAppBar) to change the route
+  handleUserButton = () => {
+    this.props.history.push("/log/");
+  };
+
   render() {
     return (
       <div>
@@ -177,6 +182,7 @@ class ImageSet extends React.Component {
           putting={this.show}
           handleClick={this.promotion}
           handleMenuGestion={this.handleModalGestion}
+          handleClickUser={this.handleUserButton} //To call userButton ("Inicia sesion")
         />
         <center>
           <table style={simpleStyle} cellSpacing="20px" key="table1">

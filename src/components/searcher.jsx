@@ -14,7 +14,7 @@ import nuevo from "../images/nuevo.png";
 import Data from "../auxData";
 import SimpleMenu from "./menuShopCart";
 import Comentarios from "../images/comentarios.png";
-import ModalComment from "./modalComment";
+import ModalComment from "./modalWindows/modalComment";
 import Gestionar from "../images/GestionarProducto.png";
 
 //Here you can add some styles for the elements
@@ -103,6 +103,11 @@ class ButtonAppBar extends React.Component {
     this.props.handleMenuGestion(text);
   };
 
+  //This handle event is called when the button "Inicia sesion" has been clicked
+  handleClickUser = event => {
+    this.props.handleClickUser();
+  };
+
   render() {
     return (
       <div className={this.props.root}>
@@ -145,7 +150,7 @@ class ButtonAppBar extends React.Component {
               name={<img src={Gestionar} alt="" />}
               handleClickOption={this.handleMenuGestion}
             />
-            <IconButton id="btnSesion">
+            <IconButton id="btnSesion" onClick={this.handleClickUser}>
               Inicia sesión
             </IconButton>
           </Toolbar>

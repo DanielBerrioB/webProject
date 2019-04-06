@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
-import ModalWindow from "./listComment";
+import ModalWindow from "../listComment";
 
 //CSS styles
 const botonBackground = {
