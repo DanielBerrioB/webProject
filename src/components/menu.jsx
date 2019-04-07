@@ -8,16 +8,12 @@ const fontStyle = {
   color: "black"
 };
 
-const styleDiv ={
-
-};  
-
 const ITEM_HEIGHT = 88;
 
 class LongMenu extends React.Component {
   state = {
     anchorEl: null,
-    selectedItem: "None", 
+    selectedItem: "None",
     hideOrShow: false
   };
 

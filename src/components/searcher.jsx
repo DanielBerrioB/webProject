@@ -16,6 +16,7 @@ import SimpleMenu from "./menuShopCart";
 import Comentarios from "../images/comentarios.png";
 import ModalComment from "./modalWindows/modalComment";
 import Gestionar from "../images/GestionarProducto.png";
+import DataProduct from "./APIMethod/apiMethods";
 
 //Here you can add some styles for the elements
 const styles1 = {
@@ -47,29 +48,36 @@ const stylesToolbar = {
   height: "50px"
 };
 
+async function getAllProducts() {
+  var users = await DataProduct.getProducts();
+  return users;
+}
+
 if (!localStorage.arrayElement)
   localStorage.setItem("arrayElement", JSON.stringify(Data));
 
-var data = JSON.parse(localStorage.getItem("arrayElement"));
-
+var nuevoArray = [];
 /**
  * Allows to return the categories from the local storage
- * @param {The array that contains all the information from the localStorage} array
+ * @param {The array that contains all the information from the API} array
  */
-function categoryArray(array) {
-  array = JSON.parse(localStorage.getItem("arrayElement"));
+async function categoryArray() {
+  nuevoArray = await getAllProducts();
   var arrayToReturn = [];
-  array.forEach(i => {
+  nuevoArray.forEach(i => {
     if (!arrayToReturn.includes(i.categoria)) arrayToReturn.push(i.categoria);
   });
   return arrayToReturn;
 }
 
 class ButtonAppBar extends React.Component {
+  componentDidMount() {
+    categoryArray().then(value => this.setState({ arrayCategory: value }));
+  }
   state = {
     openComment: false,
     text: "",
-    arrayCategory: categoryArray(data)
+    arrayCategory: []
   };
 
   handleClickComment = event => {
@@ -81,12 +89,14 @@ class ButtonAppBar extends React.Component {
   };
 
   updateElementFromParent() {
-    this.setState({ arrayCategory: categoryArray(data) });
+    categoryArray().then(value => this.setState({ arrayCategory: value }));
   }
 
   handleChange = event => {
     this.setState({ text: event.target.value });
-    this.props.handleChange(event, verifyContent(this.state.text));
+    verifyContent(this.state.text).then(value =>
+      this.props.handleChange(event, value)
+    );
   };
 
   handleClick = event => {
@@ -94,8 +104,7 @@ class ButtonAppBar extends React.Component {
   };
 
   putting = (event, text) => {
-    data = JSON.parse(localStorage.getItem("arrayElement"));
-    this.setState({ arrayCategory: categoryArray(data) });
+    categoryArray().then(value => this.setState({ arrayCategory: value }));
     this.props.putting(event, text);
   };
 
@@ -169,21 +178,22 @@ class ButtonAppBar extends React.Component {
  * Return all the data related to the text
  * @param {Text given by the input} text
  */
-function verifyContent(text) {
+async function verifyContent(text) {
   var arrayElement = [];
+  var newData = nuevoArray;
   if (text !== "") {
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < newData.length; i++) {
       if (
-        data[i].name
+        newData[i].name
           .toLowerCase()
           .trim()
           .includes(text) ||
-        data[i].categoria
+        newData[i].categoria
           .toLowerCase()
           .trim()
           .includes(text)
       ) {
-        arrayElement.push(data[i]);
+        arrayElement.push(newData[i]);
       }
     }
   }

@@ -48,7 +48,7 @@ class ModalGestion extends React.Component {
 
   handleActionButton = event => {
     //Deleting
-    if (event.currentTarget.id == "Eliminar producto") {
+    if (event.currentTarget.id === "Eliminar producto") {
       if (document.getElementById("txtEliminarId").value.includes("")) {
         //Verify if the value if empty
         this.setState({ openSnack: true });
@@ -69,7 +69,7 @@ class ModalGestion extends React.Component {
       }
     } else {
       //Editing
-      if (event.currentTarget.id == "Editar producto") {
+      if (event.currentTarget.id === "Editar producto") {
         if (findId(document.getElementById("txtIdEditar").value)) {
           var newArray2 = deleteItem(
             document.getElementById("txtIdEditar").value
@@ -100,7 +100,7 @@ class ModalGestion extends React.Component {
         // Adding
         var str = document.getElementById("txtTalla").value.split(",");
         var x =
-          document.getElementById("txtPromocion").value != "true"
+          document.getElementById("txtPromocion").value !== "true"
             ? false
             : true;
         var datosAgregar = {

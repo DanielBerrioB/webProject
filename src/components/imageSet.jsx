@@ -5,6 +5,7 @@ import ModalWindow from "./modalWindows/modalWindow";
 import Data from "../auxData";
 import ModalGestion from "./modalWindows/modalGestion";
 import TextField from "@material-ui/core/TextField";
+import DataProduct from "./APIMethod/apiMethods";
 
 //Styles
 const simpleStyle = {
@@ -19,8 +20,21 @@ const imagenStyle = {
 //Data from local storage
 if (!localStorage.arrayElement)
   localStorage.setItem("arrayElement", JSON.stringify(Data));
-var data = JSON.parse(window.localStorage.getItem("arrayElement"));
-var values = toConvert(data);
+
+var arrayAPI = [];
+/**
+ * This function returns all the elemtns from the api
+ */
+async function getAllProducts() {
+  var users = await DataProduct.getProducts();
+  arrayAPI = users;
+  return users;
+}
+
+//Just updates the value
+async function updateValue() {
+  arrayAPI = await DataProduct.getProducts();
+}
 
 /**
  * This class represents the entire skeleton of the web. First of all, we put
@@ -33,15 +47,21 @@ class ImageSet extends React.Component {
     super(props);
     this.buttonAppBar = React.createRef();
   }
+
+  //Get all the elements from the API
+  componentDidMount() {
+    getAllProducts().then(value => {
+      this.setState({ arrayElement: toConvert(value) });
+    });
+  }
   //Create a set with some particualar values
   state = {
-    arrayElement: values, //Here, the array element takes all the values from localStorage
+    arrayElement: [], //Here, the array element takes all the values from localStorage
     openModal: false,
     valueKey: "",
     openModalGestion: false,
     titleModalGestion: "",
-    body: <div />, //(WILL BE DELETE)
-    arrayToGive: []
+    body: <div /> //(WILL BE DELETE)
   };
 
   onAlert = (event, array) => {
@@ -49,11 +69,12 @@ class ImageSet extends React.Component {
   };
 
   show = (event, text) => {
-    if (text !== "") this.setState({ arrayElement: fromCategory(text) });
+    if (text !== "")
+      fromCategory(text).then(value => this.setState({ arrayElement: value }));
   };
 
   promotion = event => {
-    this.setState({ arrayElement: byPromotion() });
+    byPromotion().then(value => this.setState({ arrayElement: value }));
   };
 
   imageClick = event => {
@@ -163,8 +184,8 @@ class ImageSet extends React.Component {
 
   //Updating the values to reload the page with new changes
   handleReload = () => {
-    data = JSON.parse(window.localStorage.getItem("arrayElement"));
-    var values = toConvert(data);
+    updateValue(); //Update the values
+    var values = toConvert(arrayAPI);
     this.setState({ arrayElement: values });
     this.setState({ openModalGestion: false });
   };
@@ -247,9 +268,9 @@ function toConvert(arrayParse) {
 /**
  * This method returns the products which have a promotion
  */
-function byPromotion() {
+async function byPromotion() {
   var arrayToReturn = [];
-  data.forEach(i => {
+  arrayAPI.forEach(i => {
     if (i.promocion) arrayToReturn.push(i);
   });
   return toConvert(arrayToReturn);
@@ -259,9 +280,9 @@ function byPromotion() {
  * It return the category with a given key
  * @param {It's the given category key to find the category} text
  */
-function fromCategory(text) {
+async function fromCategory(text) {
   var arrayToReturn = [];
-  data.forEach(i => {
+  arrayAPI.forEach(i => {
     if (text.includes(i.categoria)) arrayToReturn.push(i);
   });
   return toConvert(arrayToReturn);

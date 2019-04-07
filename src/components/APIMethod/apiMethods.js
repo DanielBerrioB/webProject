@@ -1,7 +1,16 @@
 var url = "http://localhost:4000";
 
 /**
- * This function return all the users
+ * This function returns all the elements
+ */
+const getProducts = async () => {
+  let products = await fetch(`${url}/main/`);
+  products = await products.json();
+  return products;
+};
+
+/**
+ * This function returns all the users
  */
 const getUsers = async () => {
   let users = await fetch(`${url}/users/create/`);
@@ -24,4 +33,4 @@ const postUser = async user => {
   return fetch(`${url}/users/create/`, jsonUser);
 };
 
-export default { getUsers, postUser };
+export default { getUsers, postUser, getProducts };
