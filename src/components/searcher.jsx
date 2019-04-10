@@ -11,7 +11,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import logo from "../images/logo.png";
 import promocion from "../images/promocion.png";
 import nuevo from "../images/nuevo.png";
-import Data from "../auxData";
 import SimpleMenu from "./menuShopCart";
 import Comentarios from "../images/comentarios.png";
 import ModalComment from "./modalWindows/modalComment";
@@ -52,9 +51,6 @@ async function getAllProducts() {
   var users = await DataProduct.getProducts();
   return users;
 }
-
-if (!localStorage.arrayElement)
-  localStorage.setItem("arrayElement", JSON.stringify(Data));
 
 var nuevoArray = [];
 /**

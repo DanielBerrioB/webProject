@@ -1,7 +1,6 @@
 import React from "react";
 import ImageSet from "./imageSet";
 import InfoBar from "./infoBar";
-import Data from "../auxData";
 import UserLoggin from "./routesElements/userLoggin";
 import UserRegistration from "./routesElements/userRegistration";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -9,17 +8,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 var Route = require("react-router-dom").Route;
 
 class Main extends React.Component {
-  constructor(...props) {
-    super(...props);
-    localStorage.setItem("arrayElement", JSON.stringify(Data));
-  }
-
-  componentDidMount() {
-    if (JSON.parse(localStorage.getItem("arrayElement"))) {
-      localStorage.setItem("arrayElement", JSON.stringify(Data));
-    }
-  }
-
   //Route means the posible routes that can be used
   render() {
     return (

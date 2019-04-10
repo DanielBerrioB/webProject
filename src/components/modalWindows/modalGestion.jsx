@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import SnackBar from "../snackBar";
+import DataProduct from "../APIMethod/apiMethods";
 
 //CSS styles
 const botonBackground = {
@@ -36,6 +37,20 @@ function getModalStyle() {
   };
 }
 
+async function deleteElement(id) {
+  var response = await DataProduct.deleteProduct(id);
+  return response;
+}
+
+async function addProduct(body) {
+  var response = await DataProduct.addProduct(body);
+  return response;
+}
+
+async function putProduct(body, id) {
+  var response = await DataProduct.putProduct(body, id);
+  return response;
+}
 /**
  * This class show the different interfaces for the admin that changes dinamilly depending
  * of the parameter that the father provides
@@ -49,16 +64,11 @@ class ModalGestion extends React.Component {
   handleActionButton = event => {
     //Deleting
     if (event.currentTarget.id === "Eliminar producto") {
-      if (document.getElementById("txtEliminarId").value.includes("")) {
-        //Verify if the value if empty
-        this.setState({ openSnack: true });
-        this.setState({ snackMessage: "No has ingresado los campos válidos" });
-      } else {
+      if (document.getElementById("txtEliminarId").value) {
         if (findId(document.getElementById("txtEliminarId").value)) {
-          var newArray = deleteItem(
-            document.getElementById("txtEliminarId").value
+          deleteElement(document.getElementById("txtEliminarId").value).then(
+            res => this.props.handleActionButton(event, res.json())
           );
-          localStorage.setItem("arrayElement", JSON.stringify(newArray));
           document.getElementById("txtEliminarId").value = "";
           this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
           this.setState({ snackMessage: "Se eliminó correctamente" }); //The message to snackBar
@@ -66,36 +76,36 @@ class ModalGestion extends React.Component {
           this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
           this.setState({ snackMessage: "No se encontró el elemento" }); //The message to snackBar
         }
+      } else {
+        //Verify if the value if empty
+        this.setState({ openSnack: true });
+        this.setState({ snackMessage: "No has ingresado los campos válidos" });
       }
     } else {
       //Editing
       if (event.currentTarget.id === "Editar producto") {
-        if (findId(document.getElementById("txtIdEditar").value)) {
-          var newArray2 = deleteItem(
-            document.getElementById("txtIdEditar").value
-          );
-          newArray2.push({
-            id: parseInt(document.getElementById("txtIdEditar").value),
-            name: document.getElementById("txtNameEditar").value,
-            source: document.getElementById("txtUrlEditar").value,
-            precio: parseInt(document.getElementById("txtPrecioEditar").value),
-            categoria: document.getElementById("txtCategoriaEditar").value,
-            promocion:
-              document.getElementById("txtPromocionEditar").value === "S"
-                ? true
-                : false,
-            talla: document
-              .getElementById("txtTallaEditar")
-              .value.trim()
-              .split(",")
-          });
-          localStorage.setItem("arrayElement", JSON.stringify(newArray2));
-          this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
-          this.setState({ snackMessage: "Se editó correctamente" }); //The message to snackBar
-        } else {
-          this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
-          this.setState({ snackMessage: "No se encontró el elemento" }); //The message to snackBar
-        }
+        var datosEditar = {
+          id: parseInt(document.getElementById("txtIdEditar").value),
+          name: document.getElementById("txtNameEditar").value,
+          source: document.getElementById("txtUrlEditar").value,
+          precio: parseInt(document.getElementById("txtPrecioEditar").value),
+          categoria: document.getElementById("txtCategoriaEditar").value,
+          promocion:
+            document.getElementById("txtPromocionEditar").value === "S"
+              ? true
+              : false,
+          talla: document
+            .getElementById("txtTallaEditar")
+            .value.trim()
+            .split(",")
+        };
+        putProduct(
+          datosEditar,
+          parseInt(document.getElementById("txtIdEditar").value)
+        ).then(res => this.props.handleActionButton(event, res.json()));
+
+        this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+        this.setState({ snackMessage: "Se editó correctamente" }); //The message to snackBar
       } else {
         // Adding
         var str = document.getElementById("txtTalla").value.split(",");
@@ -112,19 +122,14 @@ class ModalGestion extends React.Component {
           promocion: x,
           talla: str
         };
-        if (localStorage.arrayElement) {
-          var last = JSON.parse(localStorage.getItem("arrayElement"));
-          last.push(datosAgregar);
-          localStorage.setItem("arrayElement", JSON.stringify(last));
-        } else {
-          var json = datosAgregar;
-          localStorage.setItem("arrayElement", JSON.stringify(json));
-        }
+
+        addProduct(datosAgregar).then(res =>
+          this.props.handleActionButton(event, res.json())
+        );
         this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
         this.setState({ snackMessage: "Se agregó correctamente" }); //The message to snackBar
       }
     }
-    this.props.handleActionButton();
   };
 
   //Here the openSnack is changed by false in order to close the SnackBar.
@@ -170,25 +175,12 @@ class ModalGestion extends React.Component {
 }
 
 /**
- * With the id we can delete the element from the localStorage
- * @param {Given a key for a particular element} id
- */
-function deleteItem(id) {
-  var data = JSON.parse(localStorage.getItem("arrayElement"));
-  var newArray = [];
-  data.forEach(i => {
-    if (i.id != id) newArray.push(i);
-  });
-  return newArray;
-}
-
-/**
  * Find an element with the id
  * @param {Given key for a particular element} id
  */
 function findId(id) {
   var data = JSON.parse(localStorage.getItem("arrayElement"));
-  return data.find(i => i.id == id);
+  return data.find(i => i.id === id);
 }
 
 ModalGestion.propTypes = {

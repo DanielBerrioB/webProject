@@ -2,7 +2,6 @@ import React from "react";
 import TableElement from "./tableElement";
 import ButtonAppBar from "./searcher";
 import ModalWindow from "./modalWindows/modalWindow";
-import Data from "../auxData";
 import ModalGestion from "./modalWindows/modalGestion";
 import TextField from "@material-ui/core/TextField";
 import DataProduct from "./APIMethod/apiMethods";
@@ -17,10 +16,6 @@ const imagenStyle = {
   borderRadius: "50px"
 };
 
-//Data from local storage
-if (!localStorage.arrayElement)
-  localStorage.setItem("arrayElement", JSON.stringify(Data));
-
 var arrayAPI = [];
 /**
  * This function returns all the elemtns from the api
@@ -29,11 +24,6 @@ async function getAllProducts() {
   var users = await DataProduct.getProducts();
   arrayAPI = users;
   return users;
-}
-
-//Just updates the value
-async function updateValue() {
-  arrayAPI = await DataProduct.getProducts();
 }
 
 /**
@@ -182,12 +172,13 @@ class ImageSet extends React.Component {
     this.setState({ openModalGestion: false });
   };
 
-  //Updating the values to reload the page with new changes
-  handleReload = () => {
-    updateValue(); //Update the values
-    var values = toConvert(arrayAPI);
-    this.setState({ arrayElement: values });
-    this.setState({ openModalGestion: false });
+  //Updating the values to reload the page with new changes made from modalGestion component
+  handleReload = (event, array) => {
+    array.then(arrayUpdated => {
+      var values = toConvert(arrayUpdated);
+      this.setState({ arrayElement: values });
+      this.setState({ openModalGestion: false });
+    });
   };
 
   //This button is called from its child (searcher, ButtonAppBar) to change the route
