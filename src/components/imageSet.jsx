@@ -15,8 +15,9 @@ const simpleStyle = {
 const imagenStyle = {
   borderRadius: "50px"
 };
-
+//Global variables
 var arrayAPI = [];
+
 /**
  * This function returns all the elemtns from the api
  */
@@ -50,6 +51,7 @@ class ImageSet extends React.Component {
     openModal: false,
     valueKey: "",
     openModalGestion: false,
+    openEditar: true,
     titleModalGestion: "",
     body: <div /> //(WILL BE DELETE)
   };
@@ -134,30 +136,6 @@ class ImageSet extends React.Component {
                 margin="normal"
               />
               <br />
-              <TextField id="txtNameEditar" label="Nombre" margin="normal" />
-              <br />
-              <TextField id="txtUrlEditar" label="URL" margin="normal" />
-              <br />
-              <TextField id="txtPrecioEditar" label="Precio" margin="normal" />
-              <br />
-              <TextField
-                id="txtCategoriaEditar"
-                label="Categoria"
-                margin="normal"
-              />
-              <br />
-              <TextField
-                id="txtPromocionEditar"
-                label="¿Promoción?(S o N)"
-                margin="normal"
-              />
-              <br />
-              <TextField
-                id="txtTallaEditar"
-                label="Tallas (separadas por,)"
-                margin="normal"
-              />
-              <br />
             </div>
           )
         });
@@ -170,15 +148,78 @@ class ImageSet extends React.Component {
   closeHandleModalGestion = () => {
     this.setState({ titleModalGestion: "" });
     this.setState({ openModalGestion: false });
+    this.setState({ openEditar: true });
   };
 
   //Updating the values to reload the page with new changes made from modalGestion component
-  handleReload = (event, array) => {
-    array.then(arrayUpdated => {
-      var values = toConvert(arrayUpdated);
-      this.setState({ arrayElement: values });
-      this.setState({ openModalGestion: false });
-    });
+  handleReload = (event, array, valueOpen) => {
+    if (!valueOpen) {
+      this.setState({ openEditar: false });
+      this.setState({
+        body: (
+          <div>
+            <h1>Editar un producto</h1>
+            <TextField
+              id="txtIdEditar"
+              label="Id imagen a editar"
+              margin="normal"
+              value={array.id}
+            />
+            <br />
+
+            <TextField
+              id="txtNameEditar"
+              label="Nombre"
+              margin="normal"
+              value={array.name}
+            />
+            <br />
+            <TextField
+              id="txtUrlEditar"
+              label="URL"
+              margin="normal"
+              value={array.source}
+            />
+            <br />
+            <TextField
+              id="txtPrecioEditar"
+              label="Precio"
+              margin="normal"
+              value={array.precio}
+            />
+            <br />
+            <TextField
+              id="txtCategoriaEditar"
+              label="Categoria"
+              margin="normal"
+              value={array.categoria}
+            />
+            <br />
+            <TextField
+              id="txtPromocionEditar"
+              label="¿Promoción?(S o N)"
+              margin="normal"
+              value={array.promocion ? "S" : "N"}
+            />
+            <br />
+            <TextField
+              id="txtTallaEditar"
+              label="Tallas (separadas por,)"
+              margin="normal"
+              value={array.talla.toString()}
+            />
+            <br />
+          </div>
+        )
+      });
+    } else {
+      array.then(arrayUpdated => {
+        var values = toConvert(arrayUpdated);
+        this.setState({ arrayElement: values });
+        this.setState({ openModalGestion: false });
+        this.setState({ openEditar: true });
+      });
+    }
   };
 
   //This button is called from its child (searcher, ButtonAppBar) to change the route
@@ -226,6 +267,7 @@ class ImageSet extends React.Component {
             cambio={this.closeHandleModalGestion}
             bodyElement={this.state.body}
             handleActionButton={this.handleReload}
+            openEditar={this.state.openEditar}
           />
         </center>
       </div>
@@ -278,5 +320,4 @@ async function fromCategory(text) {
   });
   return toConvert(arrayToReturn);
 }
-
 export default ImageSet;

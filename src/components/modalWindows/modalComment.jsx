@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import ModalWindow from "../listComment";
+import DataComment from "../APIMethod/apiMethods";
 
 //CSS styles
 const botonBackground = {
@@ -37,21 +38,30 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`
   };
 }
-var data = [];
 
-//Get all the datas from the local storage
-if (localStorage.getItem("comentario")) {
-  data = JSON.parse(localStorage.getItem("comentario"));
-} else {
-  data.push({ comment: "" }); // if there is nothing at the local storage an empty comment will be added
+async function postComment(comment) {
+  var response = await DataComment.postComment(comment);
+  return response;
+}
+
+async function getComment() {
+  var response = await DataComment.getComment();
+  return response;
 }
 
 //This class represents the modal window that shows all the comments and allows to add comments to the local Storage
 class CommendModal extends React.Component {
+  componentDidMount() {
+    getComment().then(res => {
+      console.log(res);
+      this.setState({ arrayComment: res });
+    });
+  }
+
   state = {
     sizeClothe: "",
     text: "",
-    arrayComment: data
+    arrayComment: []
   };
 
   /**
@@ -59,18 +69,18 @@ class CommendModal extends React.Component {
    */
   createComment = () => {
     this.setState({ text: document.getElementById("txt1").value });
-    if (localStorage.comentario) {
-      var last = JSON.parse(localStorage.getItem("comentario"));
-      last.push({ comment: document.getElementById("txt1").value });
-      localStorage.setItem("comentario", JSON.stringify(last));
-    } else {
-      var json = [{ comment: document.getElementById("txt1").value }];
-      localStorage.setItem("comentario", JSON.stringify(json));
+    if (document.getElementById("txt1").value) {
+      postComment({ comment: document.getElementById("txt1").value }).then(
+        res => {
+          res.json().then(value => {
+            this.setState({
+              arrayComment: value
+            });
+            this.props.cambio();
+          });
+        }
+      );
     }
-    this.setState({
-      arrayComment: JSON.parse(localStorage.getItem("comentario"))
-    });
-    this.props.cambio();
   };
 
   handleClose = event => {

@@ -10,6 +10,15 @@ const getProducts = async () => {
 };
 
 /**
+ * This function returns a product with a given id
+ */
+const getProduct = async id => {
+  let product = await fetch(`${url}/main/${id}`);
+  product = await product.json();
+  return product;
+};
+
+/**
  * This DELETE method allows to delete a product from the API
  * @param {Given id to remove a product} id
  */
@@ -62,11 +71,38 @@ const postUser = async user => {
   return fetch(`${url}/users/create/`, jsonUser);
 };
 
+/**
+ * This POST method add a new comment to the API
+ * @param {Comment to add} comment
+ */
+const postComment = async comment => {
+  const jsonComment = {
+    method: "POST",
+    body: JSON.stringify(comment),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  return fetch(`${url}/main/comment/`, jsonComment);
+};
+
+/**
+ * This GET method returns all the comments from the database
+ */
+const getComment = async () => {
+  let comment = await fetch(`${url}/main/comment/`);
+  comment = await comment.json();
+  return comment;
+};
+
 export default {
   getUsers,
   postUser,
   getProducts,
   deleteProduct,
   addProduct,
-  putProduct
+  putProduct,
+  getProduct,
+  postComment,
+  getComment
 };

@@ -37,6 +37,12 @@ function getModalStyle() {
   };
 }
 
+//A bunch of functions that do the entire CRUD
+async function getProductById(id) {
+  var response = await DataProduct.getProduct(id);
+  return response;
+}
+
 async function deleteElement(id) {
   var response = await DataProduct.deleteProduct(id);
   return response;
@@ -51,6 +57,7 @@ async function putProduct(body, id) {
   var response = await DataProduct.putProduct(body, id);
   return response;
 }
+
 /**
  * This class show the different interfaces for the admin that changes dinamilly depending
  * of the parameter that the father provides
@@ -65,17 +72,21 @@ class ModalGestion extends React.Component {
     //Deleting
     if (event.currentTarget.id === "Eliminar producto") {
       if (document.getElementById("txtEliminarId").value) {
-        if (findId(document.getElementById("txtEliminarId").value)) {
-          deleteElement(document.getElementById("txtEliminarId").value).then(
-            res => this.props.handleActionButton(event, res.json())
-          );
-          document.getElementById("txtEliminarId").value = "";
-          this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
-          this.setState({ snackMessage: "Se eliminó correctamente" }); //The message to snackBar
-        } else {
-          this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
-          this.setState({ snackMessage: "No se encontró el elemento" }); //The message to snackBar
-        }
+        getProductById(document.getElementById("txtEliminarId").value).then(
+          res => {
+            if (res.message) {
+              this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+              this.setState({ snackMessage: "El elemento no se encuentra" });
+            } else {
+              deleteElement(
+                document.getElementById("txtEliminarId").value
+              ).then(res => this.props.handleActionButton(event, res.json()));
+              document.getElementById("txtEliminarId").value = "";
+              this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+              this.setState({ snackMessage: "Se eliminó correctamente" });
+            }
+          }
+        );
       } else {
         //Verify if the value if empty
         this.setState({ openSnack: true });
@@ -84,28 +95,50 @@ class ModalGestion extends React.Component {
     } else {
       //Editing
       if (event.currentTarget.id === "Editar producto") {
-        var datosEditar = {
-          id: parseInt(document.getElementById("txtIdEditar").value),
-          name: document.getElementById("txtNameEditar").value,
-          source: document.getElementById("txtUrlEditar").value,
-          precio: parseInt(document.getElementById("txtPrecioEditar").value),
-          categoria: document.getElementById("txtCategoriaEditar").value,
-          promocion:
-            document.getElementById("txtPromocionEditar").value === "S"
-              ? true
-              : false,
-          talla: document
-            .getElementById("txtTallaEditar")
-            .value.trim()
-            .split(",")
-        };
-        putProduct(
-          datosEditar,
-          parseInt(document.getElementById("txtIdEditar").value)
-        ).then(res => this.props.handleActionButton(event, res.json()));
+        if (this.props.openEditar) {
+          if (document.getElementById("txtIdEditar").value) {
+            getProductById(document.getElementById("txtIdEditar").value).then(
+              res => {
+                if (res.message) {
+                  this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+                  this.setState({ snackMessage: "El id no se encuentra" });
+                } else {
+                  this.props.handleActionButton(
+                    event,
+                    res,
+                    !this.props.openEditar
+                  );
+                }
+              }
+            );
+          } else {
+            this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+            this.setState({ snackMessage: "No has ingresado el id" });
+          }
+        } else {
+          var datosEditar = {
+            id: parseInt(document.getElementById("txtIdEditar").value),
+            name: document.getElementById("txtNameEditar").value,
+            source: document.getElementById("txtUrlEditar").value,
+            precio: parseInt(document.getElementById("txtPrecioEditar").value),
+            categoria: document.getElementById("txtCategoriaEditar").value,
+            promocion:
+              document.getElementById("txtPromocionEditar").value === "S"
+                ? true
+                : false,
+            talla: document
+              .getElementById("txtTallaEditar")
+              .value.trim()
+              .split(",")
+          };
+          putProduct(
+            datosEditar,
+            parseInt(document.getElementById("txtIdEditar").value)
+          ).then(res => this.props.handleActionButton(event, res.json(), true));
 
-        this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
-        this.setState({ snackMessage: "Se editó correctamente" }); //The message to snackBar
+          this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+          this.setState({ snackMessage: "Se editó correctamente" }); //The message to snackBar
+        }
       } else {
         // Adding
         var str = document.getElementById("txtTalla").value.split(",");
@@ -172,15 +205,6 @@ class ModalGestion extends React.Component {
       </div>
     );
   }
-}
-
-/**
- * Find an element with the id
- * @param {Given key for a particular element} id
- */
-function findId(id) {
-  var data = JSON.parse(localStorage.getItem("arrayElement"));
-  return data.find(i => i.id === id);
 }
 
 ModalGestion.propTypes = {

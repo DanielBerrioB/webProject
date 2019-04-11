@@ -59,7 +59,7 @@ class SimpleModal extends React.Component {
    * JSON at the local storage
    */
   handleAddCar = () => {
-    if (this.state.sizeClothe != "") {
+    if (this.state.sizeClothe) {
       var information = findById(this.props.text);
       var jsonVar1 = [
         {
