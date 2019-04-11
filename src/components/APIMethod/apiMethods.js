@@ -72,6 +72,21 @@ const postUser = async user => {
 };
 
 /**
+ * With a given a user its just to find it from the API.
+ * @param {User to find} user
+ */
+const postUserToFind = async user => {
+  const jsonUser = {
+    method: "POST",
+    body: JSON.stringify(user),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+  return fetch(`${url}/main/users/auth/`, jsonUser);
+};
+
+/**
  * This POST method add a new comment to the API
  * @param {Comment to add} comment
  */
@@ -104,5 +119,6 @@ export default {
   putProduct,
   getProduct,
   postComment,
-  getComment
+  getComment,
+  postUserToFind
 };

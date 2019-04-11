@@ -18,7 +18,7 @@ class RadioButtons extends React.Component {
 
   render() {
     var element = this.props.talla;
-
+    console.log(element);
     return (
       <div>
         {element.map(size => (

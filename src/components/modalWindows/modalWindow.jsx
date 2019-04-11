@@ -6,6 +6,7 @@ import TableElement from "../tableElement";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import OptionButton from "../optionSize";
 import Button from "@material-ui/core/Button";
+import DataProduct from "../APIMethod/apiMethods";
 
 //CSS styles
 const botonBackground = {
@@ -24,6 +25,7 @@ const styles = theme => ({
   }
 });
 
+var allProducts = [];
 /**
  * This function allows to put the modal window in the center of the screen
  */
@@ -38,10 +40,20 @@ function getModalStyle() {
   };
 }
 
+async function getAllProducts() {
+  var product = await DataProduct.getProducts();
+  allProducts = product;
+  return product;
+}
+
 /**
  * This class shows the image's descriptions when it has been tapped
  */
 class SimpleModal extends React.Component {
+  componentDidMount() {
+    getAllProducts();
+  }
+
   state = {
     sizeClothe: ""
   };
@@ -89,7 +101,9 @@ class SimpleModal extends React.Component {
 
   render() {
     const { classes } = this.props;
-    var element = findById(this.props.text);
+    var element = this.props.text
+      ? findById(this.props.text)
+      : { name: "", precio: "", source: "", id: "", talla: ["x"] };
     return (
       <div>
         <Modal
@@ -136,12 +150,7 @@ class SimpleModal extends React.Component {
  * @param {Given key for a particular element} id
  */
 function findById(id) {
-  var data = JSON.parse(localStorage.getItem("arrayElement"));
-  if (!id) {
-    const [first] = data;
-    return first;
-  }
-  return data.find(product => product.id == id);
+  return allProducts.find(product => product.id.toString() === id);
 }
 
 SimpleModal.propTypes = {

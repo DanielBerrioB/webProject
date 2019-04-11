@@ -2,6 +2,7 @@ import React from "react";
 import InputType from "../routesElements/inputType";
 import Button from "@material-ui/core/Button";
 import DataUser from "../APIMethod/apiMethods";
+import { createSocket } from "dgram";
 
 const style1 = {
   height: "400px",
@@ -21,6 +22,11 @@ async function getAllUsers() {
   return users;
 }
 
+async function findUser(user) {
+  var response = await DataUser.postUserToFind(user);
+  return response;
+}
+
 //Just to put at the center
 const botonBackground = {
   background: "#FFAB88",
@@ -38,17 +44,19 @@ class UserLoggin extends React.Component {
   };
   //This method allows to log in the account
   handleLogIn = () => {
-    var users = getAllUsers();
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
-    users.then(value => {
-      var element = value.find(
-        i => i.email === email.trim() && i.password === password
-      );
-      if (element) {
-        alert(`Bienvenido ${element.email}`);
-        this.props.history.push("/");
-      }
+
+    findUser({ email: email, password: password }).then(res => {
+      res.json().then(value => {
+        if (value.status) {
+          localStorage.setItem("user", email);
+          alert(`Bienvenido ${email}`);
+          this.props.history.push("/");
+        } else {
+          alert(`No se encontró ${email}`);
+        }
+      });
     });
   };
 
