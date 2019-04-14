@@ -5,6 +5,7 @@ import ModalWindow from "./modalWindows/modalWindow";
 import ModalGestion from "./modalWindows/modalGestion";
 import TextField from "@material-ui/core/TextField";
 import DataProduct from "./APIMethod/apiMethods";
+import Searcher2 from "./searcher2"
 
 //Styles
 const simpleStyle = {
@@ -235,8 +236,20 @@ class ImageSet extends React.Component {
           putting={this.show}
           handleClick={this.promotion}
           handleMenuGestion={this.handleModalGestion}
-          handleClickUser={this.handleUserButton} //To call userButton ("Inicia sesion")
+          
         />
+        <br></br>
+        <br></br>
+
+
+        <Searcher2
+        handleClickUser={this.handleUserButton} //To call userButton ("Inicia sesion")
+        />
+
+
+        
+
+
         <center>
           <table style={simpleStyle} cellSpacing="20px" key="table1">
             {this.state.arrayElement.map(option => (

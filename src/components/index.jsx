@@ -21,6 +21,7 @@ class Main extends React.Component {
               return (
                 <div>
                   <ImageSet {...props} />
+                  <br></br>
                   <InfoBar />
                 </div>
               );

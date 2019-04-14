@@ -32,12 +32,12 @@ const styles1 = {
 };
 
 const styles2 = {
-  marginLeft: "3%"
+  marginLeft: "1%"
 };
 
 const styles3 = {
   color: "black",
-  marginLeft: "55%",
+  marginLeft: "40%",
   width: "85%",
   fontSize: "18px"
 };
@@ -155,9 +155,9 @@ class ButtonAppBar extends React.Component {
               name={<img src={Gestionar} alt="" />}
               handleClickOption={this.handleMenuGestion}
             />
-            <IconButton id="btnSesion" onClick={this.handleClickUser}>
-              Inicia sesión
-            </IconButton>
+          
+
+          
           </Toolbar>
         </AppBar>
         <ModalComment
