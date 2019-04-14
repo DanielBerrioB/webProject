@@ -8,6 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
+
 const styles = theme => ({
   root: {
     display: "flex"
@@ -62,8 +63,10 @@ class CustomizedInputs extends React.Component {
             style={{ position: "fixed", width: "350px" }}
           />
         </div>
-        <br />
-        <br />
+
+        <br></br>
+        <br></br>
+
 
         <div>
           <TextField
@@ -72,7 +75,7 @@ class CustomizedInputs extends React.Component {
             variant="outlined"
             type={this.state.showPassword ? "text" : "password"}
             label="Contraseña"
-            style={{ position: "fixed", marginTop: "5%", width: "350px" }}
+            style={{ position: "fixed", marginTop: "6%", width: "350px" }}
             value={this.state.password}
             onChange={this.handleChangePassword("password")}
             InputProps={{

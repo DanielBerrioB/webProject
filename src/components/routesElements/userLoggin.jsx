@@ -10,7 +10,7 @@ const style1 = {
   border: "1px solid black",
   float: "none",
   margin: "0 auto",
-  marginTop: "200px",
+  marginTop: "10%",
   borderRadios: "20px"
 };
 
@@ -66,9 +66,11 @@ class UserLoggin extends React.Component {
         <div id="userForm" style={style1}>
           <h1 style={{ textAlign: "center" }}>Inicia sesión</h1>
           <InputType showOrHideStatus={true} />
+          <center>
           <Button style={botonBackground} onClick={this.handleLogIn}>
             Ingresar
           </Button>
+          </center>
           <Button
             style={{ marginTop: "55%", alignItems: "center" }}
             onClick={this.hadleNewAccount}
