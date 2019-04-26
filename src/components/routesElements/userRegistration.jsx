@@ -23,7 +23,8 @@ const botonBackground = {
 };
 
 async function postUser(body) {
-  DataUser.postUser(body);
+  var userData = await DataUser.postUser(body);
+  return userData;
 }
 
 /**
@@ -45,19 +46,23 @@ class UserRegistration extends React.Component {
     var email = document.getElementById("email").value;
     var password_verify = document.getElementById("password_verify").value;
     var password = document.getElementById("password").value;
-    this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+     //The SnackBar is open putting true on openSnack
     if (email && password && password_verify) {
       if (password === password_verify) {
         postUser({
           email: email,
           password: password
+        }).then(() => {
+          this.setState({ openSnack: true });
+          this.setState({ snackMessage: "Se ha agregado correctamente" });
+          this.props.history.push("/log/");
         });
-        this.setState({ snackMessage: "Se ha agregado correctamente" });
-        this.props.history.push("/log/");
       } else {
+        this.setState({ openSnack: true });
         this.setState({ snackMessage: "Las contraseñas no coinciden" }); //The message to snackBar
       }
     } else {
+      this.setState({ openSnack: true });
       this.setState({ snackMessage: "No has ingresado todos lo campos" }); //The message to snackBar
     }
   };

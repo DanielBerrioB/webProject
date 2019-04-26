@@ -155,9 +155,6 @@ class ButtonAppBar extends React.Component {
               name={<img src={Gestionar} alt="" />}
               handleClickOption={this.handleMenuGestion}
             />
-          
-
-          
           </Toolbar>
         </AppBar>
         <ModalComment

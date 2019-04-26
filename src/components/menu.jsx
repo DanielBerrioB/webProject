@@ -5,7 +5,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 //Styles
 const fontStyle = {
-  color: "black"
+  float: "left", 
+  color: "white"
 };
 
 const ITEM_HEIGHT = 88;
@@ -44,8 +45,9 @@ class LongMenu extends React.Component {
           aria-owns={open ? "long-menu" : undefined}
           aria-haspopup="true"
           onClick={this.handleClick.bind(this)}
+          style={fontStyle}
         >
-          <p style={fontStyle}>{this.props.name}</p>
+          {this.props.name}
         </IconButton>
         <Menu
           id="long-menu"

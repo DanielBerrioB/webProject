@@ -51,7 +51,7 @@ const putProduct = async (producto, id) => {
  * This function returns all the users
  */
 const getUsers = async () => {
-  let users = await fetch(`${url}/users/create/`);
+  let users = await fetch(`${url}/main/users/create/`);
   users = await users.json();
   return users;
 };
@@ -68,7 +68,7 @@ const postUser = async user => {
       "Content-Type": "application/json"
     }
   };
-  return fetch(`${url}/users/create/`, jsonUser);
+  return fetch(`${url}/main/users/create/`, jsonUser);
 };
 
 /**

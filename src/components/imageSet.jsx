@@ -54,7 +54,8 @@ class ImageSet extends React.Component {
     openModalGestion: false,
     openEditar: true,
     titleModalGestion: "",
-    body: <div /> //(WILL BE DELETE)
+    body: <div />,//(WILL BE DELETE)
+    idText: ""
   };
 
   onAlert = (event, array) => {
@@ -135,6 +136,8 @@ class ImageSet extends React.Component {
                 id="txtIdEditar"
                 label="Id imagen a editar"
                 margin="normal"
+                value={this.state.idText}
+                onChange={e => this.setState({idText: e.target.value.toString()})}
               />
               <br />
             </div>
@@ -156,6 +159,7 @@ class ImageSet extends React.Component {
   handleReload = (event, array, valueOpen) => {
     if (!valueOpen) {
       this.setState({ openEditar: false });
+      this.setState({idText: array.id})
       this.setState({
         body: (
           <div>
@@ -164,7 +168,8 @@ class ImageSet extends React.Component {
               id="txtIdEditar"
               label="Id imagen a editar"
               margin="normal"
-              value={array.id}
+              value={this.state.idText}
+              onChange={(e) => this.setState(e.event.idText)}
             />
             <br />
 
@@ -172,7 +177,7 @@ class ImageSet extends React.Component {
               id="txtNameEditar"
               label="Nombre"
               margin="normal"
-              value={array.name}
+              value={array.name} 
             />
             <br />
             <TextField
@@ -241,14 +246,9 @@ class ImageSet extends React.Component {
         <br></br>
         <br></br>
 
-
         <Searcher2
-        handleClickUser={this.handleUserButton} //To call userButton ("Inicia sesion")
+            handleClickUser={this.handleUserButton} //To call userButton ("Inicia sesion")
         />
-
-
-        
-
 
         <center>
           <table style={simpleStyle} cellSpacing="20px" key="table1">
