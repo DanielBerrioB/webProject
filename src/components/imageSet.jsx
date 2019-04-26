@@ -5,7 +5,7 @@ import ModalWindow from "./modalWindows/modalWindow";
 import ModalGestion from "./modalWindows/modalGestion";
 import TextField from "@material-ui/core/TextField";
 import DataProduct from "./APIMethod/apiMethods";
-import Searcher2 from "./searcher2"
+import Searcher2 from "./searcher2";
 
 //Styles
 const simpleStyle = {
@@ -54,7 +54,7 @@ class ImageSet extends React.Component {
     openModalGestion: false,
     openEditar: true,
     titleModalGestion: "",
-    body: <div />,//(WILL BE DELETE)
+    body: <div />, //(WILL BE DELETE)
     idText: ""
   };
 
@@ -136,8 +136,8 @@ class ImageSet extends React.Component {
                 id="txtIdEditar"
                 label="Id imagen a editar"
                 margin="normal"
-                value={this.state.idText}
-                onChange={e => this.setState({idText: e.target.value.toString()})}
+                //value={this.state.idText}
+                //onChange={e => this.setState({ idText: e.target.value })}
               />
               <br />
             </div>
@@ -159,60 +159,48 @@ class ImageSet extends React.Component {
   handleReload = (event, array, valueOpen) => {
     if (!valueOpen) {
       this.setState({ openEditar: false });
-      this.setState({idText: array.id})
       this.setState({
         body: (
           <div>
             <h1>Editar un producto</h1>
+            <h6>*Si dejas un campo en blanco no se editará dicho campo</h6>
             <TextField
               id="txtIdEditar"
               label="Id imagen a editar"
               margin="normal"
-              value={this.state.idText}
-              onChange={(e) => this.setState(e.event.idText)}
             />
             <br />
 
             <TextField
               id="txtNameEditar"
-              label="Nombre"
+              label={`Nombre: ${array.name}`}
               margin="normal"
-              value={array.name} 
             />
             <br />
-            <TextField
-              id="txtUrlEditar"
-              label="URL"
-              margin="normal"
-              value={array.source}
-            />
+            <TextField id="txtUrlEditar" label="URL" margin="normal" />
             <br />
             <TextField
               id="txtPrecioEditar"
-              label="Precio"
+              label={`Precio: ${array.precio}`}
               margin="normal"
-              value={array.precio}
             />
             <br />
             <TextField
               id="txtCategoriaEditar"
-              label="Categoria"
+              label={`Categoria: ${array.categoria}`}
               margin="normal"
-              value={array.categoria}
             />
             <br />
             <TextField
               id="txtPromocionEditar"
-              label="¿Promoción?(S o N)"
+              label={`¿Promoción?(S o N): ${array.promocion ? "S" : "N"}`}
               margin="normal"
-              value={array.promocion ? "S" : "N"}
             />
             <br />
             <TextField
               id="txtTallaEditar"
-              label="Tallas (separadas por,)"
+              label={`Tallas: ${array.talla.toString()}`}
               margin="normal"
-              value={array.talla.toString()}
             />
             <br />
           </div>
@@ -241,13 +229,12 @@ class ImageSet extends React.Component {
           putting={this.show}
           handleClick={this.promotion}
           handleMenuGestion={this.handleModalGestion}
-          
         />
-        <br></br>
-        <br></br>
+        <br />
+        <br />
 
         <Searcher2
-            handleClickUser={this.handleUserButton} //To call userButton ("Inicia sesion")
+          handleClickUser={this.handleUserButton} //To call userButton ("Inicia sesion")
         />
 
         <center>

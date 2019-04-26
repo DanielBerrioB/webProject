@@ -65,7 +65,8 @@ async function putProduct(body, id) {
 class ModalGestion extends React.Component {
   state = {
     openSnack: false,
-    snackMessage: ""
+    snackMessage: "",
+    dataEdit: []
   };
 
   handleActionButton = event => {
@@ -103,6 +104,7 @@ class ModalGestion extends React.Component {
                   this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
                   this.setState({ snackMessage: "El id no se encuentra" });
                 } else {
+                  this.setState({ dataEdit: res });
                   this.props.handleActionButton(
                     event,
                     res,
@@ -116,28 +118,33 @@ class ModalGestion extends React.Component {
             this.setState({ snackMessage: "No has ingresado el id" });
           }
         } else {
+          var id, name, source, precio, categoria, promocion, talla;
+          id = parseInt(document.getElementById("txtIdEditar").value);
+          name = document.getElementById("txtNameEditar").value;
+          source = document.getElementById("txtUrlEditar").value;
+          precio = parseInt(document.getElementById("txtPrecioEditar").value);
+          categoria = document.getElementById("txtCategoriaEditar").value;
+          promocion =
+            document.getElementById("txtPromocionEditar").value === "S"
+              ? true
+              : false;
+          talla = document.getElementById("txtTallaEditar").value;
           var datosEditar = {
-            id: parseInt(document.getElementById("txtIdEditar").value),
-            name: document.getElementById("txtNameEditar").value,
-            source: document.getElementById("txtUrlEditar").value,
-            precio: parseInt(document.getElementById("txtPrecioEditar").value),
-            categoria: document.getElementById("txtCategoriaEditar").value,
-            promocion:
-              document.getElementById("txtPromocionEditar").value === "S"
-                ? true
-                : false,
-            talla: document
-              .getElementById("txtTallaEditar")
-              .value.trim()
-              .split(",")
+            id: id ? id : this.state.dataEdit.id,
+            name: name ? name : this.state.dataEdit.name,
+            source: source ? source : this.state.dataEdit.source,
+            precio: precio ? precio : this.state.dataEdit.precio,
+            categoria: categoria ? categoria : this.state.dataEdit.categoria,
+            promocion: promocion,
+            talla: talla ? talla.trim().split(",") : this.state.dataEdit.talla
           };
-          putProduct(
-            datosEditar,
-            parseInt(document.getElementById("txtIdEditar").value)
-          ).then(res => this.props.handleActionButton(event, res.json(), true));
+          putProduct(datosEditar, id ? id : this.state.dataEdit.id).then(res =>
+            this.props.handleActionButton(event, res.json(), true)
+          );
 
           this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
           this.setState({ snackMessage: "Se editó correctamente" }); //The message to snackBar
+          this.setState({ dataEdit: [] });
         }
       } else {
         // Adding
