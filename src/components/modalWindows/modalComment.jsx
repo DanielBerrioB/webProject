@@ -5,6 +5,7 @@ import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import ModalWindow from "../listComment";
 import DataComment from "../APIMethod/apiMethods";
+import SnackBar from "../snackBar";
 
 //CSS styles
 const botonBackground = {
@@ -39,57 +40,60 @@ function getModalStyle() {
   };
 }
 
-async function postComment(comment) {
-  var response = await DataComment.postComment(comment);
-  return response;
-}
-
-async function getComment() {
-  var response = await DataComment.getComment();
-  return response;
-}
-
 //This class represents the modal window that shows all the comments and allows to add comments to the local Storage
 class CommendModal extends React.Component {
   componentDidMount() {
-    getComment().then(res => {
-      console.log(res);
-      this.setState({ arrayComment: res });
-    });
+    DataComment.getComment()
+      .then(res => {
+        return res.json();
+      })
+      .then(value => {
+        this.setState({ arrayComment: value });
+      });
   }
 
   state = {
     sizeClothe: "",
     text: "",
-    arrayComment: []
+    arrayComment: [],
+    openSnack: false,
+    snackMessage: ""
   };
 
   /**
    * Create a comment and add it to the localStorage
    */
   createComment = () => {
-    this.setState({ text: document.getElementById("txt1").value });
-    if (document.getElementById("txt1").value) {
-      postComment({ comment: document.getElementById("txt1").value }).then(
-        res => {
-          res.json().then(value => {
+    if (this.state.text) {
+      DataComment.postComment({
+        comment: this.state.text
+      })
+        .then(res => {
+          return res.json();
+        })
+        .then(value => {
+          if (value.message) {
+            this.setState({ openSnack: true });
+            this.setState({ snackMessage: "No has ingresado como usuario" });
+          } else {
             this.setState({
               arrayComment: value
             });
             this.props.cambio();
-          });
-        }
-      );
+            this.setState({ text: "" });
+          }
+        });
     }
   };
 
+  handleCloseSnackBar = () => this.setState({ openSnack: false });
+
   handleClose = event => {
+    this.setState({ text: "" });
     this.handleClose(event);
   };
 
-  handleButton = size => {
-    this.setState({ sizeClothe: size });
-  };
+  handleButton = size => this.setState({ sizeClothe: size });
 
   render() {
     const { classes } = this.props;
@@ -113,6 +117,10 @@ class CommendModal extends React.Component {
                     textAlign: "start",
                     fontStyle: "arial"
                   }}
+                  value={this.state.text}
+                  onChange={e => {
+                    this.setState({ text: e.target.value });
+                  }}
                 />
               </div>
               <Button onClick={this.createComment} style={botonBackground}>
@@ -120,7 +128,12 @@ class CommendModal extends React.Component {
               </Button>
             </center>
             <ModalWindow array={this.state.arrayComment} />
-            <commendModalWrapped />
+            <SnackBar
+              openSnackBar={this.state.openSnack}
+              handleCloseSnack={this.handleCloseSnackBar}
+              textMessage={this.state.snackMessage}
+            />
+            <CommendModalWrapped />
           </div>
         </Modal>
       </div>
@@ -133,6 +146,6 @@ CommendModal.propTypes = {
 };
 
 // We need an intermediary variable for handling the recursive nesting.
-const commendModalWrapped = withStyles(styles)(CommendModal);
+const CommendModalWrapped = withStyles(styles)(CommendModal);
 
-export default commendModalWrapped;
+export default CommendModalWrapped;

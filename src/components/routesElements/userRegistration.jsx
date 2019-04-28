@@ -22,11 +22,6 @@ const botonBackground = {
   height: "45px"
 };
 
-async function postUser(body) {
-  var userData = await DataUser.postUser(body);
-  return userData;
-}
-
 /**
  * This class represents the window where the user can register
  * into the app
@@ -46,12 +41,13 @@ class UserRegistration extends React.Component {
     var email = document.getElementById("email").value;
     var password_verify = document.getElementById("password_verify").value;
     var password = document.getElementById("password").value;
-     //The SnackBar is open putting true on openSnack
+    //The SnackBar is open putting true on openSnack
     if (email && password && password_verify) {
       if (password === password_verify) {
-        postUser({
+        DataUser.postUser({
           email: email,
-          password: password
+          password: password,
+          role: false
         }).then(() => {
           this.setState({ openSnack: true });
           this.setState({ snackMessage: "Se ha agregado correctamente" });

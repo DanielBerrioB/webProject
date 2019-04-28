@@ -199,7 +199,7 @@ class ImageSet extends React.Component {
             <br />
             <TextField
               id="txtTallaEditar"
-              label={`Tallas: ${array.talla.toString()}`}
+              label={`Tallas: ${array.talla}`}
               margin="normal"
             />
             <br />
@@ -211,7 +211,7 @@ class ImageSet extends React.Component {
         var values = toConvert(arrayUpdated);
         this.setState({ arrayElement: values });
         this.setState({ openModalGestion: false });
-        this.setState({ openEditar: true });
+        this.setState({ openEditar: false });
       });
     }
   };

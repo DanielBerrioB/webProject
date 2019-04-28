@@ -1,4 +1,7 @@
 var url = "http://localhost:4000";
+var currentToken = "";
+if (localStorage.getItem("user"))
+  currentToken = JSON.parse(localStorage.getItem("user")).token;
 
 /**
  * This function returns all the elements
@@ -23,7 +26,14 @@ const getProduct = async id => {
  * @param {Given id to remove a product} id
  */
 const deleteProduct = async id => {
-  return await fetch(`${url}/main/${id}`, { method: "DELETE" });
+  const jsonDelete = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: currentToken
+    }
+  };
+  return fetch(`${url}/main/${id}`, jsonDelete);
 };
 
 /**
@@ -33,16 +43,16 @@ const addProduct = async producto => {
   const jsonProduct = {
     method: "POST",
     body: JSON.stringify(producto),
-    headers: { "Content-Type": "application/json" }
+    headers: { "Content-Type": "application/json", authorization: currentToken }
   };
-  return await fetch(`${url}/main/`, jsonProduct);
+  return fetch(`${url}/main/`, jsonProduct);
 };
 
 const putProduct = async (producto, id) => {
   const jsonProduct = {
     method: "PUT",
     body: JSON.stringify(producto),
-    headers: { "Content-Type": "application/json" }
+    headers: { "Content-Type": "application/json", authorization: currentToken }
   };
   return await fetch(`${url}/main/${id}`, jsonProduct);
 };
@@ -95,7 +105,8 @@ const postComment = async comment => {
     method: "POST",
     body: JSON.stringify(comment),
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      authorization: currentToken
     }
   };
   return fetch(`${url}/main/comment/`, jsonComment);
@@ -105,9 +116,7 @@ const postComment = async comment => {
  * This GET method returns all the comments from the database
  */
 const getComment = async () => {
-  let comment = await fetch(`${url}/main/comment/`);
-  comment = await comment.json();
-  return comment;
+  return fetch(`${url}/main/comment/`);
 };
 
 export default {

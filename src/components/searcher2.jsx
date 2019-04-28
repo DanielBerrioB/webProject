@@ -1,13 +1,13 @@
 import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import LongMenu from "./menu";
+import DataProduct from "./APIMethod/apiMethods";
 
 const simpleStyle = {
   height: "40px",
   width: "100%",
-  background:
-    "#636060",
-  position: "absolute",
+  background: "#636060",
+  position: "absolute"
 };
 
 const height = {
@@ -21,36 +21,38 @@ const height = {
 /**
  * This function returns the user saved from the local storage
  */
-function getUserFromLocal(){
-  var user = localStorage.getItem("user");
-  return user ? user : false; 
+function getUserFromLocal() {
+  var user = JSON.parse(localStorage.getItem("user"));
+  return user ? user.email : false;
 }
 
 //Here you can add some styles for the elements
 class searcher2 extends React.Component {
-
-  componentDidMount(){
+  componentDidMount() {
     var user = getUserFromLocal();
-    if(user){ 
-      this.setState({isHidden: false});
-      this.setState({textUser: user});
-    }else{
-      this.setState({isHidden: false});
-      this.setState({textUser: ""});
+    if (user) {
+      this.setState({ isHidden: false });
+      this.setState({ textUser: user });
+    } else {
+      this.setState({ isHidden: true });
+      this.setState({ textUser: "" });
     }
   }
 
-  handleClickUser = event => {
-    this.props.handleClickUser();
-  };
+  handleClickUser = () => this.props.handleClickUser();
 
   handleItem = (event, text) => {
-    alert(text);
+    if (text === "Cerrar sesión") {
+      DataProduct.currentToken = "";
+      this.setState({ isHidden: true });
+      this.setState({ textUser: "" });
+      localStorage.removeItem("user");
+    }
   };
 
   state = {
     isHidden: false,
-    textUser: "", 
+    textUser: ""
   };
 
   render() {
@@ -58,15 +60,19 @@ class searcher2 extends React.Component {
       <div style={simpleStyle}>
         <LongMenu
           id="btnBienvenido"
-          array={["H", "k", "o"]}
+          array={["Cerrar sesión"]}
           name={this.state.textUser}
           key="btnBienvenido"
           hidden={this.state.isHidden}
           handleClickOption={this.handleItem}
         />
         <center hidden={!this.state.isHidden}>
-          <IconButton id="btnSesion" onClick={this.handleClickUser} style={height} >
-                Iniciar Sesión
+          <IconButton
+            id="btnSesion"
+            onClick={this.handleClickUser}
+            style={height}
+          >
+            Iniciar Sesión
           </IconButton>
         </center>
       </div>

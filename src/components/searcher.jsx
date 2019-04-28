@@ -16,6 +16,7 @@ import Comentarios from "../images/comentarios.png";
 import ModalComment from "./modalWindows/modalComment";
 import Gestionar from "../images/GestionarProducto.png";
 import DataProduct from "./APIMethod/apiMethods";
+import SnackBar from "./snackBar";
 
 //Here you can add some styles for the elements
 const styles1 = {
@@ -47,18 +48,13 @@ const stylesToolbar = {
   height: "50px"
 };
 
-async function getAllProducts() {
-  var users = await DataProduct.getProducts();
-  return users;
-}
-
 var nuevoArray = [];
 /**
  * Allows to return the categories from the local storage
  * @param {The array that contains all the information from the API} array
  */
 async function categoryArray() {
-  nuevoArray = await getAllProducts();
+  nuevoArray = await DataProduct.getProducts();
   var arrayToReturn = [];
   nuevoArray.forEach(i => {
     if (!arrayToReturn.includes(i.categoria)) arrayToReturn.push(i.categoria);
@@ -73,16 +69,14 @@ class ButtonAppBar extends React.Component {
   state = {
     openComment: false,
     text: "",
-    arrayCategory: []
+    arrayCategory: [],
+    openSnack: false,
+    snackMessage: ""
   };
 
-  handleClickComment = event => {
-    this.setState({ openComment: true });
-  };
+  handleClickComment = () => this.setState({ openComment: true });
 
-  closeComment = event => {
-    this.setState({ openComment: false });
-  };
+  closeComment = () => this.setState({ openComment: false });
 
   updateElementFromParent() {
     categoryArray().then(value => this.setState({ arrayCategory: value }));
@@ -95,9 +89,7 @@ class ButtonAppBar extends React.Component {
     );
   };
 
-  handleClick = event => {
-    this.props.handleClick(event);
-  };
+  handleClick = event => this.props.handleClick(event);
 
   putting = (event, text) => {
     categoryArray().then(value => this.setState({ arrayCategory: value }));
@@ -105,13 +97,18 @@ class ButtonAppBar extends React.Component {
   };
 
   handleMenuGestion = (event, text) => {
-    this.props.handleMenuGestion(text);
+    if (localStorage.getItem("user")) {
+      this.props.handleMenuGestion(text);
+    } else {
+      this.setState({ openSnack: true });
+      this.setState({ snackMessage: "No eres administrador" });
+    }
   };
 
   //This handle event is called when the button "Inicia sesion" has been clicked
-  handleClickUser = event => {
-    this.props.handleClickUser();
-  };
+  handleClickUser = () => this.props.handleClickUser();
+
+  handleCloseSnackBar = () => this.setState({ openSnack: false });
 
   render() {
     return (
@@ -146,14 +143,27 @@ class ButtonAppBar extends React.Component {
               />
             </FormControl>
             <SimpleMenu />
-            <LongMenu
-              array={[
-                "Agregar producto",
-                "Eliminar producto",
-                "Editar producto"
-              ]}
-              name={<img src={Gestionar} alt="" />}
-              handleClickOption={this.handleMenuGestion}
+            <div
+              hidden={
+                localStorage.getItem("user")
+                  ? !JSON.parse(localStorage.getItem("user")).role
+                  : true
+              }
+            >
+              <LongMenu
+                array={[
+                  "Agregar producto",
+                  "Eliminar producto",
+                  "Editar producto"
+                ]}
+                name={<img src={Gestionar} alt="" />}
+                handleClickOption={this.handleMenuGestion}
+              />
+            </div>
+            <SnackBar
+              openSnackBar={this.state.openSnack}
+              handleCloseSnack={this.handleCloseSnackBar}
+              textMessage={this.state.snackMessage}
             />
           </Toolbar>
         </AppBar>

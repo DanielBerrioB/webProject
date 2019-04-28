@@ -2,7 +2,6 @@ import React from "react";
 import InputType from "../routesElements/inputType";
 import Button from "@material-ui/core/Button";
 import DataUser from "../APIMethod/apiMethods";
-import { createSocket } from "dgram";
 
 const style1 = {
   height: "400px",
@@ -13,19 +12,6 @@ const style1 = {
   marginTop: "10%",
   borderRadios: "20px"
 };
-
-/**
- * This function return all the users called from apiMethods
- */
-async function getAllUsers() {
-  var users = await DataUser.getUsers();
-  return users;
-}
-
-async function findUser(user) {
-  var response = await DataUser.postUserToFind(user);
-  return response;
-}
 
 //Just to put at the center
 const botonBackground = {
@@ -47,17 +33,25 @@ class UserLoggin extends React.Component {
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
 
-    findUser({ email: email, password: password }).then(res => {
-      res.json().then(value => {
+    DataUser.postUserToFind({ email: email, password: password })
+      .then(res => {
+        return res.json();
+      })
+      .then(value => {
         if (value.status) {
-          localStorage.setItem("user", email);
+          var userData = {
+            email: email,
+            role: value.user.role,
+            token: value.token
+          };
+          DataUser.currentToken = value.user.token;
+          localStorage.setItem("user", JSON.stringify(userData));
           alert(`Bienvenido ${email}`);
           this.props.history.push("/");
         } else {
           alert(`No se encontró ${email}`);
         }
       });
-    });
   };
 
   render() {
@@ -67,9 +61,9 @@ class UserLoggin extends React.Component {
           <h1 style={{ textAlign: "center" }}>Inicia sesión</h1>
           <InputType showOrHideStatus={true} />
           <center>
-          <Button style={botonBackground} onClick={this.handleLogIn}>
-            Ingresar
-          </Button>
+            <Button style={botonBackground} onClick={this.handleLogIn}>
+              Ingresar
+            </Button>
           </center>
           <Button
             style={{ marginTop: "55%", alignItems: "center" }}
