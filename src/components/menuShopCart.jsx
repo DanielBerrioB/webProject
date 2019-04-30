@@ -5,6 +5,10 @@ import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Done from "@material-ui/icons/Done";
+import DataShop from "./APIMethod/apiMethods";
+import SnackBar from "./snackBar";
 
 var data;
 
@@ -15,7 +19,9 @@ class SimpleMenu extends React.Component {
   state = {
     anchorEl: null,
     arrayElement: [{ id: 0, name: "", precio: 0, size: 0 }],
-    estaActivado: false
+    estaActivado: false,
+    openSnack: false,
+    snackMessage: ""
   };
 
   //Get all the elements from local storage and then it saves into data
@@ -40,13 +46,37 @@ class SimpleMenu extends React.Component {
     }
   };
 
-  handleExit = event => {
-    this.setState({ anchorEl: null });
+  handleBuyClothe = () => {
+    var total = 0;
+    data.forEach(i => (total += i.precio));
+    var body = {
+      email: JSON.parse(localStorage.getItem("user")).email,
+      shop: data,
+      total: total
+    };
+    data = [];
+    DataShop.postShopCart(body)
+      .then(res => res.json())
+      .then(value => {
+        if (value.status) {
+          this.setState({ anchorEl: null });
+          localStorage.removeItem("carrito");
+          this.props.handleSnackMessage(
+            "Has comprado los productos en las próximas horas recibiras un mensaje con los metodos de pago"
+          );
+        } else {
+          this.props.handleSnackMessage(
+            "No se han podido comprar los productos intenta de nuevo"
+          );
+        }
+      });
   };
 
-  handleShopCar = () => {
-    this.setState({ arrayElement: data });
-  };
+  handleExit = () => this.setState({ anchorEl: null });
+
+  handleShopCar = () => this.setState({ arrayElement: data });
+
+  handleCloseSnackBar = () => this.setState({ openSnack: false });
 
   render() {
     const { anchorEl } = this.state;
@@ -72,7 +102,7 @@ class SimpleMenu extends React.Component {
             <Grid item xs={8} style={{ width: "100%" }}>
               <MenuItem
                 onClick={this.handleClose}
-                style={{ width: "99%" }}
+                style={{ width: "100%" }}
                 id={element.id}
               >
                 <DeleteIcon style={{ float: "right" }} />
@@ -80,6 +110,19 @@ class SimpleMenu extends React.Component {
               </MenuItem>
             </Grid>
           ))}
+          {elements.length > 0 ? (
+            <div>
+              <Button onClick={this.handleBuyClothe}>Comprar</Button>
+              <Done />
+            </div>
+          ) : (
+            ""
+          )}
+          <SnackBar
+            openSnackBar={this.state.openSnack}
+            handleCloseSnack={this.handleCloseSnackBar}
+            textMessage={this.state.snackMessage}
+          />
         </Menu>
       </div>
     );

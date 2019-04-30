@@ -119,6 +119,21 @@ const getComment = async () => {
   return fetch(`${url}/main/comment/`);
 };
 
+/**
+ * This method allows to post a shop to the API
+ */
+const postShopCart = async body => {
+  const jsonShopCart = {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+      authorization: currentToken
+    }
+  };
+  return fetch(`${url}/main/users/shopCart/`, jsonShopCart);
+};
+
 export default {
   getUsers,
   postUser,
@@ -129,5 +144,6 @@ export default {
   getProduct,
   postComment,
   getComment,
-  postUserToFind
+  postUserToFind,
+  postShopCart
 };

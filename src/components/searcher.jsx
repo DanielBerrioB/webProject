@@ -110,6 +110,11 @@ class ButtonAppBar extends React.Component {
 
   handleCloseSnackBar = () => this.setState({ openSnack: false });
 
+  handleShowMessage = text => {
+    this.setState({ openSnack: true });
+    this.setState({ snackMessage: text });
+  };
+
   render() {
     return (
       <div className={this.props.root}>
@@ -142,7 +147,7 @@ class ButtonAppBar extends React.Component {
                 startAdornment={<SearchIcon />}
               />
             </FormControl>
-            <SimpleMenu />
+            <SimpleMenu handleSnackMessage={this.handleShowMessage} />
             <div
               hidden={
                 localStorage.getItem("user")
