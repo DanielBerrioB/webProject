@@ -59,18 +59,22 @@ class UserLoggin extends React.Component {
       <div>
         <div id="userForm" style={style1}>
           <h1 style={{ textAlign: "center" }}>Inicia sesión</h1>
+          <center>
           <InputType showOrHideStatus={true} />
+                      </center>
           <center>
             <Button style={botonBackground} onClick={this.handleLogIn}>
               Ingresar
             </Button>
-          </center>
-          <Button
-            style={{ marginTop: "55%", alignItems: "center" }}
+            </center>
+            <center>
+            <Button
+            style={{ marginTop: "10%", alignItems: "center" }}
             onClick={this.hadleNewAccount}
           >
             ¿No tienes cuenta?/Crea una aquí
           </Button>
+          </center>
         </div>
       </div>
     );

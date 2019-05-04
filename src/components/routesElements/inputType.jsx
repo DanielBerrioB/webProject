@@ -65,6 +65,7 @@ class CustomizedInputs extends React.Component {
         <br />
         <br />
         <div>
+
           <TextField
             id="password"
             className={classNames(classes.margin, classes.textField)}
@@ -94,6 +95,8 @@ class CustomizedInputs extends React.Component {
         </div>
 
         <div hidden={this.props.showOrHideStatus}>
+        <br />
+
           <TextField //Hidden password only aviable for userRegistration
             id="password_verify"
             className={classNames(classes.margin, classes.textField)}

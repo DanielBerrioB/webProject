@@ -10,7 +10,7 @@ const style1 = {
   border: "1px solid black",
   float: "none",
   margin: "0 auto",
-  marginTop: "200px",
+  marginTop: "5%",
   borderRadios: "20px"
 };
 
@@ -69,9 +69,12 @@ class UserRegistration extends React.Component {
         <div id="userForm" style={style1}>
           <h1 style={{ textAlign: "center" }}>Crea tu cuenta</h1>
           <InputType showOrHideStatus={false} />
+          <br/>
+          <center>
           <Button style={botonBackground} onClick={this.handleCreateUser}>
             Crear
           </Button>
+          </center>
           <SnackBar
             openSnackBar={this.state.openSnack}
             handleCloseSnack={this.handleCloseSnackBar}
