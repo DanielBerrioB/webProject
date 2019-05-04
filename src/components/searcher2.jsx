@@ -2,6 +2,7 @@ import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import LongMenu from "./menu";
 import DataProduct from "./APIMethod/apiMethods";
+import ModalProduct from "./modalWindows/modalProduct";
 
 const simpleStyle = {
   height: "40px",
@@ -41,18 +42,30 @@ class searcher2 extends React.Component {
 
   handleClickUser = () => this.props.handleClickUser();
 
+  handleCloseModalWindow = () => this.setState({ openModalProduct: false });
+
   handleItem = (event, text) => {
     if (text === "Cerrar sesión") {
       DataProduct.currentToken = "";
       this.setState({ isHidden: true });
       this.setState({ textUser: "" });
       localStorage.removeItem("user");
+    } else {
+      if (text === "Pedidos") {
+        DataProduct.getShopCart()
+          .then(res => res.json())
+          .then(result => {
+            console.log(result);
+            this.setState({ openModalProduct: true }); //This modal window is open
+          });
+      }
     }
   };
 
   state = {
     isHidden: false,
-    textUser: ""
+    textUser: "",
+    openModalProduct: false
   };
 
   render() {
@@ -60,7 +73,7 @@ class searcher2 extends React.Component {
       <div style={simpleStyle}>
         <LongMenu
           id="btnBienvenido"
-          array={["Cerrar sesión"]}
+          array={["Pedidos", "Cerrar sesión"]}
           name={this.state.textUser}
           key="btnBienvenido"
           hidden={this.state.isHidden}
@@ -75,6 +88,10 @@ class searcher2 extends React.Component {
             Iniciar Sesión
           </IconButton>
         </center>
+        <ModalProduct
+          allowOpen={this.state.openModalProduct}
+          cambio={this.handleCloseModalWindow}
+        />
       </div>
     );
   }

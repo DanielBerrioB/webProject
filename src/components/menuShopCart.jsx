@@ -45,31 +45,36 @@ class SimpleMenu extends React.Component {
       if (data.length === 0) this.setState({ estaActivado: false });
     }
   };
-
+  //When button 'Comprar' is pressed, first of all it verifies
+  //if a user has logged
   handleBuyClothe = () => {
-    var total = 0;
-    data.forEach(i => (total += i.precio));
-    var body = {
-      email: JSON.parse(localStorage.getItem("user")).email,
-      shop: data,
-      total: total
-    };
-    data = [];
-    DataShop.postShopCart(body)
-      .then(res => res.json())
-      .then(value => {
-        if (value.status) {
-          this.setState({ anchorEl: null });
-          localStorage.removeItem("carrito");
-          this.props.handleSnackMessage(
-            "Has comprado los productos en las próximas horas recibiras un mensaje con los metodos de pago"
-          );
-        } else {
-          this.props.handleSnackMessage(
-            "No se han podido comprar los productos intenta de nuevo"
-          );
-        }
-      });
+    if (localStorage.getItem("user")) {
+      var total = 0;
+      data.forEach(i => (total += i.precio));
+      var body = {
+        email: JSON.parse(localStorage.getItem("user")).email,
+        shop: data,
+        total: total
+      };
+      data = [];
+      DataShop.postShopCart(body)
+        .then(res => res.json())
+        .then(value => {
+          if (value.status) {
+            this.setState({ anchorEl: null });
+            localStorage.removeItem("carrito");
+            this.props.handleSnackMessage(
+              "Has comprado los productos en las próximas horas recibiras un mensaje con los metodos de pago"
+            );
+          } else {
+            this.props.handleSnackMessage(
+              "No se han podido comprar los productos intenta de nuevo"
+            );
+          }
+        });
+    } else {
+      this.props.handleSnackMessage("Tal vez no has ingresado como un usuario");
+    }
   };
 
   handleExit = () => this.setState({ anchorEl: null });

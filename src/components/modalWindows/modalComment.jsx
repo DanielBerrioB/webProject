@@ -102,7 +102,7 @@ class CommendModal extends React.Component {
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
-          open={this.props.allowOpen}
+          open={this.props.allowOpen === undefined ? false : this.props.allowOpen}
           onClose={() => this.props.cambio()}
         >
           <div style={getModalStyle()} className={classes.paper}>

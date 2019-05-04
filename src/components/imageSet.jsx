@@ -82,45 +82,31 @@ class ImageSet extends React.Component {
 
   //Here you add the body's elements from modal class (WILL BE DELETE)
   handleModalGestion = text => {
-    if (text.includes("Agregar producto")) {
-      this.setState({
-        body: (
-          <div>
-            <h1>Agrega un producto</h1>
-            <TextField id="txtId" label="Id" margin="normal" />
-            <br />
-            <TextField id="txtName" label="Nombre" margin="normal" />
-            <br />
-            <TextField id="txtUrl" label="URL" margin="normal" />
-            <br />
-            <TextField id="txtPrecio" label="Precio" margin="normal" />
-            <br />
-            <TextField id="txtCategoria" label="Categoria" margin="normal" />
-            <br />
-            <TextField
-              id="txtPromocion"
-              label="¿Esta en promoción?"
-              margin="normal"
-            />
-            <br />
-            <TextField
-              id="txtTalla"
-              label="Tallas (separadas por,)"
-              margin="normal"
-            />
-            <br />
-          </div>
-        )
-      });
-    } else {
-      if (text.includes("Eliminar producto")) {
+    if (text) {
+      if (text.includes("Agregar producto")) {
         this.setState({
           body: (
             <div>
-              <h1>Eliminar producto</h1>
+              <h1>Agrega un producto</h1>
+              <TextField id="txtId" label="Id" margin="normal" />
+              <br />
+              <TextField id="txtName" label="Nombre" margin="normal" />
+              <br />
+              <TextField id="txtUrl" label="URL" margin="normal" />
+              <br />
+              <TextField id="txtPrecio" label="Precio" margin="normal" />
+              <br />
+              <TextField id="txtCategoria" label="Categoria" margin="normal" />
+              <br />
               <TextField
-                id="txtEliminarId"
-                label="Ingrese el Id de la imagen"
+                id="txtPromocion"
+                label="¿Esta en promoción?"
+                margin="normal"
+              />
+              <br />
+              <TextField
+                id="txtTalla"
+                label="Tallas (separadas por,)"
                 margin="normal"
               />
               <br />
@@ -128,25 +114,41 @@ class ImageSet extends React.Component {
           )
         });
       } else {
-        this.setState({
-          body: (
-            <div>
-              <h1>Editar un producto</h1>
-              <TextField
-                id="txtIdEditar"
-                label="Id imagen a editar"
-                margin="normal"
-                //value={this.state.idText}
-                //onChange={e => this.setState({ idText: e.target.value })}
-              />
-              <br />
-            </div>
-          )
-        });
+        if (text.includes("Eliminar producto")) {
+          this.setState({
+            body: (
+              <div>
+                <h1>Eliminar producto</h1>
+                <TextField
+                  id="txtEliminarId"
+                  label="Ingrese el Id de la imagen"
+                  margin="normal"
+                />
+                <br />
+              </div>
+            )
+          });
+        } else {
+          this.setState({
+            body: (
+              <div>
+                <h1>Editar un producto</h1>
+                <TextField
+                  id="txtIdEditar"
+                  label="Id imagen a editar"
+                  margin="normal"
+                  //value={this.state.idText}
+                  //onChange={e => this.setState({ idText: e.target.value })}
+                />
+                <br />
+              </div>
+            )
+          });
+        }
       }
+      this.setState({ titleModalGestion: text });
+      this.setState({ openModalGestion: true });
     }
-    this.setState({ titleModalGestion: text });
-    this.setState({ openModalGestion: true });
   };
 
   closeHandleModalGestion = () => {

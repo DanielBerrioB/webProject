@@ -134,6 +134,17 @@ const postShopCart = async body => {
   return fetch(`${url}/main/users/shopCart/`, jsonShopCart);
 };
 
+const getShopCart = async () => {
+  const jsonGetShopCart = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: currentToken
+    }
+  };
+  return fetch(`${url}/main/users/shopCart/`, jsonGetShopCart);
+}
+
 export default {
   getUsers,
   postUser,
@@ -145,5 +156,6 @@ export default {
   postComment,
   getComment,
   postUserToFind,
-  postShopCart
+  postShopCart,
+  getShopCart
 };
