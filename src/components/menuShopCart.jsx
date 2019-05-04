@@ -12,6 +12,10 @@ import SnackBar from "./snackBar";
 
 var data;
 
+const style={
+  marginLeft: "80px",
+}
+
 /**
  * This class represents a simple menu with all the things that the user has choosen
  */
@@ -45,36 +49,31 @@ class SimpleMenu extends React.Component {
       if (data.length === 0) this.setState({ estaActivado: false });
     }
   };
-  //When button 'Comprar' is pressed, first of all it verifies
-  //if a user has logged
+
   handleBuyClothe = () => {
-    if (localStorage.getItem("user")) {
-      var total = 0;
-      data.forEach(i => (total += i.precio));
-      var body = {
-        email: JSON.parse(localStorage.getItem("user")).email,
-        shop: data,
-        total: total
-      };
-      data = [];
-      DataShop.postShopCart(body)
-        .then(res => res.json())
-        .then(value => {
-          if (value.status) {
-            this.setState({ anchorEl: null });
-            localStorage.removeItem("carrito");
-            this.props.handleSnackMessage(
-              "Has comprado los productos en las próximas horas recibiras un mensaje con los metodos de pago"
-            );
-          } else {
-            this.props.handleSnackMessage(
-              "No se han podido comprar los productos intenta de nuevo"
-            );
-          }
-        });
-    } else {
-      this.props.handleSnackMessage("Tal vez no has ingresado como un usuario");
-    }
+    var total = 0;
+    data.forEach(i => (total += i.precio));
+    var body = {
+      email: JSON.parse(localStorage.getItem("user")).email,
+      shop: data,
+      total: total
+    };
+    data = [];
+    DataShop.postShopCart(body)
+      .then(res => res.json())
+      .then(value => {
+        if (value.status) {
+          this.setState({ anchorEl: null });
+          localStorage.removeItem("carrito");
+          this.props.handleSnackMessage(
+            "Has comprado los productos en las próximas horas recibiras un mensaje con los metodos de pago"
+          );
+        } else {
+          this.props.handleSnackMessage(
+            "No se han podido comprar los productos intenta de nuevo"
+          );
+        }
+      });
   };
 
   handleExit = () => this.setState({ anchorEl: null });
@@ -88,7 +87,7 @@ class SimpleMenu extends React.Component {
     var elements = this.state.arrayElement;
     if (data) elements = data;
     return (
-      <div>
+      <div style={style}>
         <IconButton
           style={{ margin: "50px" }}
           color="black"
