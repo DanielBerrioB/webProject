@@ -12,9 +12,9 @@ import SnackBar from "./snackBar";
 
 var data;
 
-const style={
-  marginLeft: "80px",
-}
+const style = {
+  marginLeft: "80px"
+};
 
 /**
  * This class represents a simple menu with all the things that the user has choosen
@@ -51,29 +51,34 @@ class SimpleMenu extends React.Component {
   };
 
   handleBuyClothe = () => {
-    var total = 0;
-    data.forEach(i => (total += i.precio));
-    var body = {
-      email: JSON.parse(localStorage.getItem("user")).email,
-      shop: data,
-      total: total
-    };
-    data = [];
-    DataShop.postShopCart(body)
-      .then(res => res.json())
-      .then(value => {
-        if (value.status) {
-          this.setState({ anchorEl: null });
-          localStorage.removeItem("carrito");
-          this.props.handleSnackMessage(
-            "Has comprado los productos en las próximas horas recibiras un mensaje con los metodos de pago"
-          );
-        } else {
-          this.props.handleSnackMessage(
-            "No se han podido comprar los productos intenta de nuevo"
-          );
-        }
-      });
+    if (localStorage.getItem("user")) {
+      var total = 0;
+      data.forEach(i => (total += parseInt(i.precio)));
+      var body = {
+        email: JSON.parse(localStorage.getItem("user")).email,
+        shop: data,
+        total: total
+      };
+      data = [];
+      total = 0;
+      DataShop.postShopCart(body)
+        .then(res => res.json())
+        .then(value => {
+          if (value.status) {
+            this.setState({ anchorEl: null });
+            localStorage.removeItem("carrito");
+            this.props.handleSnackMessage(
+              "Has comprado los productos en las próximas horas recibiras un mensaje con los metodos de pago"
+            );
+          } else {
+            this.props.handleSnackMessage(
+              "No se han podido comprar los productos intenta de nuevo"
+            );
+          }
+        });
+    } else {
+      this.props.handleSnackMessage("No has ingresado a tu cuenta");
+    }
   };
 
   handleExit = () => this.setState({ anchorEl: null });

@@ -1,4 +1,4 @@
-var url = "http://localhost:4000";
+var url = "https://boutiqueapi.herokuapp.com";
 var currentToken = "";
 if (localStorage.getItem("user"))
   currentToken = JSON.parse(localStorage.getItem("user")).token;
@@ -143,7 +143,7 @@ const getShopCart = async () => {
     }
   };
   return fetch(`${url}/main/users/shopCart/`, jsonGetShopCart);
-}
+};
 
 export default {
   getUsers,

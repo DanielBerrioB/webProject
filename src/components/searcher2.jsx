@@ -56,6 +56,7 @@ class searcher2 extends React.Component {
           .then(res => res.json())
           .then(result => {
             console.log(result);
+            this.setState({ arrayProduct: result });
             this.setState({ openModalProduct: true }); //This modal window is open
           });
       }
@@ -65,7 +66,8 @@ class searcher2 extends React.Component {
   state = {
     isHidden: false,
     textUser: "",
-    openModalProduct: false
+    openModalProduct: false,
+    arrayProduct: []
   };
 
   render() {
@@ -73,7 +75,13 @@ class searcher2 extends React.Component {
       <div style={simpleStyle}>
         <LongMenu
           id="btnBienvenido"
-          array={["Pedidos", "Cerrar sesión"]}
+          array={
+            localStorage.getItem("user")
+              ? JSON.parse(localStorage.getItem("user")).role
+                ? ["Pedidos", "Cerrar sesión"]
+                : ["Cerrar sesión"]
+              : ["Cerrar sesión"]
+          }
           name={this.state.textUser}
           key="btnBienvenido"
           hidden={this.state.isHidden}
@@ -91,6 +99,7 @@ class searcher2 extends React.Component {
         <ModalProduct
           allowOpen={this.state.openModalProduct}
           cambio={this.handleCloseModalWindow}
+          arrayProduct={this.state.arrayProduct}
         />
       </div>
     );

@@ -147,13 +147,25 @@ class ButtonAppBar extends React.Component {
                 startAdornment={<SearchIcon />}
               />
             </FormControl>
-            <SimpleMenu handleSnackMessage={this.handleShowMessage} />
+            <div
+              hidden={
+                localStorage.getItem("user")
+                  ? JSON.parse(localStorage.getItem("user")).role
+                    ? true
+                    : false
+                  : false
+              }
+            >
+              <SimpleMenu handleSnackMessage={this.handleShowMessage} />
+            </div>
+
             <div
               hidden={
                 localStorage.getItem("user")
                   ? !JSON.parse(localStorage.getItem("user")).role
                   : true
               }
+              style={{ marginLeft: "70px" }}
             >
               <LongMenu
                 array={[

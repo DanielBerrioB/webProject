@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import SnackBar from "../snackBar";
+import ListProduct from "../listProduct";
 
 const styles = theme => ({
   paper: {
@@ -54,6 +55,7 @@ class ModalProduct extends React.Component {
         >
           <div style={getModalStyle()} className={classes.paper}>
             <h1>Pedidos</h1>
+            <ListProduct arrayProduct={this.props.arrayProduct} />
             <SnackBar
               openSnackBar={this.state.openSnack}
               handleCloseSnack={this.handleCloseSnackBar}
@@ -67,7 +69,7 @@ class ModalProduct extends React.Component {
   }
 }
 
-ModalProduct.propTypes = { 
+ModalProduct.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
