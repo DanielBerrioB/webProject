@@ -17,7 +17,7 @@ const style1 = {
 const botonBackground = {
   background: "#FFAB88",
   borderRadios: "20px",
-  marginTop: "30%",
+  marginTop: "37%",
   width: "90px",
   height: "45px"
 };
