@@ -49,7 +49,7 @@ class ListProduct extends React.Component {
                   <ListItem>
                     <ListItemText
                       key={value.total}
-                      primary={`Usuario: ${value.email} \n total: ${
+                      primary={`Usuario: ${value.email} \n Total: ${
                         value.total
                       }`}
                       secondary={this.transformData(value.shop)}

@@ -44,9 +44,7 @@ function getModalStyle() {
 class CommendModal extends React.Component {
   componentDidMount() {
     DataComment.getComment()
-      .then(res => {
-        return res.json();
-      })
+      .then(res => res.json())
       .then(value => {
         this.setState({ arrayComment: value });
       });
@@ -65,24 +63,33 @@ class CommendModal extends React.Component {
    */
   createComment = () => {
     if (this.state.text) {
-      DataComment.postComment({
-        comment: this.state.text
-      })
-        .then(res => {
-          return res.json();
+      if (localStorage.getItem("user")) {
+        DataComment.postComment({
+          comment: this.state.text
         })
-        .then(value => {
-          if (value.message) {
-            this.setState({ openSnack: true });
-            this.setState({ snackMessage: "No has ingresado como usuario" });
-          } else {
-            this.setState({
-              arrayComment: value
-            });
-            this.props.cambio();
-            this.setState({ text: "" });
-          }
+          .then(res => res.json())
+          .then(value => {
+            console.log(value);
+            if (value.message) {
+              this.setState({ openSnack: true });
+              this.setState({ snackMessage: "No has ingresado como usuario" });
+            } else {
+              this.setState({
+                arrayComment: value
+              });
+              this.props.cambio();
+              this.setState({ text: "" });
+            }
+          });
+      } else {
+        this.setState({ openSnack: true });
+        this.setState({
+          snackMessage: "No has ingresado como usuario, Intenta de nuevo"
         });
+      }
+    } else {
+      this.setState({ openSnack: true });
+      this.setState({ snackMessage: "El campo está vacío" });
     }
   };
 
@@ -95,14 +102,25 @@ class CommendModal extends React.Component {
 
   handleButton = size => this.setState({ sizeClothe: size });
 
+  handleRecharge = () => {
+    DataComment.getComment()
+      .then(res => res.json())
+      .then(value => {
+        this.setState({ arrayComment: value });
+      });
+  };
+
   render() {
+    if (this.props.allowOpen) this.handleRecharge();
     const { classes } = this.props;
     return (
       <div>
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
-          open={this.props.allowOpen === undefined ? false : this.props.allowOpen}
+          open={
+            this.props.allowOpen === undefined ? false : this.props.allowOpen
+          }
           onClose={() => this.props.cambio()}
         >
           <div style={getModalStyle()} className={classes.paper}>
