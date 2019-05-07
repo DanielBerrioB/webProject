@@ -146,11 +146,13 @@ class ModalGestion extends React.Component {
           talla: str
         };
 
-        DataProduct.addProduct(datosAgregar).then(res =>
-          this.props.handleActionButton(event, res.json(), true)
+        DataProduct.addProduct(datosAgregar).then(
+          res => {
+            this.props.handleActionButton(event, res.json(), true);
+            this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+            this.setState({ snackMessage: "Se agregó correctamente" });
+          } //The message to snackBar
         );
-        this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
-        this.setState({ snackMessage: "Se agregó correctamente" }); //The message to snackBar
       }
     }
   };
@@ -167,7 +169,9 @@ class ModalGestion extends React.Component {
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
-          open={this.props.allowOpen === undefined ? false : this.props.allowOpen}
+          open={
+            this.props.allowOpen === undefined ? false : this.props.allowOpen
+          }
           onClose={() => this.props.cambio()}
         >
           <div style={getModalStyle()} className={classes.paper}>

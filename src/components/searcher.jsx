@@ -64,7 +64,10 @@ async function categoryArray() {
 
 class ButtonAppBar extends React.Component {
   componentDidMount() {
-    categoryArray().then(value => this.setState({ arrayCategory: value }));
+    categoryArray().then(value => {
+      value.push("Inicio");
+      this.setState({ arrayCategory: value });
+    });
   }
   state = {
     openComment: false,
@@ -79,7 +82,10 @@ class ButtonAppBar extends React.Component {
   closeComment = () => this.setState({ openComment: false });
 
   updateElementFromParent() {
-    categoryArray().then(value => this.setState({ arrayCategory: value }));
+    categoryArray().then(value => {
+      value.push("Inicio");
+      this.setState({ arrayCategory: value });
+    });
   }
 
   handleChange = event => {
@@ -92,7 +98,10 @@ class ButtonAppBar extends React.Component {
   handleClick = event => this.props.handleClick(event);
 
   putting = (event, text) => {
-    categoryArray().then(value => this.setState({ arrayCategory: value }));
+    categoryArray().then(value => {
+      value.push("Inicio");
+      this.setState({ arrayCategory: value });
+    });
     this.props.putting(event, text);
   };
 
@@ -201,7 +210,7 @@ class ButtonAppBar extends React.Component {
 async function verifyContent(text) {
   var arrayElement = [];
   var newData = nuevoArray;
-  if (text !== "") {
+  if (text) {
     for (let i = 0; i < newData.length; i++) {
       if (
         newData[i].name

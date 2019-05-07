@@ -63,8 +63,13 @@ class ImageSet extends React.Component {
   };
 
   show = (event, text) => {
-    if (text !== "")
+    if (text === "Inicio") {
+      getAllProducts().then(value => {
+        this.setState({ arrayElement: toConvert(value) });
+      });
+    } else {
       fromCategory(text).then(value => this.setState({ arrayElement: value }));
+    }
   };
 
   promotion = event => {
