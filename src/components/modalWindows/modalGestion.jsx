@@ -62,7 +62,6 @@ class ModalGestion extends React.Component {
             DataProduct.deleteProduct(
               document.getElementById("txtEliminarId").value
             ).then(res => {
-              console.log(res);
               this.props.handleActionButton(event, res.json(), true);
             });
             document.getElementById("txtEliminarId").value = "";

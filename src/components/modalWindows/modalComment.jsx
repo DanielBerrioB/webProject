@@ -69,7 +69,6 @@ class CommendModal extends React.Component {
         })
           .then(res => res.json())
           .then(value => {
-            console.log(value);
             if (value.message) {
               this.setState({ openSnack: true });
               this.setState({ snackMessage: "No has ingresado como usuario" });
