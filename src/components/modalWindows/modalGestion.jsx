@@ -146,13 +146,9 @@ class ModalGestion extends React.Component {
           talla: str
         };
 
-        DataProduct.addProduct(datosAgregar).then(
-          res => {
-            this.props.handleActionButton(event, res.json(), true);
-            this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
-            this.setState({ snackMessage: "Se agregó correctamente" });
-          } //The message to snackBar
-        );
+        DataProduct.addProduct(datosAgregar).then(res => {
+          this.props.handleActionButton(event, res.json(), true);
+        });
       }
     }
   };

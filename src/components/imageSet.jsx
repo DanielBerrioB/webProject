@@ -215,10 +215,14 @@ class ImageSet extends React.Component {
       });
     } else {
       array.then(arrayUpdated => {
-        var values = toConvert(arrayUpdated);
-        this.setState({ arrayElement: values });
-        this.setState({ openModalGestion: false });
-        this.setState({ openEditar: false });
+        if (arrayUpdated.message !== "The element already exists") {
+          var values = toConvert(arrayUpdated);
+          this.setState({ arrayElement: values });
+          this.setState({ openModalGestion: false });
+          this.setState({ openEditar: false });
+        } else {
+          alert("El elemento ya existe!");
+        }
       });
     }
   };
