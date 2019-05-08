@@ -42,7 +42,7 @@ class SimpleMenu extends React.Component {
     this.setState({ anchorEl: null });
     if (localStorage.carrito) {
       data = JSON.parse(localStorage.getItem("carrito"));
-      var seElimino = toDelete(event.target.id, data);
+      var seElimino = toDelete(event.id, data, event.size);
       localStorage.setItem("carrito", JSON.stringify(seElimino));
       data = JSON.parse(localStorage.getItem("carrito"));
       this.setState({ arrayElement: data });
@@ -108,14 +108,15 @@ class SimpleMenu extends React.Component {
           onClose={this.handleExit}
         >
           {elements.map(element => (
-            <Grid item xs={8} style={{ width: "100%" }}>
+            <Grid item xs={12} style={{ width: "100%" }}>
               <MenuItem
-                onClick={this.handleClose}
+                onClick={this.handleClose.bind(this, element)}
                 style={{ width: "100%" }}
                 id={element.id}
+                key={element.id}
               >
                 <DeleteIcon style={{ float: "right" }} />
-                {element.name}
+                {element.name}--{element.size}
               </MenuItem>
             </Grid>
           ))}
@@ -143,11 +144,16 @@ class SimpleMenu extends React.Component {
  * @param {Represents the value to find} id
  * @param {It's the array that contains all the information} arrayData
  */
-function toDelete(id, arrayData) {
+function toDelete(id, arrayData, size) {
   var toReturn = [];
   if (arrayData.length === 1) return toReturn;
   for (let i = 0; i < arrayData.length; i++) {
-    if (id != arrayData[i].id) toReturn.push(arrayData[i]);
+    if (
+      id.toString() !== arrayData[i].id.toString() ||
+      size.toString() !== arrayData[i].size.toString()
+    ) {
+      toReturn.push(arrayData[i]);
+    }
   }
   return toReturn;
 }

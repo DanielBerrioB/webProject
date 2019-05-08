@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import ModalWindow from "../listComment";
 import DataComment from "../APIMethod/apiMethods";
 import SnackBar from "../snackBar";
+import TextField from "@material-ui/core/TextField";
 
 //CSS styles
 const botonBackground = {
@@ -41,12 +42,13 @@ function getModalStyle() {
 }
 
 //This class represents the modal window that shows all the comments and allows to add comments to the local Storage
+//ATTENTION: THIS CLASS NEEDS TO BE CHANGE IN ORDER TO CONTROL THE ERROR AND AVOID USING document.getElementById
 class CommendModal extends React.Component {
   componentDidMount() {
     DataComment.getComment()
       .then(res => res.json())
       .then(value => {
-        this.setState({ arrayComment: value });
+        this.setState({ arrayComment: value, control: true });
       });
   }
 
@@ -55,17 +57,20 @@ class CommendModal extends React.Component {
     text: "",
     arrayComment: [],
     openSnack: false,
-    snackMessage: ""
+    snackMessage: "",
+    control: false
   };
 
   /**
-   * Create a comment and add it to the localStorage
+   * Create a comment and add it to the localStorage.
+   *
    */
   createComment = () => {
-    if (this.state.text) {
+    this.setState({ text: document.getElementById("txt1").value });
+    if (document.getElementById("txt1").value) {
       if (localStorage.getItem("user")) {
         DataComment.postComment({
-          comment: this.state.text
+          comment: document.getElementById("txt1").value
         })
           .then(res => res.json())
           .then(value => {
@@ -77,7 +82,11 @@ class CommendModal extends React.Component {
                 arrayComment: value
               });
               this.props.cambio();
-              this.setState({ text: "" });
+              DataComment.getComment()
+                .then(res => res.json())
+                .then(value => {
+                  this.setState({ arrayComment: value, control: true });
+                });
             }
           });
       } else {
@@ -95,22 +104,10 @@ class CommendModal extends React.Component {
   handleCloseSnackBar = () => this.setState({ openSnack: false });
 
   handleClose = event => {
-    this.setState({ text: "" });
     this.handleClose(event);
   };
 
-  handleButton = size => this.setState({ sizeClothe: size });
-
-  handleRecharge = () => {
-    DataComment.getComment()
-      .then(res => res.json())
-      .then(value => {
-        this.setState({ arrayComment: value });
-      });
-  };
-
   render() {
-    if (this.props.allowOpen) this.handleRecharge();
     const { classes } = this.props;
     return (
       <div>
@@ -126,7 +123,7 @@ class CommendModal extends React.Component {
             <h5>Deja tu comentario!</h5>
             <center>
               <div>
-                <textarea
+                <TextField
                   id="txt1"
                   style={{
                     width: "300px",
@@ -134,10 +131,9 @@ class CommendModal extends React.Component {
                     textAlign: "start",
                     fontStyle: "arial"
                   }}
-                  value={this.state.text}
-                  onChange={e => {
-                    this.setState({ text: e.target.value });
-                  }}
+                  rowsMax="5"
+                  multiline
+                  margin="normal"
                 />
               </div>
               <Button onClick={this.createComment} style={botonBackground}>

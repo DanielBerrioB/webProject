@@ -221,54 +221,6 @@ class ImageSet extends React.Component {
           this.setState({ arrayElement: values });
           this.setState({ openModalGestion: false });
           this.setState({ openEditar: false });
-
-          this.setState({
-            body: (
-              <div>
-                <h1>Editar un producto</h1>
-                <h6>*Si dejas un campo en blanco no se editará dicho campo</h6>
-                <TextField
-                  id="txtIdEditar"
-                  label="Id imagen a editar"
-                  margin="normal"
-                />
-                <br />
-
-                <TextField
-                  id="txtNameEditar"
-                  label={`Nombre: ${array.name}`}
-                  margin="normal"
-                />
-                <br />
-                <TextField id="txtUrlEditar" label="URL" margin="normal" />
-                <br />
-                <TextField
-                  id="txtPrecioEditar"
-                  label={`Precio: ${array.precio}`}
-                  margin="normal"
-                />
-                <br />
-                <TextField
-                  id="txtCategoriaEditar"
-                  label={`Categoria: ${array.categoria}`}
-                  margin="normal"
-                />
-                <br />
-                <TextField
-                  id="txtPromocionEditar"
-                  label={`¿Promoción?(S o N): ${array.promocion ? "S" : "N"}`}
-                  margin="normal"
-                />
-                <br />
-                <TextField
-                  id="txtTallaEditar"
-                  label={`Tallas: ${array.talla}`}
-                  margin="normal"
-                />
-                <br />
-              </div>
-            )
-          });
         } else {
           alert("El elemento ya existe!");
         }

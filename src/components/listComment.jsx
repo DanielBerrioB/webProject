@@ -29,14 +29,15 @@ const styles = theme => ({
 class PinnedSubheaderList extends React.Component {
   render() {
     const { classes } = this.props;
+    var cont = 0;
     return (
       <List className={classes.root} subheader={<li />}>
         {[0].map(sectionId => (
           <li key={`section-${sectionId}`} className={classes.listSection}>
             <ul className={classes.ul}>
               <ListSubheader>{`Comentarios`}</ListSubheader>
-              {this.props.array.map(item => (
-                <ListItem key={`item-${sectionId}-${item}`}>
+              {this.props.array.reverse().map(item => (
+                <ListItem key={cont++}>
                   <ListItemText primary={`${item.comment}`} />
                 </ListItem>
               ))}
