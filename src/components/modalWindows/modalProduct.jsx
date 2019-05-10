@@ -12,6 +12,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
+    overflow:'scroll',
     outline: "none",
     borderRadius: "20px"
   }
@@ -48,6 +49,7 @@ class ModalProduct extends React.Component {
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
+          style={{ overflow:'scroll'}}
           open={
             this.props.allowOpen === undefined ? false : this.props.allowOpen
           }

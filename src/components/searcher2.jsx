@@ -55,6 +55,7 @@ class searcher2 extends React.Component {
         DataProduct.getShopCart()
           .then(res => res.json())
           .then(result => {
+            console.log(result);
             this.setState({ arrayProduct: result });
             this.setState({ openModalProduct: true }); //This modal window is open
           });

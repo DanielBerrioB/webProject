@@ -106,7 +106,9 @@ class ModalGestion extends React.Component {
           precio = parseInt(document.getElementById("txtPrecioEditar").value);
           categoria = document.getElementById("txtCategoriaEditar").value;
           promocion =
-            document.getElementById("txtPromocionEditar").value === "S"
+            document
+              .getElementById("txtPromocionEditar")
+              .value.toLowerCase() === "s"
               ? true
               : false;
           talla = document.getElementById("txtTallaEditar").value;
@@ -132,7 +134,7 @@ class ModalGestion extends React.Component {
         // Adding
         var str = document.getElementById("txtTalla").value.split(",");
         var x =
-          document.getElementById("txtPromocion").value !== "true"
+          document.getElementById("txtPromocion").value.toLowerCase() !== "s"
             ? false
             : true;
         var datosAgregar = {
@@ -144,10 +146,22 @@ class ModalGestion extends React.Component {
           promocion: x,
           talla: str
         };
-
-        DataProduct.addProduct(datosAgregar).then(res => {
-          this.props.handleActionButton(event, res.json(), true);
-        });
+        if (
+          datosAgregar.id &&
+          datosAgregar.name &&
+          datosAgregar.source &&
+          datosAgregar.precio &&
+          datosAgregar.categoria &&
+          datosAgregar.promocion &&
+          datosAgregar.talla
+        ) {
+          DataProduct.addProduct(datosAgregar).then(res => {
+            this.props.handleActionButton(event, res.json(), true);
+          });
+        } else {
+          this.setState({ openSnack: true }); //The SnackBar is open putting true on openSnack
+          this.setState({ snackMessage: "No has ingresado todos los campos" }); //The message to snackBar
+        }
       }
     }
   };
